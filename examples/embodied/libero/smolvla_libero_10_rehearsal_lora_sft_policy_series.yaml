@@ -1,0 +1,28 @@
+schema_version: 1
+workspace_root: ../../..
+base_config: ../smolvla_libero_10_rehearsal_lora_sft_policy_series_eval_h100.yaml
+candidates:
+- step: 0
+  name: smolvla-libero-sft-baseline
+  checkpoint_role: sft_baseline
+  path: HuggingFaceVLA/smolvla_libero
+  revision: 6721902bc4d61e50a3bfdb11dfb4cb626f05d102
+  local: false
+- step: 25
+  name: pi05-teacher-rehearsal-lora-sft-update25
+  checkpoint_role: sft_candidate
+  path: outputs/smolvla-distillation/smolvla-libero10-rehearsal-lora-merged/step-000025
+  revision: null
+  local: true
+- step: 50
+  name: pi05-teacher-rehearsal-lora-sft-update50
+  checkpoint_role: sft_candidate
+  path: outputs/smolvla-distillation/smolvla-libero10-rehearsal-lora-merged/step-000050
+  revision: null
+  local: true
+- step: 100
+  name: pi05-teacher-rehearsal-lora-sft-update100
+  checkpoint_role: sft_candidate
+  path: outputs/smolvla-distillation/smolvla-libero10-rehearsal-lora-merged/step-000100
+  revision: null
+  local: true

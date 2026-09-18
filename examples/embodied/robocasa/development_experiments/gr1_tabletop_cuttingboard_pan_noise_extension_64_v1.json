@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "kind": "art_embodied_diagnostic_preregistration",
+  "name": "gr1-tabletop-cuttingboard-pan-n1d7-noise01-extension-64-v1",
+  "created_at_utc": "2026-08-19T06:15:00Z",
+  "question": "Does K=4, noise=0.1 satisfy the unchanged two-sided ODE/SDE equivalence gate after extending from 32 to 64 reset clusters?",
+  "scope": {
+    "optimizer_steps": 0,
+    "data_role": "diagnostic",
+    "split": "train_matched",
+    "sealed_eligible": false,
+    "development_lift_claim_eligible": false
+  },
+  "trigger": {
+    "prior_report": "outputs/gr00t-n1d7-robocasa-sampler-calibration/cuttingboard-pan-k4-noise01-extension-v1/noise-extension-report.json",
+    "prior_report_sha256": "7117d3b41d27d9387dc978c719d84ff4d660db702d81f611ee2371143ee8b489",
+    "prior_reset_clusters": 32,
+    "prior_difference": -0.046875,
+    "prior_cluster_ci95": [-0.1171875, 0.0234375],
+    "prior_decision": "inconclusive"
+  },
+  "frozen_inputs": {
+    "base_config_sha256": "5d86e98758d0c14dbd450f1a400f1a606c959124269c088f7cb09ff170b0e9d0",
+    "prior_ode_outcomes": "outputs/gr00t-n1d7-robocasa-sampler-calibration/cuttingboard-pan-k4-noise01-extension-v1/aggregate-ode-outcomes.json",
+    "prior_ode_outcomes_sha256": "0295d754908f6dc5aeb314f00908131c12e73fa2bf5fefbf09b50028476f366b",
+    "prior_sde_outcomes": "outputs/gr00t-n1d7-robocasa-sampler-calibration/cuttingboard-pan-k4-noise01-extension-v1/aggregate-sde-outcomes.json",
+    "prior_sde_outcomes_sha256": "dc99235dc48268d13aa5462722a8e4c73412087db505214ace26dee7641e907b",
+    "denoise_steps": 4,
+    "execution_horizon": 8,
+    "maximum_environment_steps": 720
+  },
+  "extension_design": {
+    "noise_level": 0.1,
+    "prior_environment_seed_range": [400, 431],
+    "new_environment_seeds": [432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463],
+    "policy_seed_repetitions_per_environment_seed": 8,
+    "new_episodes_per_condition": 256,
+    "aggregate_episodes_per_condition": 512,
+    "pairing": "Each new ODE/SDE pair shares scenario, environment seed, policy seed, and initial Gaussian latent plan. The SHA-frozen 32-reset aggregate is combined with the new panel before inference.",
+    "primary_uncertainty_unit": "environment reset seed",
+    "primary_interval": "10,000-sample paired cluster bootstrap over all 64 reset seeds"
+  },
+  "equivalence_gate": {
+    "maximum_absolute_success_rate_gap": 0.1,
+    "pass": "Point estimate and reset-clustered 95% interval are wholly within [-0.10, 0.10].",
+    "reject": "The clustered interval excludes the equivalence region on either side, or the absolute point estimate is at least 0.20.",
+    "inconclusive": "Any result that is neither pass nor reject.",
+    "failed_episodes": 0,
+    "partial_results_cannot_pass": true
+  },
+  "decision_rule": {
+    "on_pass": "Restart the one-task GRPO recipe from the unchanged SFT base with noise_level=0.1 as the only changed factor and evaluate through at least 20 updates.",
+    "on_reject": "Do not optimize. Release GPUs and review denoise-step calibration.",
+    "on_inconclusive": "Do not optimize or extend automatically. Release GPUs and review the admission design.",
+    "no_post_hoc_relabeling": true
+  },
+  "observability": {
+    "wandb_entity": "wandb-japan",
+    "wandb_project": "art-embodied-gr00t-n1d7-robocasa-sampler-calibration",
+    "wandb_group": "cuttingboard-pan-k4-noise01-extension-64-v1",
+    "evaluation_artifacts": true,
+    "evaluation_tables": true,
+    "progress_logging": true
+  },
+  "resource_budget": {
+    "jobs": 1,
+    "gpus": 8,
+    "maximum_new_evaluation_episodes": 512,
+    "optimizer_steps": 0,
+    "sealed_jobs": 0
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "art_embodied_diagnostic_preregistration",
+  "name": "gr1-tabletop-cuttingboard-pan-n1d7-noise01-extension-v1",
+  "created_at_utc": "2026-08-19T05:58:00Z",
+  "question": "Does K=4, noise=0.1 satisfy the frozen ODE/SDE equivalence gate after extending the reset-cluster panel from 16 to 32 seeds?",
+  "scope": {
+    "optimizer_steps": 0,
+    "data_role": "diagnostic",
+    "split": "train_matched",
+    "sealed_eligible": false,
+    "development_lift_claim_eligible": false
+  },
+  "trigger": {
+    "noise_screen_report_sha256": "8a79c08afbac6b1a765e21b01c9f72b78cc24402e93e4fb7d3ed4f4637892797",
+    "noise_0_1_difference": -0.03125,
+    "noise_0_1_cluster_ci95": [-0.1484375, 0.078125],
+    "noise_0_1_decision": "inconclusive",
+    "selection_reason": "The prior rule extends the lowest-noise inconclusive condition, not the condition with the best observed point estimate."
+  },
+  "frozen_inputs": {
+    "base_config_sha256": "5d86e98758d0c14dbd450f1a400f1a606c959124269c088f7cb09ff170b0e9d0",
+    "prior_ode_outcomes_sha256": "0880226e453fd27738af842c25a2064f1175416d4dbce210636c4626976cedcd",
+    "prior_sde_outcomes_sha256": "bfa891b5d3c5d4607a834cc1948c76fcf0af59beba15fc73185c69b99a12c033",
+    "denoise_steps": 4,
+    "execution_horizon": 8,
+    "maximum_environment_steps": 720
+  },
+  "extension_design": {
+    "noise_level": 0.1,
+    "prior_environment_seeds": [400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415],
+    "new_environment_seeds": [416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431],
+    "policy_seed_repetitions_per_environment_seed": 8,
+    "new_episodes_per_condition": 128,
+    "aggregate_episodes_per_condition": 256,
+    "pairing": "Each new ODE/SDE pair shares scenario, environment seed, policy seed, and initial latent plan. Prior and new rows are combined before inference.",
+    "primary_uncertainty_unit": "environment reset seed",
+    "primary_interval": "10,000-sample paired cluster bootstrap over all 32 reset seeds"
+  },
+  "equivalence_gate": {
+    "maximum_absolute_success_rate_gap": 0.1,
+    "pass": "Point estimate and reset-clustered 95% interval are wholly within [-0.10, 0.10].",
+    "reject": "The clustered interval excludes the equivalence region on either side, or the absolute point estimate is at least 0.20.",
+    "inconclusive": "Any result that is neither pass nor reject.",
+    "failed_episodes": 0,
+    "partial_results_cannot_pass": true
+  },
+  "decision_rule": {
+    "on_pass": "Restart the one-task GRPO recipe from the unchanged SFT base with noise_level=0.1 as the only changed factor and evaluate through at least 20 updates.",
+    "on_reject": "Do not optimize. Stop and review denoise-step calibration design.",
+    "on_inconclusive": "Do not automatically spend more GPU. Stop and review the equivalence margin and power design before any extension."
+  },
+  "resource_budget": {
+    "jobs": 1,
+    "gpus": 8,
+    "maximum_new_evaluation_episodes": 256,
+    "optimizer_steps": 0,
+    "sealed_jobs": 0
+  }
+}

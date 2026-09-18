@@ -1,0 +1,288 @@
+---
+title: "Embodied runtime architecture"
+description: "Execution and scaling contracts for ART-Embodied"
+---
+
+ART-Embodied separates **what is optimized** from **how work is executed**.
+The trajectory schema and model-native objective stay independent of Slurm,
+Kubernetes, or a particular simulator. The runtime receives explicit device
+pools from YAML and is responsible for keeping those devices productive.
+
+## Selected execution model
+
+### Persistent rollout actors
+
+Each rollout device owns one or more isolated actor processes. An actor loads
+the base policy once, executes many complete episodes, and refreshes only the
+small policy delta between versions. Environment instances remain episode-local.
+
+Threads around a shared VLA policy are not a scaling mechanism: native LeRobot
+policies and their action-chunk state are not generally safe for concurrent
+calls, and a global lock only hides serialization. Starting a new process and
+loading the full policy for every episode is also not an acceptable production
+path.
+
+The local runtime exposes this explicitly through
+`runtime.rollout_execution`:
+
+```yaml
+runtime:
+  rollout_devices: [cuda:0, cuda:1]
+  training_devices: [cuda:2, cuda:3]
+  rollout_execution:
+    mode: local_process
+    actor_factory: art_embodied.integrations.lerobot_process:create_lerobot_process_actor
+    actor_kwargs:
+      components_factory: my_project.rollout:create_lerobot_components
+      components_kwargs: {}
+    actors_per_device: 4
+    lifecycle: persistent
+    policy_sync: checkpoint
+    inference_mode: embedded
+    inference_factory: null
+    inference_max_batch_size: 1
+    inference_max_wait_ms: 0.0
+    startup_timeout_seconds: 600
+    request_timeout_seconds: 600
+```
+
+The built-in actor owns the Gymnasium episode loop, trajectory recording,
+success and reward capture, bounded video, and train/eval separation. The
+application supplies only native components:
+
+```python
+from art_embodied import LeRobotProcessComponents
+
+def create_lerobot_components(*, config, context):
+    policy, preprocessor, postprocessor = load_lerobot_stack(
+        config.policy,
+        device=context.local_device,
+    )
+
+    def load_policy_snapshot(*, update, policy_snapshot):
+        refresh_adapter(policy, policy_snapshot)
+
+    def make_adapter(scenario, rollout_context):
+        return make_lerobot_adapter(
+            policy,
+            preprocessor,
+            postprocessor,
+            scenario=scenario,
+            context=rollout_context,
+        )
+
+    return LeRobotProcessComponents(
+        environment_factory=make_environment,
+        policy_adapter_factory=make_adapter,
+        load_policy_snapshot=load_policy_snapshot,
+    )
+```
+
+The component factory is imported inside each child process. This keeps CUDA
+models and simulator state out of pickle while retaining LeRobot's native
+policy and processor lifecycle. ART calls `load_policy_snapshot` before every
+collection and rejects a rollout whose requested update does not match the
+loaded policy version.
+
+Advanced applications may replace the built-in actor with an object exposing
+`rollout(...)` and `prepare_update(...)`. In `batched_server` mode, ART creates
+one inference engine per rollout device and passes a persistent `policy_client`
+to each custom actor. Concurrent environment requests are dynamically batched
+before `predict_batch`. This preserves native simulator and model code without
+embedding either in the generic runtime.
+
+`inference_replicas_per_device` optionally creates multiple independent engine
+processes on one rollout GPU and assigns actors round-robin. It is intended for
+high-memory devices where one replica leaves both memory and compute headroom.
+It does not change trajectory, seed, or reward contracts, but it must be
+benchmarked because concurrent replicas can also contend for GPU execution.
+For the validated OpenVLA-OFT H100 80 GB profile, three replicas with six actors
+produced 0.2647 trajectories/second on a fixed 128-trajectory workload, versus
+0.2251 for two replicas with the same actors. Four replicas are not considered
+safe because model weights plus transient workspace would exhaust HBM. These
+numbers describe one model and simulator stack, not an automatic hardware rule.
+
+The same profile uses an action-logprob training microbatch of 12. Microbatch 16
+reached approximately 75.7 GiB before an additional 110 MiB allocation failed.
+Microbatch 12 completed two consecutive distributed updates and shortened the
+observed four-subupdate compute window by about 31% relative to microbatch 8.
+
+`persistent` requires rollout and training device pools to be disjoint.
+`per_update` permits time-sharing: ART moves the coordinator policy off the
+shared device, collects the complete on-policy update, stops rollout workers,
+and restores the policy before training. The latter saves GPUs but reloads
+rollout models each update.
+
+`cpu_offload` also permits time-sharing, but keeps simulator actors and batched
+inference processes alive. After collection, inference engines move their base
+models to CPU and release CUDA memory; before the next collection they load the
+new LoRA snapshot and move back to their configured device. This removes repeated
+process and base-model construction at the cost of host memory. It is supported
+only with `batched_server`, because embedded actor policies do not expose a
+shared model lifecycle.
+
+Host memory scales with every offloaded inference and training replica. For
+example, two inference replicas on each of eight GPUs retain sixteen CPU model
+copies during training. Measure the complete rollout-to-training transition and
+request enough scheduler memory; free HBM alone is not evidence that another
+replica is safe.
+
+ART-Embodied exposes this boundary through separate `rollout/*` metrics:
+`prepare_seconds`, `worker_startup_seconds`, `snapshot_seconds`,
+`inference_prepare_seconds`, `collection_seconds`, `inference_offload_seconds`,
+`coordinator_restore_seconds`, and `finish_seconds`. Inspect these values before
+adding actors or model replicas. Replicas address inference contention; large
+prepare or offload values instead require lifecycle or checkpoint-transfer
+changes.
+
+The current local transport uses a Unix socket for inference requests and
+bounded temporary files for complete trajectories and checkpoints. Inference
+requests and responses must therefore be pickle-serializable CPU values.
+Shared-memory observation transport and model-family-specific inference
+engines are subsequent optimizations; the public runtime contract does not
+depend on either.
+
+The built-in OpenVLA-OFT engine accepts requests shaped as
+`{"observation": Observation, "context": {...}}`. It returns the native decoded
+action, the complete ART `Action` record with CPU-backed transient tensors, the
+policy update, and the realized batch size. A user actor can therefore call:
+
+```python
+prediction = await policy_client.predict(
+    {"observation": observation_record, "context": action_context}
+)
+next_observation, reward, terminated, truncated, info = env.step(
+    prediction["native_action"]
+)
+trajectory.actions.append(prediction["action"])
+```
+
+The inference engine loads the base VLA once and refreshes LoRA weights in
+place on later updates. This is an optimization of the validated native
+`OpenVLAPolicy.act_batch` path, not a second action-generation implementation.
+Dynamic batching is an execution option, not an assumed speedup: some VLA
+forwards already saturate a GPU at batch one, and processor/model
+implementations can scale poorly with batch size. Measure actions/second and
+GPU utilization for the selected model before enabling it in a long run.
+
+### Persistent distributed trainer
+
+Training workers load the base policy once and remain alive across optimizer
+sub-updates. Global reward, mask, advantage, and denominator construction is
+performed once per update. The current local backend keeps one process per
+training device alive for the full update, refreshes only LoRA state between
+subupdates, returns gradients through bounded file handoffs, and advances one
+coordinator-owned optimizer state. `runtime.training_worker_lifecycle:
+cpu_offload` extends that lifetime across updates: workers move the base policy
+to CPU after training, release the CUDA cache for rollout, then restore the
+model and next LoRA snapshot on the next gradient request. `per_update` remains
+the lower-host-memory default. The backend fails closed if any
+alignment-guarded worker shard is rejected, rather than applying a partial
+gradient.
+
+A collective gradient-reduction backend is the next scaling tier. The current
+file handoff remains a correctness-oriented local backend; persistence removes
+base-model reloads, but serialized gradient files and a coordinator-side
+optimizer will eventually limit larger model and node counts.
+
+### Barrier by default, pipeline by explicit opt-in
+
+The default mode is strict on-policy execution:
+
+```text
+rollout(policy N) -> train(policy N -> N+1) -> evaluate(N+1)
+```
+
+This is the reference mode for mathematical parity and reproducibility.
+Pipelined execution follows ART `PipelineTrainer` semantics: bounded queues,
+policy-version tags, checkpoint leases, stale-group rejection, and separate
+rollout/training device pools. It must expose `max_steps_off_policy` in YAML;
+staleness is never an implicit performance optimization.
+
+### Model-native objective adapters
+
+The scheduler must not assume that every policy emits text tokens. Backends
+own the native likelihood contract:
+
+- action-token policies use token/action log probabilities;
+- diffusion or flow policies use sampler-aligned path likelihood or another
+  explicitly validated objective;
+- deterministic continuous policies use an explicit stochastic training
+  policy, critic, or preference objective.
+
+ART Optimized Megatron can become another trainer backend after the relevant
+VLA architecture and action loss have model-provider support. It is not a
+drop-in OpenVLA backend today.
+
+## Package boundary
+
+The fork is the incubation vehicle, not a requirement that robotics support
+remain inside the `art` Python package. The intended distribution after the
+validated OpenVLA-OFT path is stable is an add-on installed beside ART:
+
+```bash
+pip install openpipe-art
+pip install "art-embodied[libero]"
+```
+
+That extraction must not change experiment semantics. Code added during the
+incubation phase follows this ownership boundary now:
+
+| Owner | Responsibilities |
+| --- | --- |
+| ART | Generic model identity, trajectory grouping, logging hooks, backend lifecycle, and small public registration interfaces |
+| ART-Embodied | Multimodal trajectory records, embodied experiment config, rollout/evaluation orchestration, media, and W&B/Weave robotics observability |
+| Policy integration | LeRobot-native construction, preprocessing, action representation, likelihood/objective adapter, and checkpoint refresh |
+| Environment integration | Reset/step semantics, task manifests, success signal, simulator-specific dependencies, and rendering |
+
+The extracted package will use its own `art_embodied` namespace and register
+capabilities through public hooks. It must not monkeypatch ART internals or
+inject modules into the `art` namespace. Conversely, generic ART modules must
+not import LeRobot, LIBERO, OpenVLA, or another simulator/model family. During
+incubation, new dependencies are accepted only behind the existing embodied
+extras, model-family logic stays behind policy/backend factories, and
+simulator logic stays in its integration or example package. RLinf remains a
+conformance oracle and cannot become an add-on runtime dependency.
+
+The extraction preserves the validated fork while moving the embodied modules,
+YAML and trajectory contracts into the independent namespace. The add-on owns
+the `art-embodied` entry point; it does not modify ART's `art` command or
+top-level package.
+
+## Runtime contract
+
+All non-secret execution conditions belong in YAML:
+
+- rollout and training device pools;
+- actor processes per device;
+- embedded or dynamically batched inference and its importable factory;
+- persistent, CPU-offloaded, or per-update actor lifecycle;
+- barrier or pipeline mode;
+- maximum policy staleness and queue bounds;
+- rollout and training microbatch geometry;
+- worker timeout, local handoff limits, and retention;
+- evaluation cadence and checkpoint policy.
+
+Slurm may allocate these resources, but no generic runtime component may
+require `sbatch`, `srun`, or Slurm environment variables.
+
+## Performance acceptance criteria
+
+An optimized runtime reports enough telemetry to identify the bottleneck:
+
+- policy loads and policy-delta refreshes per worker;
+- rollout actor busy, idle, queue-wait, and episode wall time;
+- train forward, backward, collective, optimizer, and checkpoint time;
+- trajectories and environment steps per second;
+- policy version and steps off-policy for every trained group;
+- bytes and wall time spent on process handoff;
+- GPU utilization and peak memory by role.
+
+The following are release blockers rather than tuning opportunities:
+
+- loading the base VLA once per episode or optimizer sub-update;
+- silently serializing a configured multi-worker rollout;
+- overlapping rollout and training on the same device without an explicit
+  resource and policy-version contract;
+- allowing stale groups without a configured bound;
+- changing algorithmic batch geometry merely to improve utilization.

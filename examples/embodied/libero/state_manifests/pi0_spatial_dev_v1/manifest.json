@@ -1,0 +1,1933 @@
+{
+  "entries": [
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260722,
+      "id": "libero_spatial/generated-held-out/task-00/state-00",
+      "nearest_official_l2": 0.04212216829360671,
+      "nearest_official_max_abs": 0.018741880726564464,
+      "state_key": "task_00_state_00",
+      "state_length": 92,
+      "state_sha256": "00aabdbd0841d55174ea5b7ef28f43955c528fb9f3e5f8abe9de0cba69f865f4",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.77634384657634,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260723,
+      "id": "libero_spatial/generated-held-out/task-00/state-01",
+      "nearest_official_l2": 0.042015895953325215,
+      "nearest_official_max_abs": 0.018741880726564464,
+      "state_key": "task_00_state_01",
+      "state_length": 92,
+      "state_sha256": "a1ea2ada7b99817470edde4109f5368922a0f4abc283dad9f371b8afc201fc6f",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7674629202445249,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260724,
+      "id": "libero_spatial/generated-held-out/task-00/state-02",
+      "nearest_official_l2": 0.043262864709009405,
+      "nearest_official_max_abs": 0.022323301420858144,
+      "state_key": "task_00_state_02",
+      "state_length": 92,
+      "state_sha256": "34e5b32011c0e45c0e512583130b4f72003bcc09f482426d7b5d7eef51088ddd",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260725,
+      "id": "libero_spatial/generated-held-out/task-00/state-03",
+      "nearest_official_l2": 0.0483002535289824,
+      "nearest_official_max_abs": 0.019136806355443126,
+      "state_key": "task_00_state_03",
+      "state_length": 92,
+      "state_sha256": "2799e31d76d3fff48c103e0c2df99697ff25ee697fb2d6a4335ed712fecf3cbd",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7662202784279939,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260726,
+      "id": "libero_spatial/generated-held-out/task-00/state-04",
+      "nearest_official_l2": 0.04062199723042652,
+      "nearest_official_max_abs": 0.019143768340038114,
+      "state_key": "task_00_state_04",
+      "state_length": 92,
+      "state_sha256": "abcaf98e92e583e43c57dcaf0a1c8990f841216bafab4f1b20431769aa743b04",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260727,
+      "id": "libero_spatial/generated-held-out/task-00/state-05",
+      "nearest_official_l2": 0.03971076391013113,
+      "nearest_official_max_abs": 0.020939848614829774,
+      "state_key": "task_00_state_05",
+      "state_length": 92,
+      "state_sha256": "210912b56cc191b374a9198e45f82db373aa24748c97d58c6a60c5725de41b77",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260728,
+      "id": "libero_spatial/generated-held-out/task-00/state-06",
+      "nearest_official_l2": 0.039530895097285836,
+      "nearest_official_max_abs": 0.020939848614829774,
+      "state_key": "task_00_state_06",
+      "state_length": 92,
+      "state_sha256": "597cde1027dbd16bf6d4fb61f32cb1ba67b444a0dd20f103013b648918f35979",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260729,
+      "id": "libero_spatial/generated-held-out/task-00/state-07",
+      "nearest_official_l2": 0.045007173361968716,
+      "nearest_official_max_abs": 0.020939848614829774,
+      "state_key": "task_00_state_07",
+      "state_length": 92,
+      "state_sha256": "4f915e00b0c75abdcb915443e1a12900f6ce7bc8eb58d78b5f6a4f0ccf1ad039",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7661517873574814,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260730,
+      "id": "libero_spatial/generated-held-out/task-00/state-08",
+      "nearest_official_l2": 0.04438259215388064,
+      "nearest_official_max_abs": 0.020939848614829774,
+      "state_key": "task_00_state_08",
+      "state_length": 92,
+      "state_sha256": "9ba5e949087b0d376f3d13f07b081e6e8213cda7c6a018a139c2974472237c7b",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7663342526736816,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "generation_seed": 20260731,
+      "id": "libero_spatial/generated-held-out/task-00/state-09",
+      "nearest_official_l2": 0.038981541480603045,
+      "nearest_official_max_abs": 0.020939848614829774,
+      "state_key": "task_00_state_09",
+      "state_length": 92,
+      "state_sha256": "d48a8131ab18fa9b7f8ff732b447a071ea52371347da7c7b1e3c498237678c2e",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7672556078431652,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260722,
+      "id": "libero_spatial/generated-held-out/task-01/state-00",
+      "nearest_official_l2": 0.04834595879448407,
+      "nearest_official_max_abs": 0.021557351415374487,
+      "state_key": "task_01_state_00",
+      "state_length": 92,
+      "state_sha256": "6056e6d31bd94e458483cacf8a5f707f75775007bff870f1cf47e584df2d9916",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260723,
+      "id": "libero_spatial/generated-held-out/task-01/state-01",
+      "nearest_official_l2": 0.04038610644299395,
+      "nearest_official_max_abs": 0.021534944668624156,
+      "state_key": "task_01_state_01",
+      "state_length": 92,
+      "state_sha256": "9198db3df9fc5537ad316e00eabd03f6510511fa14b6290b9b84dd5675e4ee38",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260724,
+      "id": "libero_spatial/generated-held-out/task-01/state-02",
+      "nearest_official_l2": 0.038686644374979096,
+      "nearest_official_max_abs": 0.024432497984377077,
+      "state_key": "task_01_state_02",
+      "state_length": 92,
+      "state_sha256": "b8bf932ede50f36cda2cf028babce75921b52e8556e0154313a9e7ffab7f37cf",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260725,
+      "id": "libero_spatial/generated-held-out/task-01/state-03",
+      "nearest_official_l2": 0.044496502275123286,
+      "nearest_official_max_abs": 0.022956182152061383,
+      "state_key": "task_01_state_03",
+      "state_length": 92,
+      "state_sha256": "500b18e88931cdd8e335169b33307c6aa83b97db962ad6021c796bbfcb7a225f",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260726,
+      "id": "libero_spatial/generated-held-out/task-01/state-04",
+      "nearest_official_l2": 0.03940408161817989,
+      "nearest_official_max_abs": 0.02108611505261737,
+      "state_key": "task_01_state_04",
+      "state_length": 92,
+      "state_sha256": "d9a44386e4ba334d9c5c290656d196b405464c966f56cf900e0d9f8edcc75d30",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260727,
+      "id": "libero_spatial/generated-held-out/task-01/state-05",
+      "nearest_official_l2": 0.04330176292553794,
+      "nearest_official_max_abs": 0.024432497984377077,
+      "state_key": "task_01_state_05",
+      "state_length": 92,
+      "state_sha256": "13e9070c1d9d9231e7d9ae13c5a5de0dab463b5645fbec943e22a1cdac1301de",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260728,
+      "id": "libero_spatial/generated-held-out/task-01/state-06",
+      "nearest_official_l2": 0.04148696172636759,
+      "nearest_official_max_abs": 0.02166982364512357,
+      "state_key": "task_01_state_06",
+      "state_length": 92,
+      "state_sha256": "03fc255835b50d18ed7484541621094e5f0be94f516913477abf0be909f1db8f",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260729,
+      "id": "libero_spatial/generated-held-out/task-01/state-07",
+      "nearest_official_l2": 0.04718201982459089,
+      "nearest_official_max_abs": 0.022641533989622716,
+      "state_key": "task_01_state_07",
+      "state_length": 92,
+      "state_sha256": "e8c5fe9b8d63e389c65c8aabc020fd8039f65390ff7c5fad614b3fecc60985ad",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260730,
+      "id": "libero_spatial/generated-held-out/task-01/state-08",
+      "nearest_official_l2": 0.04189347564742057,
+      "nearest_official_max_abs": 0.018954012397531653,
+      "state_key": "task_01_state_08",
+      "state_length": 92,
+      "state_sha256": "9343fd6c59e042532403f9fd3ef16b0093e5d26e56992acaa5259e0247314740",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "53a7516571412a2f46a27cbf8482d3b76dbad4221858c8f6b565d506c274e61d",
+      "generation_seed": 21260731,
+      "id": "libero_spatial/generated-held-out/task-01/state-09",
+      "nearest_official_l2": 0.044804012766419536,
+      "nearest_official_max_abs": 0.021534944668624156,
+      "state_key": "task_01_state_09",
+      "state_length": 92,
+      "state_sha256": "624b58ac2218031b086427fc744a0bb547578553d20fad968087abc18e17652c",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260722,
+      "id": "libero_spatial/generated-held-out/task-02/state-00",
+      "nearest_official_l2": 0.04128092486739922,
+      "nearest_official_max_abs": 0.0182477916028444,
+      "state_key": "task_02_state_00",
+      "state_length": 92,
+      "state_sha256": "c6ea1af8cce33f4aebb374705b45a23af7bbafd19240f81881ea519a8f784139",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260723,
+      "id": "libero_spatial/generated-held-out/task-02/state-01",
+      "nearest_official_l2": 0.03458462998788214,
+      "nearest_official_max_abs": 0.01736772343066484,
+      "state_key": "task_02_state_01",
+      "state_length": 92,
+      "state_sha256": "ff27936f06ef591c9ffe92459e0fef6a32f790272e902ce6541657ab219b4f21",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260724,
+      "id": "libero_spatial/generated-held-out/task-02/state-02",
+      "nearest_official_l2": 0.03895541683801094,
+      "nearest_official_max_abs": 0.02082053706727638,
+      "state_key": "task_02_state_02",
+      "state_length": 92,
+      "state_sha256": "0f204419b222f81dc34928c8c1d6faca144862467111b2edf64176c07d3fe7f5",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260725,
+      "id": "libero_spatial/generated-held-out/task-02/state-03",
+      "nearest_official_l2": 0.033580231093778876,
+      "nearest_official_max_abs": 0.02082053706727638,
+      "state_key": "task_02_state_03",
+      "state_length": 92,
+      "state_sha256": "4f5c7b8392705778e46c3b52b0f8ee90f3cf39df0b7fc67c0e04a7763900a0d6",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260726,
+      "id": "libero_spatial/generated-held-out/task-02/state-04",
+      "nearest_official_l2": 0.044163349485682755,
+      "nearest_official_max_abs": 0.019513469188010984,
+      "state_key": "task_02_state_04",
+      "state_length": 92,
+      "state_sha256": "93a6f8836df2343c1476430023016d16b14faea7e5927857cafdfa37bba17b7f",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260727,
+      "id": "libero_spatial/generated-held-out/task-02/state-05",
+      "nearest_official_l2": 0.03988940543838663,
+      "nearest_official_max_abs": 0.01736772343066484,
+      "state_key": "task_02_state_05",
+      "state_length": 92,
+      "state_sha256": "d6b1401b99104870e6909390a98e7fbf4034dee288064fcf120a6450cc5381e3",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7661547538173361,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260728,
+      "id": "libero_spatial/generated-held-out/task-02/state-06",
+      "nearest_official_l2": 0.04367018775001343,
+      "nearest_official_max_abs": 0.02007760278521667,
+      "state_key": "task_02_state_06",
+      "state_length": 92,
+      "state_sha256": "44d97838b331ece97e8cbe7a8898246fd67dcf5a80a049deb82dac7a8c05de3c",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260729,
+      "id": "libero_spatial/generated-held-out/task-02/state-07",
+      "nearest_official_l2": 0.03373215994157318,
+      "nearest_official_max_abs": 0.02082053706727638,
+      "state_key": "task_02_state_07",
+      "state_length": 92,
+      "state_sha256": "36b41e396df28aac1cd486f82a86882968dbd91b2c09e4e52c2455cb1b3af11d",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260730,
+      "id": "libero_spatial/generated-held-out/task-02/state-08",
+      "nearest_official_l2": 0.03888581754660746,
+      "nearest_official_max_abs": 0.01736772343066484,
+      "state_key": "task_02_state_08",
+      "state_length": 92,
+      "state_sha256": "4e1da97337de66424fa0b159348a5f27de93f830dbe877f86ac04b851206722f",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7690757331744891,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5e19880ebc844f86b89f63b172aab0b7a89f85b6e6955891f544f0ea7d0795d5",
+      "generation_seed": 22260731,
+      "id": "libero_spatial/generated-held-out/task-02/state-09",
+      "nearest_official_l2": 0.042377009323812206,
+      "nearest_official_max_abs": 0.018764972517421485,
+      "state_key": "task_02_state_09",
+      "state_length": 92,
+      "state_sha256": "68b8c479e5c567f9152553d46a401542bfd06d1a60204b9959dddca9a40d9479",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7687897094084185,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260722,
+      "id": "libero_spatial/generated-held-out/task-03/state-00",
+      "nearest_official_l2": 0.033702778733218,
+      "nearest_official_max_abs": 0.01743977274031497,
+      "state_key": "task_03_state_00",
+      "state_length": 92,
+      "state_sha256": "3e48357299cf2270b63a2e5a61a5652b4c7070bc2c9275aba66cf54c928cdfd8",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260723,
+      "id": "libero_spatial/generated-held-out/task-03/state-01",
+      "nearest_official_l2": 0.0436769898670813,
+      "nearest_official_max_abs": 0.02382148597002659,
+      "state_key": "task_03_state_01",
+      "state_length": 92,
+      "state_sha256": "355885642c0decbc4b4c93be40fa5d9a39edcb9d580a3c4631ab4c882a039131",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260724,
+      "id": "libero_spatial/generated-held-out/task-03/state-02",
+      "nearest_official_l2": 0.04484812286767257,
+      "nearest_official_max_abs": 0.02037382695980927,
+      "state_key": "task_03_state_02",
+      "state_length": 92,
+      "state_sha256": "b63168c8f98d6298ad90ae38f599a1295ec9f1ffa27c7fbb3435c7c223f34862",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260725,
+      "id": "libero_spatial/generated-held-out/task-03/state-03",
+      "nearest_official_l2": 0.03877985754206435,
+      "nearest_official_max_abs": 0.019224740217782803,
+      "state_key": "task_03_state_03",
+      "state_length": 92,
+      "state_sha256": "d9d0aedb8c3f9ad57b96e1932f762083450ace0a6fbc5926c1b8881a74a4d93a",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260726,
+      "id": "libero_spatial/generated-held-out/task-03/state-04",
+      "nearest_official_l2": 0.047142627189450094,
+      "nearest_official_max_abs": 0.024144498895879003,
+      "state_key": "task_03_state_04",
+      "state_length": 92,
+      "state_sha256": "8d15eb7ee8ed9e6e4d99cba8c01f5d0b37006b05095f5173a01b945955a7578e",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260727,
+      "id": "libero_spatial/generated-held-out/task-03/state-05",
+      "nearest_official_l2": 0.041815460649206174,
+      "nearest_official_max_abs": 0.02037382695980927,
+      "state_key": "task_03_state_05",
+      "state_length": 92,
+      "state_sha256": "90d611c1070295d7c6e00ca1dfbd0ab59562bb9d10ce80746001ff3726298547",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260728,
+      "id": "libero_spatial/generated-held-out/task-03/state-06",
+      "nearest_official_l2": 0.03687954401829142,
+      "nearest_official_max_abs": 0.01771464339682699,
+      "state_key": "task_03_state_06",
+      "state_length": 92,
+      "state_sha256": "264d7594d6ccf6cfa931b8ef3170fbe61a52bdf4377bf333065753399c926384",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260729,
+      "id": "libero_spatial/generated-held-out/task-03/state-07",
+      "nearest_official_l2": 0.04405509036525993,
+      "nearest_official_max_abs": 0.02512990540608273,
+      "state_key": "task_03_state_07",
+      "state_length": 92,
+      "state_sha256": "d64d74715e9e9673c6cf4fca72f57f2874ce1c7a2c42a11b756c02b24de96018",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260730,
+      "id": "libero_spatial/generated-held-out/task-03/state-08",
+      "nearest_official_l2": 0.05940979542925811,
+      "nearest_official_max_abs": 0.02716144390560793,
+      "state_key": "task_03_state_08",
+      "state_length": 92,
+      "state_sha256": "a263a6c44d66bd0d49f9d090b6f2af6a66e7fdb5cb68893c34db55fe1f3e33a3",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3d4ccf070c3d9883ae0676f2d888588f98c696ddad71b7694f47c379fc99ef36",
+      "generation_seed": 23260731,
+      "id": "libero_spatial/generated-held-out/task-03/state-09",
+      "nearest_official_l2": 0.051677588545580765,
+      "nearest_official_max_abs": 0.0213273896953991,
+      "state_key": "task_03_state_09",
+      "state_length": 92,
+      "state_sha256": "6edd75493a0625db36900cc2798029550ba36fbabbd496780ecfd5bb61dcdefc",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7835472734341795,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260722,
+      "id": "libero_spatial/generated-held-out/task-04/state-00",
+      "nearest_official_l2": 0.045231745637461934,
+      "nearest_official_max_abs": 0.02168260892219731,
+      "state_key": "task_04_state_00",
+      "state_length": 92,
+      "state_sha256": "b3909c61dc5ff76e481718c6c07dd582527857a1d3de742080b2b6bbdf3dd932",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7717268697429652,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260723,
+      "id": "libero_spatial/generated-held-out/task-04/state-01",
+      "nearest_official_l2": 0.04870924714013941,
+      "nearest_official_max_abs": 0.023491770595483658,
+      "state_key": "task_04_state_01",
+      "state_length": 92,
+      "state_sha256": "06f1173b6df7e6c151868806db8fa3978c11d70dc5c859f9eb0a9af701c098fd",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7714878842309238,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260724,
+      "id": "libero_spatial/generated-held-out/task-04/state-02",
+      "nearest_official_l2": 0.039741969919811854,
+      "nearest_official_max_abs": 0.017917969034356634,
+      "state_key": "task_04_state_02",
+      "state_length": 92,
+      "state_sha256": "c31032b029184919a81c4e5d9aaa4039319f2d1591987e0586345410c2ca4e1a",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7714878842315694,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260725,
+      "id": "libero_spatial/generated-held-out/task-04/state-03",
+      "nearest_official_l2": 0.03570519126476195,
+      "nearest_official_max_abs": 0.01907592302116942,
+      "state_key": "task_04_state_03",
+      "state_length": 92,
+      "state_sha256": "f7034a932a0add8ca75fda373de56cd51377063bd3017e3178de1a1767e3b407",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7714878842313445,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260726,
+      "id": "libero_spatial/generated-held-out/task-04/state-04",
+      "nearest_official_l2": 0.040196345970347325,
+      "nearest_official_max_abs": 0.020383385819547045,
+      "state_key": "task_04_state_04",
+      "state_length": 92,
+      "state_sha256": "be4c68749c925b0f5e4a0d9436e33dd1ac1ccc2f6a60606c5527400ab8d96d4a",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7714878842312202,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260727,
+      "id": "libero_spatial/generated-held-out/task-04/state-05",
+      "nearest_official_l2": 0.04333904876593048,
+      "nearest_official_max_abs": 0.020592538579908837,
+      "state_key": "task_04_state_05",
+      "state_length": 92,
+      "state_sha256": "37034c11dcf7da5f29a5800d1d7d0272f5d9a3d5e0df5697009d4a38bed192ec",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7714878842309817,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260728,
+      "id": "libero_spatial/generated-held-out/task-04/state-06",
+      "nearest_official_l2": 0.04563142300292879,
+      "nearest_official_max_abs": 0.02091117870847295,
+      "state_key": "task_04_state_06",
+      "state_length": 92,
+      "state_sha256": "f5ddca3b04e5b0b27fef36543f33fd50398382853c3e6e9f7a6dc78b27b77016",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7714878842314533,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260729,
+      "id": "libero_spatial/generated-held-out/task-04/state-07",
+      "nearest_official_l2": 0.04302040383958213,
+      "nearest_official_max_abs": 0.01751788457500751,
+      "state_key": "task_04_state_07",
+      "state_length": 92,
+      "state_sha256": "684e9d4355d26c9e499b30d7758fd52705fc82cc895e8217386607b7f73661df",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.771487884231442,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260730,
+      "id": "libero_spatial/generated-held-out/task-04/state-08",
+      "nearest_official_l2": 0.04755162075108028,
+      "nearest_official_max_abs": 0.024089238437725535,
+      "state_key": "task_04_state_08",
+      "state_length": 92,
+      "state_sha256": "57114a7860bad7b23c77d9eae002f2276e6fd08e21960f623a7cd1c572d1edcd",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7714878842312953,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "4371189e11d9fd29bb548ab9a8adcd741bb0ce41bb66c612672d0e8cb29a52a9",
+      "generation_seed": 24260731,
+      "id": "libero_spatial/generated-held-out/task-04/state-09",
+      "nearest_official_l2": 0.04839811039311329,
+      "nearest_official_max_abs": 0.02075602889789397,
+      "state_key": "task_04_state_09",
+      "state_length": 92,
+      "state_sha256": "ff8fe3e3415c0192e6e2e97059b44b4c244965c3e7622636e7b3006f456f2a44",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7714878842314147,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260722,
+      "id": "libero_spatial/generated-held-out/task-05/state-00",
+      "nearest_official_l2": 0.03966936378239709,
+      "nearest_official_max_abs": 0.019083691762603133,
+      "state_key": "task_05_state_00",
+      "state_length": 92,
+      "state_sha256": "e6fbdb256f34d7fd7e3ed80ccca0e589d1eb83720f7919502ee44c49fdfa0f07",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472573872,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260723,
+      "id": "libero_spatial/generated-held-out/task-05/state-01",
+      "nearest_official_l2": 0.04640740312953808,
+      "nearest_official_max_abs": 0.021196613014074828,
+      "state_key": "task_05_state_01",
+      "state_length": 92,
+      "state_sha256": "1f6078ea6ce2a63f73d8b07b705bb0810d780d3d8de4108f686dee584c712b62",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472640868,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260724,
+      "id": "libero_spatial/generated-held-out/task-05/state-02",
+      "nearest_official_l2": 0.02592038956036673,
+      "nearest_official_max_abs": 0.01392932735457624,
+      "state_key": "task_05_state_02",
+      "state_length": 92,
+      "state_sha256": "769bf2926dd028d93bd1657bf5c9feb8cf66455d26d049fbd6df8cc15ff7d3cd",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472618571,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260725,
+      "id": "libero_spatial/generated-held-out/task-05/state-03",
+      "nearest_official_l2": 0.03689741028649762,
+      "nearest_official_max_abs": 0.015828449763209212,
+      "state_key": "task_05_state_03",
+      "state_length": 92,
+      "state_sha256": "c5787461b2cdd6fee2041b922b6ec8facd64fe80e8edcb89afcb96f2bcd33b77",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472433038,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260726,
+      "id": "libero_spatial/generated-held-out/task-05/state-04",
+      "nearest_official_l2": 0.037716304753117984,
+      "nearest_official_max_abs": 0.018695279023370218,
+      "state_key": "task_05_state_04",
+      "state_length": 92,
+      "state_sha256": "0ef43c627c754b94fbdb61cb7dd88b890613c29ae68181bb8c8503f1d4268f77",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472513152,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260727,
+      "id": "libero_spatial/generated-held-out/task-05/state-05",
+      "nearest_official_l2": 0.04360563260263339,
+      "nearest_official_max_abs": 0.01881743594532137,
+      "state_key": "task_05_state_05",
+      "state_length": 92,
+      "state_sha256": "e36da93d26016dbc9f532d9d4397fbc2cba7462883af2cd74429f685ce9ea19c",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472429272,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260728,
+      "id": "libero_spatial/generated-held-out/task-05/state-06",
+      "nearest_official_l2": 0.03654743253045979,
+      "nearest_official_max_abs": 0.01926646467142747,
+      "state_key": "task_05_state_06",
+      "state_length": 92,
+      "state_sha256": "1e209cd3dd5a59728de7c434f9d527e5183ade53a4f3dfc43b018fd6cfca6767",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472508405,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260729,
+      "id": "libero_spatial/generated-held-out/task-05/state-07",
+      "nearest_official_l2": 0.038073036247653916,
+      "nearest_official_max_abs": 0.016729468823423632,
+      "state_key": "task_05_state_07",
+      "state_length": 92,
+      "state_sha256": "e08a3a1546ea87ca11ca916287dd53af3192ae407ac07c5e62197ff4f8443266",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472718897,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260730,
+      "id": "libero_spatial/generated-held-out/task-05/state-08",
+      "nearest_official_l2": 0.03181889395913924,
+      "nearest_official_max_abs": 0.01748729631902434,
+      "state_key": "task_05_state_08",
+      "state_length": 92,
+      "state_sha256": "2f33cd08f6b75cc2be7fad5e391a9bb6fbfc87f8d6b31af8aeace6b2018fd05a",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472542614,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "10239815a9d18ad53e09365d453a362ee54d29ca276e04eef411cf1db8d72940",
+      "generation_seed": 25260731,
+      "id": "libero_spatial/generated-held-out/task-05/state-09",
+      "nearest_official_l2": 0.04321368657302333,
+      "nearest_official_max_abs": 0.020989679754185114,
+      "state_key": "task_05_state_09",
+      "state_length": 92,
+      "state_sha256": "d9723f17d5fe1b32db24b3adaf189b6839518bf70cc404a76a60ec3501dc52c5",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.8056325472493134,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260722,
+      "id": "libero_spatial/generated-held-out/task-06/state-00",
+      "nearest_official_l2": 0.03998572309272404,
+      "nearest_official_max_abs": 0.020018849270597272,
+      "state_key": "task_06_state_00",
+      "state_length": 92,
+      "state_sha256": "30c78e9ea15bb4b720e87b4c264f98d5b4dbeebb9c1f260d440176bb99e50fdc",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260723,
+      "id": "libero_spatial/generated-held-out/task-06/state-01",
+      "nearest_official_l2": 0.04706637337728359,
+      "nearest_official_max_abs": 0.020018849270597272,
+      "state_key": "task_06_state_01",
+      "state_length": 92,
+      "state_sha256": "1439109cc356cbc52e304f52e595e65dff3b6da724e991da82303f691cd947ff",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260724,
+      "id": "libero_spatial/generated-held-out/task-06/state-02",
+      "nearest_official_l2": 0.04023079800995368,
+      "nearest_official_max_abs": 0.020018849270597272,
+      "state_key": "task_06_state_02",
+      "state_length": 92,
+      "state_sha256": "ae3beddf4044d275f2f64cac46353504247f0583497a0b653657d1cb6c11703d",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260725,
+      "id": "libero_spatial/generated-held-out/task-06/state-03",
+      "nearest_official_l2": 0.05450776371497269,
+      "nearest_official_max_abs": 0.02208390786721892,
+      "state_key": "task_06_state_03",
+      "state_length": 92,
+      "state_sha256": "44aea7b2c157211bab954d69ddfec17ebd1496589b8197b10eb388d0c85b309a",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260726,
+      "id": "libero_spatial/generated-held-out/task-06/state-04",
+      "nearest_official_l2": 0.04526100240102553,
+      "nearest_official_max_abs": 0.020018849270597272,
+      "state_key": "task_06_state_04",
+      "state_length": 92,
+      "state_sha256": "51b7d29ffb347c6c80458fad2cae6141a799a3ef71001610cab32368ba400e76",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260727,
+      "id": "libero_spatial/generated-held-out/task-06/state-05",
+      "nearest_official_l2": 0.04175289598814642,
+      "nearest_official_max_abs": 0.020018849270597272,
+      "state_key": "task_06_state_05",
+      "state_length": 92,
+      "state_sha256": "0f44ec507a4eade9b4f17c681980bc4fc7a77dd584271e462cb5d2378c858305",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260728,
+      "id": "libero_spatial/generated-held-out/task-06/state-06",
+      "nearest_official_l2": 0.042578146748893084,
+      "nearest_official_max_abs": 0.020018849270597272,
+      "state_key": "task_06_state_06",
+      "state_length": 92,
+      "state_sha256": "a17e08834b8fa32223e9bcb25b45d771d92a276531102ccd35646c19d27c3d70",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260729,
+      "id": "libero_spatial/generated-held-out/task-06/state-07",
+      "nearest_official_l2": 0.04753882373894972,
+      "nearest_official_max_abs": 0.021882379229928223,
+      "state_key": "task_06_state_07",
+      "state_length": 92,
+      "state_sha256": "e32612064af67a22ebcfc4004cd514bf1473a2af45c65c253714c9ea0620dd09",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260730,
+      "id": "libero_spatial/generated-held-out/task-06/state-08",
+      "nearest_official_l2": 0.03987889370648148,
+      "nearest_official_max_abs": 0.01965470359935101,
+      "state_key": "task_06_state_08",
+      "state_length": 92,
+      "state_sha256": "6fa42b4a5a5a4ff30d61c61b0145708734d2369a987a72c08f7b03c129f1ce23",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "566c65596f3472e752e6522817bff51bbf3ce5159d7bec1d3554e5ead46b1e55",
+      "generation_seed": 26260731,
+      "id": "libero_spatial/generated-held-out/task-06/state-09",
+      "nearest_official_l2": 0.041509743907219766,
+      "nearest_official_max_abs": 0.01699403837493369,
+      "state_key": "task_06_state_09",
+      "state_length": 92,
+      "state_sha256": "123f233b4490e0e86bbbefab2294ff262f65885f2ec973dc52cf90330520b173",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7668693576910893,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260722,
+      "id": "libero_spatial/generated-held-out/task-07/state-00",
+      "nearest_official_l2": 0.046027793594530575,
+      "nearest_official_max_abs": 0.02159353695943611,
+      "state_key": "task_07_state_00",
+      "state_length": 92,
+      "state_sha256": "fd5f29946e2fc75912a0e630be5048e60c4667db993a69764d247aeac7aa0864",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260723,
+      "id": "libero_spatial/generated-held-out/task-07/state-01",
+      "nearest_official_l2": 0.043804488399715596,
+      "nearest_official_max_abs": 0.021849495777696397,
+      "state_key": "task_07_state_01",
+      "state_length": 92,
+      "state_sha256": "80b1c7b763ac0cacc615122572f14831a5173a139bd9d756b20886972a31cc5e",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260724,
+      "id": "libero_spatial/generated-held-out/task-07/state-02",
+      "nearest_official_l2": 0.04972388278234368,
+      "nearest_official_max_abs": 0.023791899046595667,
+      "state_key": "task_07_state_02",
+      "state_length": 92,
+      "state_sha256": "d3cb5a7a92f38e49308193eb3c4f9c9bf2167adc3dc632fa7c8602f098ccd266",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260725,
+      "id": "libero_spatial/generated-held-out/task-07/state-03",
+      "nearest_official_l2": 0.050207254601641604,
+      "nearest_official_max_abs": 0.023494698379761036,
+      "state_key": "task_07_state_03",
+      "state_length": 92,
+      "state_sha256": "58f8aacad62e39da8bfc40594760d7cedee9f41f561eaa25663224b0fd484426",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260726,
+      "id": "libero_spatial/generated-held-out/task-07/state-04",
+      "nearest_official_l2": 0.041287436667476425,
+      "nearest_official_max_abs": 0.02159353695943611,
+      "state_key": "task_07_state_04",
+      "state_length": 92,
+      "state_sha256": "d47aa8cf46bb5fa40d2b3b9be59b033f59bb0aff8a3231618cbd96b1c47a8dea",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260727,
+      "id": "libero_spatial/generated-held-out/task-07/state-05",
+      "nearest_official_l2": 0.047958769814814395,
+      "nearest_official_max_abs": 0.023341287070797245,
+      "state_key": "task_07_state_05",
+      "state_length": 92,
+      "state_sha256": "6be441e6febd73aa46ffaef7149bb061fb2b2b00fba5ebfc417dd80779fdc349",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260728,
+      "id": "libero_spatial/generated-held-out/task-07/state-06",
+      "nearest_official_l2": 0.046350423220703416,
+      "nearest_official_max_abs": 0.022634554004704155,
+      "state_key": "task_07_state_06",
+      "state_length": 92,
+      "state_sha256": "fc592b44b93b646229387248f23678ba10ef895518a029c195b27a4abf1b4b08",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260729,
+      "id": "libero_spatial/generated-held-out/task-07/state-07",
+      "nearest_official_l2": 0.04645519967816727,
+      "nearest_official_max_abs": 0.020582232314602822,
+      "state_key": "task_07_state_07",
+      "state_length": 92,
+      "state_sha256": "cd85fd886a1db4e57f85707dfc5c29fd9ba0fb40f494c9bc29c0277231acbda4",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260730,
+      "id": "libero_spatial/generated-held-out/task-07/state-08",
+      "nearest_official_l2": 0.04838633226406563,
+      "nearest_official_max_abs": 0.02064389478093509,
+      "state_key": "task_07_state_08",
+      "state_length": 92,
+      "state_sha256": "2578746e1fc3f3a5de1fe9818c1e3bbb953a9c2475e97f2c7f3ba9d10a07254e",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dd11837141a30d874ebbbfaae20e91ecc67ec85ab3872ceb4cff3abfcbef7cb0",
+      "generation_seed": 27260731,
+      "id": "libero_spatial/generated-held-out/task-07/state-09",
+      "nearest_official_l2": 0.04694197320593656,
+      "nearest_official_max_abs": 0.022634554004704155,
+      "state_key": "task_07_state_09",
+      "state_length": 92,
+      "state_sha256": "b8113c179a8c9b69aab7fb627c2dfbec5dd21e9ce20d5c692e36ba4e42da813c",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260722,
+      "id": "libero_spatial/generated-held-out/task-08/state-00",
+      "nearest_official_l2": 0.04459977540288099,
+      "nearest_official_max_abs": 0.02116900459792856,
+      "state_key": "task_08_state_00",
+      "state_length": 92,
+      "state_sha256": "8cdca5ec8ec411da6e7d69968587c26ffeaa987970a5dda38a98a64aa55f9531",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260723,
+      "id": "libero_spatial/generated-held-out/task-08/state-01",
+      "nearest_official_l2": 0.0383734174017852,
+      "nearest_official_max_abs": 0.022509933093072476,
+      "state_key": "task_08_state_01",
+      "state_length": 92,
+      "state_sha256": "7ac2d8f0eae5c0a937b10f5be8dbfba8b2762074063159bc015828ce16ca1603",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260724,
+      "id": "libero_spatial/generated-held-out/task-08/state-02",
+      "nearest_official_l2": 0.04128015475826335,
+      "nearest_official_max_abs": 0.01856499113886767,
+      "state_key": "task_08_state_02",
+      "state_length": 92,
+      "state_sha256": "d09044a643eb731f9149418e71e1cfd7b35d5f21603ee4476a59a4861bbbaaac",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260725,
+      "id": "libero_spatial/generated-held-out/task-08/state-03",
+      "nearest_official_l2": 0.041759481097240814,
+      "nearest_official_max_abs": 0.018498435325913776,
+      "state_key": "task_08_state_03",
+      "state_length": 92,
+      "state_sha256": "bb1198f0400b12af58e3201434c6ecbe6883d1b609303bb1530a0ebf4c4e301f",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260726,
+      "id": "libero_spatial/generated-held-out/task-08/state-04",
+      "nearest_official_l2": 0.036043106794925346,
+      "nearest_official_max_abs": 0.016831500108413222,
+      "state_key": "task_08_state_04",
+      "state_length": 92,
+      "state_sha256": "dcda402e0bdcb575285b456eaa5e8cd9cc56594c31a82dce803e7d2e8f2dcd64",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7660478061243421,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260727,
+      "id": "libero_spatial/generated-held-out/task-08/state-05",
+      "nearest_official_l2": 0.0428659389732413,
+      "nearest_official_max_abs": 0.02356489552580833,
+      "state_key": "task_08_state_05",
+      "state_length": 92,
+      "state_sha256": "b21b16b8643fee131be83be8828fe917e27812e0d6dca72bf44476fcf0fee220",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659697508097955,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260728,
+      "id": "libero_spatial/generated-held-out/task-08/state-06",
+      "nearest_official_l2": 0.036496197464941475,
+      "nearest_official_max_abs": 0.016760182511132593,
+      "state_key": "task_08_state_06",
+      "state_length": 92,
+      "state_sha256": "210fa19977fa6346219f5f4f2fdd22bb305934cb77f8e63fd7358d3748e6519b",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260729,
+      "id": "libero_spatial/generated-held-out/task-08/state-07",
+      "nearest_official_l2": 0.042682376008480065,
+      "nearest_official_max_abs": 0.020993788934177915,
+      "state_key": "task_08_state_07",
+      "state_length": 92,
+      "state_sha256": "9033d3e70b82bf7e071a323812bfeac8d178ed6e3f7560b46fa1992fbe0020b7",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260730,
+      "id": "libero_spatial/generated-held-out/task-08/state-08",
+      "nearest_official_l2": 0.03712841884124383,
+      "nearest_official_max_abs": 0.01925821854385868,
+      "state_key": "task_08_state_08",
+      "state_length": 92,
+      "state_sha256": "1a52164c758d7da934a6f864f9ce93a8aeb059f8df92952f1ae6a522b070c216",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "c8fbb9effa27b947d04d26862d75273d93cac1806734e53836cd472a08aec1fe",
+      "generation_seed": 28260731,
+      "id": "libero_spatial/generated-held-out/task-08/state-09",
+      "nearest_official_l2": 0.04301051060299434,
+      "nearest_official_max_abs": 0.021852488079846855,
+      "state_key": "task_08_state_09",
+      "state_length": 92,
+      "state_sha256": "50adac5f1a7b901220d233bcff388af5dd19a24f3373dff1f3391f521a039eff",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7659230348957811,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260722,
+      "id": "libero_spatial/generated-held-out/task-09/state-00",
+      "nearest_official_l2": 0.052204758034568643,
+      "nearest_official_max_abs": 0.023800859681950892,
+      "state_key": "task_09_state_00",
+      "state_length": 92,
+      "state_sha256": "991366a4b8222e34db0dbcc51c607e49b99dadb406d2219072e01a602945b99c",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260723,
+      "id": "libero_spatial/generated-held-out/task-09/state-01",
+      "nearest_official_l2": 0.052916628363543154,
+      "nearest_official_max_abs": 0.023424649490544208,
+      "state_key": "task_09_state_01",
+      "state_length": 92,
+      "state_sha256": "7d5604f563bfb06d64e9825daf1a41586adfbd733689c59f1ade468135a98800",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260724,
+      "id": "libero_spatial/generated-held-out/task-09/state-02",
+      "nearest_official_l2": 0.04189959503003912,
+      "nearest_official_max_abs": 0.023934215980919077,
+      "state_key": "task_09_state_02",
+      "state_length": 92,
+      "state_sha256": "acc787ece4a007c98b5e4b20d91f3852573f3141cc12218b4859ecbc2911992b",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260725,
+      "id": "libero_spatial/generated-held-out/task-09/state-03",
+      "nearest_official_l2": 0.05323644440970587,
+      "nearest_official_max_abs": 0.02195998306948388,
+      "state_key": "task_09_state_03",
+      "state_length": 92,
+      "state_sha256": "0c7c58d62b9a39192d0534c2c7567004f9e3d967f780e722171e2d8b6932b447",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260726,
+      "id": "libero_spatial/generated-held-out/task-09/state-04",
+      "nearest_official_l2": 0.05620341316586302,
+      "nearest_official_max_abs": 0.020986765655969616,
+      "state_key": "task_09_state_04",
+      "state_length": 92,
+      "state_sha256": "c1bdf2907e44b347b5ddcca87feceb423db86b849789daefaf601870fb318608",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260727,
+      "id": "libero_spatial/generated-held-out/task-09/state-05",
+      "nearest_official_l2": 0.049069810143461894,
+      "nearest_official_max_abs": 0.02195998306948388,
+      "state_key": "task_09_state_05",
+      "state_length": 92,
+      "state_sha256": "a62179757042e1d8a0e502c6400dece6bf8de543a7c0e5bdf207ce2a38dfd3e5",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260728,
+      "id": "libero_spatial/generated-held-out/task-09/state-06",
+      "nearest_official_l2": 0.044626141154403345,
+      "nearest_official_max_abs": 0.02223905316518726,
+      "state_key": "task_09_state_06",
+      "state_length": 92,
+      "state_sha256": "a382db65724b71c6dcbb1a970b4db90b1859b5a0fda6d6d69bad658073307b06",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260729,
+      "id": "libero_spatial/generated-held-out/task-09/state-07",
+      "nearest_official_l2": 0.04668319564551783,
+      "nearest_official_max_abs": 0.021423180844501732,
+      "state_key": "task_09_state_07",
+      "state_length": 92,
+      "state_sha256": "9c994dec24a74dafb1028a42cd577bc80f63962f0d2ba9bd5405c667d13d912f",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260730,
+      "id": "libero_spatial/generated-held-out/task-09/state-08",
+      "nearest_official_l2": 0.04756761152410861,
+      "nearest_official_max_abs": 0.02223905316518726,
+      "state_key": "task_09_state_08",
+      "state_length": 92,
+      "state_sha256": "8657cf26a42403e27d84936a109ee40b4103068d33fcec4091f2d1a3ee6cadde",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5293e759381b477e126beaf83d738542bbd4d93f522a3eead1066e612bad4a8c",
+      "generation_seed": 29260731,
+      "id": "libero_spatial/generated-held-out/task-09/state-09",
+      "nearest_official_l2": 0.055511112933599546,
+      "nearest_official_max_abs": 0.02195998306948388,
+      "state_key": "task_09_state_09",
+      "state_length": 92,
+      "state_sha256": "57579ea0b146a7609e741e0b9e8b06cc3b5102d6c9f2e74d06da2e84dc8fa118",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7707225764582395,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    }
+  ],
+  "generator": {
+    "base_seed": 20260722,
+    "created_at_utc": "2026-07-21T11:07:37.013048+00:00",
+    "max_attempts_per_task": 1000,
+    "official_state_count_per_task": 50,
+    "policy_loaded": false,
+    "rejection_counts": {
+      "generated_duplicate": 0,
+      "initial_success": 0,
+      "non_finite": 0,
+      "official_duplicate": 0,
+      "settle_error": 0
+    },
+    "reset_gripper_open": true,
+    "selection_uses_model_outcomes": false,
+    "simulator_runtime": {
+      "compatibility": "rlinf_v01",
+      "distribution_version": "source-checkout",
+      "path_source": "configured",
+      "provider": "rlinf-source-checkout"
+    },
+    "states_per_task": 10,
+    "wait_steps_after_reset": 15
+  },
+  "schema_version": 1,
+  "simulator_compatibility": "rlinf_v01",
+  "state_archive": "states.npz",
+  "state_archive_sha256": "04c892a8ab9771990359f0f4069a3f897816af1f3ee3130a5f3766dcf6761a9a",
+  "suite_name": "libero_spatial"
+}

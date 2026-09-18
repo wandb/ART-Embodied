@@ -1,0 +1,61 @@
+ART-Embodied is distributed under the Apache License 2.0 as an independent
+licensing decision of this project. This license choice is not inherited from,
+or selected to match, any referenced implementation including RLinf.
+
+The `art-embodied` wheel and source distribution contain only the
+`art_embodied` package owned by this project. They do not vendor OpenPipe ART,
+LeRobot, RLinf, TorchTune, DeepEP, LIBERO, or model source code. Runtime
+dependencies are installed as separate distributions and remain governed by
+their respective licenses.
+
+The current source tree and distributions do not contain project-owned or
+vendored GPL- or LGPL-licensed code. Historical Unsloth-derived notebook
+examples were removed from the source tree before the ART-Embodied package
+boundary was established. Older Git history can still contain those examples.
+
+OpenPipe ART
+------------
+
+- Repository: https://github.com/OpenPipe/ART
+- License: Apache License 2.0
+- Relationship: required runtime dependency (`openpipe-art`), not vendored.
+
+LeRobot
+-------
+
+- Repository: https://github.com/huggingface/lerobot
+- License: Apache License 2.0
+- Relationship: optional policy/environment integration dependency, not
+  vendored.
+
+RLinf
+-----
+
+- Repository: https://github.com/RLinf/RLinf
+- License: Apache License 2.0
+- Relationship: prior art, positive-control specification, and conformance
+  oracle for documented embodied-RL experiments. Flow-SDE transition formulas,
+  operation ordering required for numerical conformance, GRPO objective
+  geometry, action-level advantage behavior, and the N1.5 LIBERO modality
+  contract were reimplemented and validated against RLinf `release/v0.1` at
+  commit
+  `9df6dc80dc729a6caccab92dd676004e51b1d3a2`.
+- Attribution: Copyright 2025 The RLinf Authors. RLinf is licensed under the
+  Apache License 2.0. ART-Embodied's module APIs, rollout/rescore separation,
+  validation, diagnostics, and framework integration are project-specific
+  modifications and extensions.
+- Distribution boundary: the normal native product path neither imports nor
+  vendors RLinf source code. An explicitly selected diagnostic conformance
+  loader can import a user-provided RLinf checkout; RLinf is not a package
+  dependency and is never included in this distribution.
+
+LIBERO
+------
+
+- Repository: https://github.com/Lifelong-Robot-Learning/LIBERO
+- License: MIT License
+- Relationship: optional benchmark/simulator dependency, not vendored.
+
+Model checkpoints and datasets are not redistributed in the ART-Embodied
+package. Users must review the licenses and terms attached to each model,
+dataset, simulator, and robot asset they select.

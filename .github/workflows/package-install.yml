@@ -1,0 +1,173 @@
+name: ART-Embodied Add-on CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  numerical:
+    name: CPU numerical and W&B regressions
+    runs-on: ubuntu-latest
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      WANDB_MODE: offline
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reject internal research content in Git history
+        run: python3 tools/check_public_content.py --history HEAD
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: "0.12.0"
+      - name: Install optional CPU test dependencies
+        run: |
+          uv sync --python 3.12 --locked --extra dev
+          uv pip install 'torch==2.10.0' 'torchvision==0.25.0' --index-url https://download.pytorch.org/whl/cpu
+          uv pip install -c constraints/security.txt 'lerobot[peft,pi]==0.6.0' 'peft==0.20.0' 'transformers==5.5.4' 'wandb==0.24.2' 'imageio[ffmpeg]>=2.34,<3'
+          uv pip install --overrides constraints/diffusers-security.txt 'diffusers==0.38.0' 'safetensors==0.8.0'
+      - name: Test without model downloads or experiment outputs
+        run: |
+          test ! -e outputs
+          uv run --no-sync python -c 'import torch, wandb; assert not torch.cuda.is_available()'
+          uv run --no-sync pytest -q
+
+  package:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: "0.12.0"
+
+      - name: Sync test environment
+        run: |
+          uv sync --python "${{ matrix.python-version }}" --extra dev
+          uv run python -c 'import sys; assert f"{sys.version_info.major}.{sys.version_info.minor}" == "${{ matrix.python-version }}"'
+
+      - name: Lint add-on-owned Python
+        run: |
+          uv run --extra dev ruff check \
+            src/art_embodied \
+            tests/test_embodied_*.py \
+            examples/embodied/*.py \
+            examples/embodied/libero/*.py
+
+      - name: Run complete core add-on suite
+        run: |
+          uv run --extra dev pytest -q
+          uv run python -m examples.embodied.libero.generate_state_manifest --help >/dev/null
+
+      - name: Resolve isolated worker profiles
+        run: |
+          uv export --extra lerobot --no-dev --no-emit-project \
+            --format requirements-txt --output-file /tmp/lerobot.txt
+          uv export --extra libero --no-dev --no-emit-project \
+            --format requirements-txt --output-file /tmp/libero.txt
+          grep -q '^lerobot==0.4.4' /tmp/lerobot.txt
+          grep -q '^diffusers==0.38.0' /tmp/lerobot.txt
+          grep -q '^torch==2.6.0' /tmp/libero.txt
+          grep -q '^transformers==4.40.1' /tmp/libero.txt
+          grep -q '^peft==0.11.1' /tmp/libero.txt
+          printf '%s\n' '.[observability]' 'openpipe-art==0.5.18' \
+            'scipy==1.15.3' 'numpy==1.26.4' 'weave==0.52.37' 'wandb==0.24.2' \
+            > /tmp/gr00t-art-retained.in
+          uv pip compile --python-version 3.12 /tmp/gr00t-art-retained.in \
+            --output-file /tmp/gr00t-art-retained.txt
+
+      - name: Build wheel and source distribution
+        run: uv build
+
+      - name: Verify distribution ownership
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import tarfile
+          import zipfile
+
+          wheel = next(Path("dist").glob("art_embodied-*.whl"))
+          with zipfile.ZipFile(wheel) as archive:
+              names = archive.namelist()
+              for filename in ("LICENSE", "THIRD-PARTY-NOTICES"):
+                  entry = next(name for name in names if name.endswith("/licenses/" + filename))
+                  assert archive.read(entry) == Path(filename).read_bytes()
+          assert any(name.startswith("art_embodied/") for name in names)
+          assert not any(name.startswith("art/") for name in names)
+
+          sdist = next(Path("dist").glob("art_embodied-*.tar.gz"))
+          with tarfile.open(sdist) as archive:
+              names = archive.getnames()
+              for filename in ("LICENSE", "THIRD-PARTY-NOTICES"):
+                  entry = next(name for name in names if name.endswith("/" + filename))
+                  assert archive.extractfile(entry).read() == Path(filename).read_bytes()
+          assert any("/src/art_embodied/" in name for name in names)
+          assert not any("/src/art/" in name for name in names)
+          PY
+
+      - name: Verify ART-first add-on install has no W&B dependency
+        run: |
+          uv venv --python "${{ matrix.python-version }}" /tmp/art-embodied-core
+          wheel_path="$(find dist -maxdepth 1 -name 'art_embodied-*.whl' -print -quit)"
+          test -n "$wheel_path"
+          uv pip install -c constraints/security.txt --python /tmp/art-embodied-core/bin/python \
+            'openpipe-art==0.5.18; python_version < "3.12"' \
+            'openpipe-art==0.5.20; python_version >= "3.12"'
+          uv pip install -c constraints/security.txt --python /tmp/art-embodied-core/bin/python \
+            "$wheel_path"
+          /tmp/art-embodied-core/bin/python - <<'PY'
+          import importlib.util
+          import art
+          import art_embodied
+
+          assert importlib.util.find_spec("wandb") is None
+          assert art_embodied.runtime_compatibility_report().compatible
+          PY
+          /tmp/art-embodied-core/bin/art-embodied doctor --json
+          /tmp/art-embodied-core/bin/art-embodied validate \
+            examples/embodied/openvla_oft_libero_grpo_rlinf_positive_control.yaml \
+            --json
+
+      - name: Verify observability extra
+        run: |
+          uv venv --python "${{ matrix.python-version }}" /tmp/art-embodied-observability
+          wheel_path="$(find dist -maxdepth 1 -name 'art_embodied-*.whl' -print -quit)"
+          test -n "$wheel_path"
+          uv pip install -c constraints/security.txt --python /tmp/art-embodied-observability/bin/python \
+            "${wheel_path}[observability]"
+          /tmp/art-embodied-observability/bin/python - <<'PY'
+          import art
+          import art_embodied
+          import wandb
+          import weave
+
+          assert art_embodied.runtime_compatibility_report().compatible
+          PY

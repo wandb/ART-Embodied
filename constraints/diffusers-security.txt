@@ -1,0 +1,4 @@
+# Tested security override for LeRobot 0.4.4 and GR00T N1.7.
+# These upstream packages still declare older Diffusers requirements.
+# See README.md installation notes before using this override.
+diffusers==0.38.0

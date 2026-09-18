@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "kind": "art_embodied_diagnostic_preregistration",
+  "name": "gr1-tabletop-cuttingboard-pan-n1d7-flow-sde-noise-calibration-v1",
+  "created_at_utc": "2026-08-19T05:40:00Z",
+  "question": "At fixed K=4, what is the highest tested Flow-SDE noise level that preserves the frozen native-ODE behavior within a 10 percentage-point equivalence margin?",
+  "scope": {
+    "optimizer_steps": 0,
+    "data_role": "diagnostic",
+    "split": "train_matched",
+    "sealed_eligible": false,
+    "development_lift_claim_eligible": false
+  },
+  "trigger": {
+    "source_report": "outputs/gr00t-n1d7-robocasa-sampler-calibration/cuttingboard-pan-k4-noise05-v1/sampler-calibration-report.json",
+    "baseline_ode_success_rate": 0.546875,
+    "noise_0_5_sde_success_rate": 0.3046875,
+    "sde_minus_ode": -0.2421875,
+    "cluster_ci95": [-0.3515625, -0.1328125],
+    "decision": "reject"
+  },
+  "prior_evidence": {
+    "pi_rl_spatial": "Lower noise preserves stochastic SFT success better, while higher noise can improve RL; behavior equivalence is a safety/admission screen rather than a claim that exact equality is theoretically required.",
+    "same_project_pi05": "A -19.4 point ODE/SDE gap was rejected before optimization was interpreted.",
+    "same_project_smolvla": "Schedule screens compared identical states and policy seeds before admitting a long run."
+  },
+  "frozen_inputs": {
+    "base_config": "examples/embodied/gr00t_n1d7_robocasa_gr1_tabletop_cuttingboard_pan_single_task_development.yaml",
+    "base_config_sha256": "5d86e98758d0c14dbd450f1a400f1a606c959124269c088f7cb09ff170b0e9d0",
+    "reference_ode_outcomes": "outputs/gr00t-n1d7-robocasa-sampler-calibration/cuttingboard-pan-k4-noise05-v1/baseline-ode/evaluation/update_000000_episode_outcomes.json",
+    "reference_ode_outcomes_sha256": "0880226e453fd27738af842c25a2064f1175416d4dbce210636c4626976cedcd",
+    "reference_ode_evidence_sha256": "3e021b05956cc8e81a1d191a74062ac826b3a6697a3eee21a86066168b9592e0",
+    "denoise_steps": 4,
+    "execution_horizon": 8,
+    "maximum_environment_steps": 720
+  },
+  "paired_design": {
+    "noise_levels": [0.1, 0.2, 0.3],
+    "task": "PosttrainPnPNovelFromCuttingboardToPanSplitA",
+    "environment_seeds": [400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415],
+    "policy_seed_repetitions_per_environment_seed": 8,
+    "episodes_per_condition": 128,
+    "pairing": "Every candidate reuses the frozen ODE scenario, environment seed, policy seed, and initial Gaussian latent plan. Only Flow-SDE noise_level changes.",
+    "primary_uncertainty_unit": "environment reset seed",
+    "primary_interval": "10,000-sample paired cluster bootstrap over 16 reset seeds"
+  },
+  "selection_gate": {
+    "maximum_absolute_success_rate_gap": 0.1,
+    "per_condition_pass": "Point estimate and reset-clustered 95% interval are wholly within [-0.10, 0.10].",
+    "per_condition_reject": "The clustered interval excludes the equivalence region on either side, or the absolute point estimate is at least 0.20.",
+    "selection": "Choose the highest tested noise level that passes. Do not select based on the largest observed success rate.",
+    "failed_episodes": 0,
+    "partial_results_cannot_pass": true
+  },
+  "decision_rule": {
+    "on_selection": "Use the selected noise level as the only recipe change, then restart from the unchanged SFT base and evaluate through at least 20 updates.",
+    "on_no_pass_with_inconclusive": "Do not optimize. Extend only the reset panel for the lowest-noise inconclusive condition to 32 seeds.",
+    "on_all_reject": "Do not optimize. Hold noise at the least divergent condition and screen denoise-step count as the next single factor."
+  },
+  "observability": {
+    "wandb_entity": "wandb-japan",
+    "wandb_project": "art-embodied-gr00t-n1d7-robocasa-sampler-calibration",
+    "wandb_group": "cuttingboard-pan-k4-noise-screen-v1",
+    "evaluation_artifacts": true,
+    "evaluation_tables": true,
+    "progress_logging": true
+  },
+  "resource_budget": {
+    "jobs": 1,
+    "gpus": 8,
+    "maximum_new_evaluation_episodes": 384,
+    "optimizer_steps": 0,
+    "sealed_jobs": 0
+  }
+}

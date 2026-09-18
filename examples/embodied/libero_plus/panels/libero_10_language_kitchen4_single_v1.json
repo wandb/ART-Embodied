@@ -1,0 +1,398 @@
+{
+  "category": "Language Instructions",
+  "classification_sha256": "faa87cce3e3ba434da01df7c77523a391b5f2912e4774330b0aa1be5f6a999e6",
+  "schema_version": 1,
+  "selection": {
+    "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+    "calibration_development_reused_only_for_training": true,
+    "calibration_panel_sha256": "b09fbdaeb9e7f684dd1fcb121f41dc474d6726aacd6902a5fbbd3f975834dd5b",
+    "exact_language_deduplication": true,
+    "method": "single-task nearest-to-difficulty-3 stratification across every unique official language string; calibration development is isolated in train",
+    "outcome_independent_within_task": true,
+    "seed": 20260903,
+    "split_sizes": {
+      "development": 14,
+      "sealed": 12,
+      "train": 20
+    },
+    "target_difficulty": 3
+  },
+  "source_revision": "4976dc30028e805ff8094b55501d532c48fec182",
+  "splits": {
+    "development": [
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1237,
+        "category": "Language Instructions",
+        "difficulty_level": 3,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_31_view_0_0_100_0_0_initstate_0",
+        "official_id": 1238
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1236,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_30_view_0_0_100_0_0_initstate_0",
+        "official_id": 1237
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1221,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_14_view_0_0_100_0_0_initstate_0",
+        "official_id": 1222
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1208,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_1_view_0_0_100_0_0_initstate_0",
+        "official_id": 1209
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1212,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_5_view_0_0_100_0_0_initstate_0",
+        "official_id": 1213
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1225,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_19_view_0_0_100_0_0_initstate_0",
+        "official_id": 1226
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1227,
+        "category": "Language Instructions",
+        "difficulty_level": 2,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_21_view_0_0_100_0_0_initstate_0",
+        "official_id": 1228
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1226,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_20_view_0_0_100_0_0_initstate_0",
+        "official_id": 1227
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1224,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_18_view_0_0_100_0_0_initstate_0",
+        "official_id": 1225
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1223,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_17_view_0_0_100_0_0_initstate_0",
+        "official_id": 1224
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1249,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_45_view_0_0_100_0_0_initstate_0",
+        "official_id": 1250
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1251,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_47_view_0_0_100_0_0_initstate_0",
+        "official_id": 1252
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1243,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_38_view_0_0_100_0_0_initstate_0",
+        "official_id": 1244
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1248,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_44_view_0_0_100_0_0_initstate_0",
+        "official_id": 1249
+      }
+    ],
+    "sealed": [
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1209,
+        "category": "Language Instructions",
+        "difficulty_level": 3,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_2_view_0_0_100_0_0_initstate_0",
+        "official_id": 1210
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1247,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_43_view_0_0_100_0_0_initstate_0",
+        "official_id": 1248
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1240,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_34_view_0_0_100_0_0_initstate_0",
+        "official_id": 1241
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1215,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_8_view_0_0_100_0_0_initstate_0",
+        "official_id": 1216
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1253,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_49_view_0_0_100_0_0_initstate_0",
+        "official_id": 1254
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1235,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_29_view_0_0_100_0_0_initstate_0",
+        "official_id": 1236
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1230,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_24_view_0_0_100_0_0_initstate_0",
+        "official_id": 1231
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1252,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_48_view_0_0_100_0_0_initstate_0",
+        "official_id": 1253
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1254,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_50_view_0_0_100_0_0_initstate_0",
+        "official_id": 1255
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1228,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_22_view_0_0_100_0_0_initstate_0",
+        "official_id": 1229
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1232,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_26_view_0_0_100_0_0_initstate_0",
+        "official_id": 1233
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1239,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_33_view_0_0_100_0_0_initstate_0",
+        "official_id": 1240
+      }
+    ],
+    "train": [
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1233,
+        "category": "Language Instructions",
+        "difficulty_level": 3,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_27_view_0_0_100_0_0_initstate_0",
+        "official_id": 1234
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1211,
+        "category": "Language Instructions",
+        "difficulty_level": 3,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_4_view_0_0_100_0_0_initstate_0",
+        "official_id": 1212
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1246,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_42_view_0_0_100_0_0_initstate_0",
+        "official_id": 1247
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1229,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_23_view_0_0_100_0_0_initstate_0",
+        "official_id": 1230
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1216,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_9_view_0_0_100_0_0_initstate_0",
+        "official_id": 1217
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1214,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_7_view_0_0_100_0_0_initstate_0",
+        "official_id": 1215
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1238,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_32_view_0_0_100_0_0_initstate_0",
+        "official_id": 1239
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1217,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_10_view_0_0_100_0_0_initstate_0",
+        "official_id": 1218
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1219,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_12_view_0_0_100_0_0_initstate_0",
+        "official_id": 1220
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1220,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_13_view_0_0_100_0_0_initstate_0",
+        "official_id": 1221
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1218,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_11_view_0_0_100_0_0_initstate_0",
+        "official_id": 1219
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1210,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_3_view_0_0_100_0_0_initstate_0",
+        "official_id": 1211
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1244,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_39_view_0_0_100_0_0_initstate_0",
+        "official_id": 1245
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1241,
+        "category": "Language Instructions",
+        "difficulty_level": 4,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_35_view_0_0_100_0_0_initstate_0",
+        "official_id": 1242
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1213,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_6_view_0_0_100_0_0_initstate_0",
+        "official_id": 1214
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1234,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_28_view_0_0_100_0_0_initstate_0",
+        "official_id": 1235
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1250,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_46_view_0_0_100_0_0_initstate_0",
+        "official_id": 1251
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1231,
+        "category": "Language Instructions",
+        "difficulty_level": 5,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_25_view_0_0_100_0_0_initstate_0",
+        "official_id": 1232
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1242,
+        "category": "Language Instructions",
+        "difficulty_level": 1,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_37_view_0_0_100_0_0_initstate_0",
+        "official_id": 1243
+      },
+      {
+        "base_task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+        "catalog_index": 1222,
+        "category": "Language Instructions",
+        "difficulty_level": 1,
+        "name": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_language_16_view_0_0_100_0_0_initstate_0",
+        "official_id": 1223
+      }
+    ]
+  },
+  "suite": "libero_10"
+}

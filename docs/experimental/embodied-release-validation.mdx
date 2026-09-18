@@ -1,0 +1,210 @@
+---
+title: "Embodied release validation"
+description: "Success-rate and media evidence required for ART-Embodied claims"
+---
+
+ART-Embodied treats video as a release artifact, not decorative logging. A
+Physical AI run is incomplete when its metrics cannot be connected to visible
+robot behavior. Release evidence must also span more than one task suite so a
+benchmark-specific integration cannot masquerade as a framework result.
+
+## Evidence matrix
+
+The OpenVLA-OFT action-token path uses the following staged matrix. Every row
+uses the same generic trajectory, optimizer, evaluator, W&B, and Weave code.
+LIBERO-specific environment construction remains in the example integration.
+
+| Stage | Suite | Purpose | Warm start | Public control | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | LIBERO Object | Establish the first action-token lift | `Haozhan72/Openvla-oft-SFT-libero-object-traj1` | `RLinf/RLinf-OpenVLAOFT-GRPO-LIBERO-object` | Passed at update 200: generated-state SFT 34/100 to ART 100/100; public GRPO 100/100 |
+| 2 | LIBERO Spatial | Independent suite and spatial-reasoning lift | `Haozhan72/Openvla-oft-SFT-libero-spatial-traj1` | `RLinf/RLinf-OpenVLAOFT-GRPO-LIBERO-spatial` | Passed: generated-state SFT 48/100 to ART 88/100 at update 100 |
+| 3 | LIBERO Goal | Instruction/goal generalization | `Haozhan72/Openvla-oft-SFT-libero-goal-traj1` | `RLinf/RLinf-OpenVLAOFT-GRPO-LIBERO-goal` | Planned after Spatial |
+| 4 | LIBERO Long | Long-horizon behavior | `Haozhan72/Openvla-oft-SFT-libero10-traj1` | `RLinf/RLinf-OpenVLAOFT-GRPO-LIBERO-long` | Final OpenVLA-OFT validation |
+
+The second suite is mandatory before a framework-level learning claim. The
+long-horizon row is mandatory before claiming that trajectory-level training
+improves long tasks specifically.
+
+The 100-episode Object evaluator control produced a paired `+64` point lift
+(65 improved pairs, one regressed pair, exact McNemar
+`p=1.81603863891322e-18`). This validates the clean native loader, simulator,
+fixed evaluation protocol, W&B media, and Weave trajectory tree. It is an
+evaluator positive control using the public RLinf checkpoint, not by itself a
+claim that the current ART LoRA training profile reaches 95%.
+
+The retained ART LoRA run separately passed a generated state-held-out control.
+Its 100 MuJoCo initial states are unique and absent from all 500 official states
+sampled during training. On this fixed manifest, SFT scored 34/100, ART update
+200 scored 100/100, and the public RLinf checkpoint scored 100/100. ART improved
+66 paired episodes without a regression (exact McNemar
+`p=2.710505431213761e-20`). This establishes transfer to unseen initial states
+under the same task definitions and language; it does not establish
+held-out-task generalization. Repeated development use means this is now a
+development manifest rather than a sealed final test.
+
+The independent Spatial add-on run also passed without using the public RLinf
+checkpoint as its acceptance oracle. On a policy-independent manifest of 100
+new initial states, SFT scored 48/100 and update 100 scored 88/100. Pairing
+found 43 improvements and three regressions (exact McNemar
+`p=4.620659358268283e-10`). Update 30 scored 82/100 on the same manifest.
+The manifest has ten states per task, unique state hashes, no exact overlap
+with the official 500-state bank, and no initially solved state. It has also
+become a development manifest through repeated use.
+
+Official references:
+
+- [RLinf OpenVLA-OFT collection](https://huggingface.co/collections/RLinf/openvla-oft)
+- [RLinf Spatial model and reported benchmark results](https://huggingface.co/RLinf/RLinf-OpenVLAOFT-GRPO-LIBERO-spatial)
+- [Spatial SFT warm start](https://huggingface.co/Haozhan72/Openvla-oft-SFT-libero-spatial-traj1)
+
+## Quantitative acceptance
+
+A fixed 100-episode evaluation is the research-preview and release-candidate
+gate used by `0.1.0rc1`. A stable performance claim uses 500 paired episodes
+per suite, matching the scale reported by the public OpenVLA-OFT controls.
+
+1. Evaluate SFT baseline and candidate on identical suite, task, reset state,
+   episode seed, sampler, horizon, and success definition.
+2. Report success counts and denominators, absolute paired lift, a 95% paired
+   bootstrap confidence interval, and a paired binary test such as McNemar's
+   test.
+3. Report per-task success and macro average in addition to the aggregate. A
+   gain concentrated in one task is not hidden by the suite average.
+4. Select checkpoints by the YAML-declared rule. Do not select a checkpoint
+   after reading the final held-out suite.
+5. Keep rollout/train success separate from fixed evaluation success.
+
+The state-held-out manifest and its SFT baseline must exist before the long run
+starts. The long-run YAML should use that manifest as its primary periodic
+`evaluation` contract. A train-matched fixed set may be logged under a clearly
+diagnostic identity, but it cannot replace the claim-facing series and must not
+be used to update README success claims.
+
+The fixed evaluator writes `evaluation/update_*_episode_outcomes.json`. Run the
+SFT baseline once, then point the candidate YAML at that immutable file:
+
+```bash
+python examples/embodied/libero/train_openvla_oft.py \
+  --config examples/embodied/openvla_oft_libero_object_sft_baseline_eval.yaml \
+  --evaluate-only --evaluation-step 0
+```
+
+Before either GPU job starts, validate that the candidate references the
+baseline artifact and that both YAML files define the same policy inference,
+environment, processors, horizon, scenarios, seeds, and sampler:
+
+```bash
+art-embodied validate-evaluation-pair \
+  examples/embodied/openvla_oft_libero_object_sft_baseline_eval.yaml \
+  examples/embodied/openvla_oft_libero_object_public_grpo_eval.yaml
+```
+
+This is a claim-facing native evaluation pair. The public GRPO checkpoint is
+the evaluator positive control, so model/checkpoint identity differs by design.
+The validator still requires the same loader runtime, attention backend,
+processor, environment, horizon, scenarios, seeds, and sampler. Training-time
+diagnostics and claim-facing evaluation both leave OpenVLA-OFT v0.1's attention
+implementation unspecified. Explicit `eager` and `flash_attention_2` overrides
+both change logits for the bidirectional action-placeholder sequence and are
+not valid comparisons.
+
+The loader runtime means the exact validated dependency contract, not only a
+loader name. For OpenVLA-OFT v0.1 this is Torch 2.6.0, Transformers 4.40.1,
+tokenizers 0.19.1, TIMM 0.9.10, and PEFT 0.11.1. A run with
+`runtime_contract: unchecked` is ineligible for release evidence.
+
+For an ART-trained LoRA, generate the claim-facing profile rather than editing
+the baseline controls by hand:
+
+```bash
+art-embodied prepare-evaluation-candidate \
+  examples/embodied/openvla_oft_libero_object_sft_baseline_eval.yaml \
+  outputs/my-run/held-out-eval.yaml \
+  --run my-run-held-out \
+  --output-dir outputs/my-run/held-out \
+  --adapter-path outputs/my-run/checkpoints/accepted/peft_adapter \
+  --baseline-wait-timeout-seconds 3600
+```
+
+ART verifies episode, scenario, environment seed, and policy seed before
+logging paired lift, improved/regressed counts, and an exact McNemar p-value to
+W&B. The same check is available without a training run through
+`art-embodied compare-evaluations BASELINE CANDIDATE`.
+The wait option is operational only: it permits baseline and candidate GPU jobs
+to run concurrently without losing the faster candidate's final media while
+the baseline finishes. It does not alter scenarios, seeds, sampling, or pairing.
+
+The minimum release result is positive lift on Object and Spatial. Strong
+evidence is positive mean lift across multiple seeds or fixed reset partitions.
+
+Spatial uses the same two-profile contract:
+
+```bash
+python examples/embodied/libero/train_openvla_oft.py \
+  --config examples/embodied/openvla_oft_libero_spatial_sft_baseline_eval.yaml \
+  --evaluate-only --evaluation-step 0
+art-embodied validate-evaluation-pair \
+  examples/embodied/openvla_oft_libero_spatial_sft_baseline_eval.yaml \
+  examples/embodied/openvla_oft_libero_spatial_grpo_rlinf_positive_control.yaml
+```
+
+## Public demo contract
+
+The public demo is generated from the same accepted evaluation, not from a
+separate hand-authored script.
+
+- W&B Models logs success, reward, per-task results, paired delta, and model
+  artifacts under one experiment group.
+- Claim-facing recipes set `observability.delivery_failure_policy: fail_run`;
+  W&B or Weave delivery exceptions invalidate the run immediately instead of
+  allowing unobservable optimization to continue.
+- The SFT baseline is native W&B Step 0 on `validation/success_rate`; every
+  periodic candidate evaluation uses the same metric. Baseline and candidate
+  must not be split into separate scalar series because that prevents a human
+  from reading the learning curve directly.
+- `wandb.Video` logs bounded baseline and candidate episodes at the same
+  evaluation step, allowing charts and media to be inspected together.
+- Videos reuse stable `media/simulation/train/{slot}` and
+  `media/simulation/eval/{slot}` keys. Update numbers, tasks, and outcomes do
+  not create new panel names; update is the W&B history axis, while task and
+  outcome remain in captions and episode Tables.
+- Weave stores one training-update trace tree with nested trajectory groups,
+  trajectories, actions, rewards, and one video reference per selected episode.
+- Standalone baseline evaluation writes local evidence without creating a W&B
+  run. At training start, the source run reads that immutable evidence and logs
+  the baseline as its first history point. Claim-facing periodic evaluation is
+  owned by the same regular primary coordinator that writes training history;
+  a separate evaluator must not attach through shared mode or W&B resume. If
+  standalone Weave tracing is enabled for local diagnosis, it does not become a
+  second experiment record.
+- At least one success and one failure are retained when both are present among
+  captured episodes. Media selection is deterministic and records task/reset
+  identifiers so the behavior is reproducible.
+- Demo captions identify suite, task, checkpoint role, reset/seed, outcome, and
+  update. A visually attractive clip never substitutes for aggregate evidence.
+
+Set these YAML fields to make missing media fail the run rather than silently
+publishing a metrics-only result:
+
+```yaml
+observability:
+  delivery_failure_policy: fail_run
+  videos_per_update: 2
+  videos_per_evaluation: 8
+  require_train_video: true
+  require_evaluation_video: true
+```
+
+Training-only conformance profiles may leave evaluation disabled and explicitly
+set `require_evaluation_video: false`. Release evaluation profiles must enable
+fixed evaluation and set it to `true`.
+
+## Boundaries
+
+- The generic ART package does not import LIBERO, ManiSkill, or Slurm.
+- Suite model IDs, unnormalization keys, reset semantics, and simulator factories
+  live under the corresponding example integration.
+- Model-family likelihood math is not shared blindly. SmolVLA and pi0/pi0.5
+  require native flow/diffusion objectives before entering this matrix.
+- A successful Object/Spatial OpenVLA-OFT result validates action-token RL, not
+  every LeRobot policy family.

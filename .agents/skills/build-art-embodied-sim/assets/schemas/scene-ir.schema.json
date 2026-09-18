@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://art-embodied.dev/schemas/scene-ir-v1.json",
+  "title": "ART-Embodied SceneIR",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "world", "objects"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "world": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coordinate_system", "length_unit", "mass_unit"],
+      "properties": {
+        "coordinate_system": {"const": "right_handed_z_up"},
+        "length_unit": {"const": "m"},
+        "mass_unit": {"const": "kg"},
+        "gravity_m_s2": {
+          "type": "array",
+          "prefixItems": [{"type": "number"}, {"type": "number"}, {"type": "number"}],
+          "items": false
+        }
+      }
+    },
+    "objects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["id", "role", "dynamic", "geometry"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "role": {
+            "enum": [
+              "manipulated_object",
+              "fixture",
+              "target_region",
+              "workspace",
+              "obstacle",
+              "visual_context"
+            ]
+          },
+          "dynamic": {"type": "boolean"},
+          "geometry": {
+            "type": "object",
+            "required": ["visual_source", "collision_source"],
+            "properties": {
+              "visual_source": {"type": "string", "minLength": 1},
+              "collision_source": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
+  }
+}

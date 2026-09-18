@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "gr00t_n1d7_robocasa_one_task_oracle_parity",
+  "task_id": "PnPCupToDrawerClose",
+  "environment_id": "gr1_unified/PnPCupToDrawerClose_GR1ArmsAndWaistFourierHands_Env",
+  "expansion_task_ids": [
+    "PnPCupToDrawerClose",
+    "PnPMilkToMicrowaveClose",
+    "PnPPotatoToMicrowaveClose",
+    "PosttrainPnPNovelFromCuttingboardToPanSplitA",
+    "PosttrainPnPNovelFromPlacematToBasketSplitA",
+    "PosttrainPnPNovelFromPlateToBowlSplitA",
+    "PosttrainPnPNovelFromTrayToPotSplitA",
+    "PosttrainPnPNovelFromTrayToTieredbasketSplitA"
+  ],
+  "seed": 20260814,
+  "contract": {
+    "action_dimension": 29,
+    "execution_horizon": 8,
+    "max_environment_steps": 720,
+    "stop_on_success": "after_action_chunk",
+    "required_matches": [
+      "deterministic_reset_simulator_state_exact",
+      "deterministic_reset_policy_observation_exact",
+      "official_wrapper_and_art_ode_action_chunk_exact",
+      "all_primitive_state_and_observation_hashes_exact",
+      "primitive_reward_success_termination_truncation_exact",
+      "macro_reward_success_termination_truncation_exact"
+    ]
+  },
+  "official_gr00t": {
+    "revision": "376ba890cff8c9de64d71d982772a9c36185fdd7",
+    "multistep_wrapper": {
+      "path": "gr00t/eval/sim/wrapper/multistep_wrapper.py",
+      "sha256": "8b2e7b8dea5399c1e1b51e9d9419aa32309aa9b46aaad88223d8dae6b3e56237"
+    },
+    "rollout_policy": {
+      "path": "gr00t/eval/rollout_policy.py",
+      "sha256": "588af9189bd2f9b5acf964e60a30c84bc2445843f7617d012bc5ef410706b13a"
+    }
+  },
+  "official_robocasa": {
+    "revision": "4840e671596f93ca03651524b9f72ffb1aadfeff",
+    "gymnasium_basic_sha256": "637707002866e3432555ab13db744970780be757c1f26f09454ad5899d2f0bea",
+    "gymnasium_groot_sha256": "b5b0dedaf051dff21e85e72635150cc8e5c9fcd6c203d8260a1bc9f76a687e5f"
+  },
+  "sft_checkpoint": {
+    "path": "outputs/gr00t-n1d7-robocasa-sft/gr00t-n1d7-robocasa-gr1-tabletop-sft-u60000/checkpoint-60000",
+    "artifact_sha256": "de87f5abea276c32d7912848e5ebfa3ebaf14e2e5f4928df6a4dc46a605344c3",
+    "completion_marker_sha256": "7a8f8a0d155282f782013d0b32f397f9b81667d1411db07a5e5d8fc34b70df3e",
+    "optimizer_steps": 60000,
+    "dataset_revision": "09c6de8af50168090e7e9cc01e1ec3bce788de24"
+  },
+  "declared_delta_from_official_cli": {
+    "name": "deterministic_reset_fixture",
+    "reason": "NVIDIA's RoboCasa Gym reset(seed) seeds numpy's legacy global RNG but does not reseed the robosuite environment's numpy Generator. Paired evaluation requires replayable initial states.",
+    "constraint": "The same explicit internal Generator reseed is applied to both the official wrapper path and the ART path; no policy, action, dynamics, or success logic is changed."
+  }
+}

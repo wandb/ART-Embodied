@@ -1,0 +1,6 @@
+art-embodied
+gymnasium>=1.1,<2
+jsonschema>=4.23,<5
+mujoco>=3.3,<4
+numpy>=2,<3
+pyyaml>=6,<7

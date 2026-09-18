@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://art-embodied.dev/schemas/task-spec-v1.json",
+  "title": "ART-Embodied TaskSpec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "instruction",
+    "manipulated_objects",
+    "success",
+    "failure",
+    "control"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "minLength": 1},
+    "instruction": {"type": "string", "minLength": 1},
+    "manipulated_objects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "target_regions": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "control": {
+      "type": "object",
+      "required": ["mode", "frequency_hz"],
+      "properties": {
+        "mode": {"type": "string", "minLength": 1},
+        "frequency_hz": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "initial_state": {"type": "object"},
+    "success": {
+      "type": "object",
+      "required": ["predicates", "hold_seconds"],
+      "properties": {
+        "predicates": {"type": "array", "minItems": 1},
+        "hold_seconds": {"type": "number", "minimum": 0}
+      }
+    },
+    "failure": {
+      "type": "object",
+      "required": ["predicates", "timeout_seconds"],
+      "properties": {
+        "predicates": {"type": "array", "minItems": 1},
+        "timeout_seconds": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "reward": {"type": "object"},
+    "safety": {"type": "object"}
+  }
+}

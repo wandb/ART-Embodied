@@ -1,0 +1,238 @@
+schema_version: 1
+experiment:
+  project: art-embodied
+  run: lerobot-action-token-grpo
+  seed: 42
+  tags:
+    - embodied
+    - lerobot
+    - grpo
+policy:
+  type: my_lerobot_action_token_policy
+  path: organization/model-checkpoint
+  revision: null
+  device: cuda:0
+  dtype: bfloat16
+  trust_remote_code: false
+  unnorm_key: null
+  load_kwargs: {}
+  rollout_generation:
+    do_sample: true
+    temperature: 1.0
+    top_p: 1.0
+  train_generation:
+    do_sample: true
+    temperature: 1.0
+    top_p: 1.0
+  evaluation_generation:
+    do_sample: false
+    temperature: 1.0
+    top_p: 1.0
+  trainable_parameter_strategy: explicit_lora
+  force_trainable_float32: true
+  lora:
+    rank_partition: null
+    enabled: true
+    rank: 16
+    alpha: 16
+    dropout: 0.0
+    init: gaussian
+    target_modules:
+      - q_proj
+      - v_proj
+environment:
+  type: native_lerobot
+  task: replace-with-task-suite
+  robot_type: null
+  kwargs:
+    success_key: success
+  reset:
+    source: scenario_payload
+    deterministic_seed: true
+  observation_processor:
+    owner: lerobot
+  action_processor:
+    owner: lerobot
+reward:
+  type: environment
+  name: task_success
+  terminal_only: true
+  scale: 1.0
+  kwargs: {}
+algorithm:
+  flow_sde: null
+  type: grpo
+  group_size: 4
+  clip_epsilon_low: 0.2
+  clip_epsilon_high: 0.2
+  kl_coefficient: 0.0
+  clip_ratio_c: null
+  importance_sampling_level: token
+  training_unit: trajectory
+  action_advantage_mode: example
+  score_source: trajectory_reward
+  pad_fixed_horizon_examples: false
+  filter_rewards: false
+  reward_filter_mode: drop_examples
+  rewards_lower_bound: null
+  rewards_upper_bound: null
+  loss_aggregation: trajectory_mean
+  advantage:
+    scope: group
+    normalize: true
+    extra_global_normalization: false
+    mask_zero_variance_groups: true
+    std_unbiased: false
+    epsilon: 1.0e-6
+  precalculate_logprobs: false
+  rollout_logprob_source: rollout_action
+  logprob_eval_mode: true
+  logprob_microbatch_size: 16
+  train_logprob_microbatch_size: 8
+  pre_update_logprob_kl_tolerance: 0.01
+  pre_update_ratio_tolerance: 0.02
+  skip_optimizer_step_without_policy_gradient_signal: true
+rollout:
+  groups_per_update: 8
+  epochs_per_update: 1
+  # The in-process shared-policy path is serial by design. Use a synchronized
+  # replica provider before increasing this value.
+  workers: 1
+  failure_policy: fail_update
+  minimum_completed_attempts_per_group: 4
+  max_episode_steps: 256
+  max_policy_steps: 256
+  temperature: 1.0
+  deterministic: false
+  action_payload:
+    kind: token
+    require_old_logprobs: true
+    require_prompt: true
+    require_observation: true
+    trainable_action_selection: all
+    max_trainable_actions_per_trajectory: null
+training:
+  updates: 100
+  optimizer_steps_per_update: 1
+  microbatch_size: 8
+  log_action_token_progress: true
+  action_token_progress_every_microbatches: 128
+  schedule:
+    type: full_update
+  checkpoint_every_updates: 10
+  optimizer:
+    type: adamw
+    learning_rate: 1.0e-5
+    weight_decay: 0.0
+    beta1: 0.9
+    beta2: 0.999
+    epsilon: 1.0e-8
+    max_grad_norm: 1.0
+evaluation:
+  enabled: true
+  evaluate_before_training: true
+  pre_training_success_gate: null
+  split: held_out
+  data_role: development
+  runtime: native_lerobot
+  baseline_outcomes_path: null
+  baseline_wait_timeout_seconds: 0
+  every_updates: 10
+  episodes: 100
+  seeds:
+    - 1000
+    - 1001
+  deterministic: true
+  temperature: 1.0
+  fixed_scenarios:
+    - held-out-0
+    - held-out-1
+  checkpoint_selection: evaluation_success
+  kwargs: {}
+observability:
+  delivery_failure_policy: fail_run
+  wandb:
+    enabled: true
+    entity: null
+    project: art-embodied
+    connection: primary
+    run_id: null
+    resume: null
+    writer_label: null
+    console_multipart: true
+    console_chunk_max_bytes: 1048576
+    console_chunk_max_seconds: 60
+    group: lerobot-action-token-grpo
+    job_type: trajectory-rl
+    mode: online
+    log_model_artifacts: true
+    log_input_model_artifact: false
+    input_model_artifact_ref: null
+    log_evaluation_artifacts: true
+    log_evaluation_table: true
+    max_evaluation_table_rows: 100
+    log_rollout_progress: true
+    rollout_progress_every_groups: 1
+    log_evaluation_progress: true
+    evaluation_progress_every_episodes: 5
+  weave:
+    enabled: true
+    project: art-embodied
+    trace_trajectories: true
+    max_groups_per_update: 2
+    max_trajectories_per_group: 2
+    max_evaluation_trajectories: 4
+    use_server_cache: false
+    server_cache_dir: null
+    server_cache_size_mb: 0
+  videos_per_update: 2
+  videos_per_evaluation: 4
+  require_train_video: false
+  require_evaluation_video: false
+  video_fps: 10
+  lookahead_preview:
+    enabled: false
+    videos_per_update: 1
+    videos_per_evaluation: 1
+    max_future_frames: 10
+    future_stride: 4
+    max_panels: 4
+storage:
+  output_dir: outputs/lerobot-action-token-grpo
+  keep_last_checkpoints: 2
+  retain_checkpoint_updates: []
+  save_training_state: true
+  resume_from_checkpoint: null
+  allow_legacy_checkpoint_resume: false
+  max_log_file_mb: 64
+  retain_rollout_payloads: false
+runtime:
+  backend: local
+  rollout_execution:
+    mode: in_process
+    actor_factory: null
+    actor_kwargs: {}
+    actors_per_device: 1
+    group_batching: false
+    lifecycle: per_update
+    policy_sync: shared
+    inference_mode: embedded
+    inference_factory: null
+    inference_replicas_per_device: 1
+    inference_max_batch_size: 1
+    inference_max_wait_ms: 0.0
+    startup_timeout_seconds: 7200
+    request_timeout_seconds: 7200
+    actor_python_executable: null
+    inference_python_executable: null
+  worker_python_executable: null
+  rollout_devices:
+    - cuda:0
+  training_devices:
+    - cuda:0
+  distributed_training: false
+  training_worker_lifecycle: per_update
+  worker_handoff_dir: /tmp/art-embodied
+  worker_timeout_seconds: 7200
+  max_worker_handoff_mb: 8192
+  keep_worker_handoffs: false

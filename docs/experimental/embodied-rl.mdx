@@ -1,0 +1,705 @@
+---
+title: "Embodied RL (experimental)"
+description: "Trajectory-aware GRPO/GSPO for LeRobot and OpenVLA-OFT"
+---
+
+<Warning>
+The embodied API is under active development. The validated public surface is
+currently limited to OpenVLA-OFT action-token policies. Do not assume that the
+same likelihood objective is valid for flow-matching or diffusion policies.
+</Warning>
+
+See [Embodied runtime architecture](./embodied-runtime-architecture) for the
+selected multi-GPU, process-isolation, and asynchronous execution contracts.
+See [Embodied release validation](./embodied-release-validation) for the
+multi-suite success-rate, W&B video, and Weave trace acceptance contract.
+
+## ART lifecycle and LeRobot ownership
+
+ART-Embodied exposes two views of one runtime. LeRobot users call
+`run_lerobot_experiment(...)` with their existing policy, processors, and
+environment factories. ART users can construct `EmbodiedTrainableModel` and
+`EmbodiedBackend` directly and use the familiar
+`register -> gather groups -> train(model, groups) -> model.log -> close`
+lifecycle.
+
+The native robot policy remains owned by LeRobot. The embodied model is a real
+`art.TrainableModel`, but it does not create an OpenAI-compatible text endpoint;
+rollout adapters call the native policy and sampler directly. This keeps ART
+lifecycle compatibility without translating images and robot actions into fake
+chat messages.
+
+## What ART owns
+
+ART-Embodied keeps the existing robotics stack in control of the environment:
+
+- LeRobot owns policy construction, preprocessors, postprocessors, and native
+  action execution.
+- The simulator or robot runtime owns reset and transition semantics.
+- ART records complete multimodal trajectories, builds comparable rollout
+  groups, computes group-relative advantages, executes optimizer updates, and
+  logs metrics, videos, and traces.
+
+This boundary avoids maintaining a second observation/action conversion path
+inside ART.
+
+## RLinf is a conformance profile, not the architecture
+
+The OpenVLA-OFT/RLinf configuration exists because it is a public positive
+control with a known success-rate lift. ART-Embodied uses it to verify the
+action-token objective and optimizer schedule. Normal execution uses the
+independent ART loader selected by `model_loader: native`. RLinf is an optional
+development oracle, not a runtime dependency. Conformance geometry, masks, and
+denominators are activated only by the selected YAML profile; they are not
+required by the trajectory model, experiment runner, evaluator, observability
+layer, or backend protocol.
+
+Users can inject any replayable LeRobot environment, policy adapter, and
+training backend into `EmbodiedExperiment`. New built-in policy families should
+add a policy-specific config validator and native likelihood/objective adapter,
+not copy OpenVLA or RLinf assumptions into the generic layer.
+
+## Install
+
+```bash
+pip install "art-embodied[lerobot]"
+```
+
+This installs LeRobot's native policy stack without selecting a simulator. For
+the OpenVLA-OFT/LIBERO positive control, use:
+
+```bash
+pip install "art-embodied[libero]"
+```
+
+The `lerobot` extra installs the simulator-neutral base package rather than
+LeRobot's model-specific extras. The LIBERO extra pins the complete validated
+OpenVLA-OFT worker stack: `hf-libero==0.1.4`, Torch 2.6.0, Transformers 4.40.1,
+tokenizers 0.19.1, TIMM 0.9.10, PEFT 0.11.1, and NumPy 1.26.4. LeRobot 0.4.4's
+`libero,peft` extras intentionally are not composed into this environment
+because they require newer Transformers and PEFT versions. The RLinf source
+checkout is a conformance oracle, not a runtime dependency. Treat `lerobot`
+and `libero` as mutually exclusive worker profiles; the control plane can
+launch either profile through `runtime.worker_python_executable`.
+
+Validate the installed add-on, ART, and optional LeRobot versions before
+allocating an accelerator:
+
+```bash
+art-embodied doctor
+
+# Generic LeRobot worker profile only.
+art-embodied doctor --require-lerobot
+
+# Behavior-pinned OpenVLA-OFT/LIBERO worker profile.
+art-embodied doctor --profile libero
+```
+
+Use `--worker` for an isolated policy process where ART is intentionally absent,
+add `--require-lerobot` only for the generic LeRobot profile, and use `--json`
+for schedulers or CI gates.
+
+Simulator-specific dependencies are deliberately excluded from the normal
+LeRobot path. Both embodied extras are separate from the LLM `backend` and
+`megatron` extras because their validated Torch, Transformers, and W&B version
+ranges currently differ.
+
+OpenVLA-OFT v0.1 is behavior-pinned, not merely import-pinned. The validated
+runtime is Torch 2.6.0, Transformers 4.40.1, tokenizers 0.19.1, TIMM 0.9.10,
+and PEFT 0.11.1. A newer stack loaded the same public checkpoint but changed
+its action logits for identical greedy inputs and collapsed the public positive
+control. `policy.load_kwargs.runtime_contract: openvla_oft_v01` therefore
+fails closed before model loading. `unchecked` exists only for explicit
+diagnostics and cannot support a benchmark claim.
+`policy.load_kwargs.robot_platform` is also explicit (`libero`, `aloha`, or
+`bridge`) so a custom checkpoint path cannot silently select LIBERO constants.
+
+## Runtime model
+
+The Python API has no Slurm dependency. The same YAML and runner work in a
+local process, a workstation container, or a scheduler-launched process.
+Slurm, Kubernetes, and SUNK are deployment choices around the runner; scheduler
+directives never enter trajectory, policy, evaluation, or backend contracts.
+Distributed implementations may consume `runtime.rollout_devices` and
+`runtime.training_devices`, but a user-supplied backend can choose a different
+launcher without changing experiment semantics.
+
+## Training structure
+
+For a Gymnasium-compatible LeRobot environment, the standard episode runner
+handles reset, native policy inference, environment transitions, reward and
+success recording, and rollout video capture:
+
+```python
+import art_embodied as embodied
+
+config = embodied.EmbodiedExperimentConfig.from_yaml("experiment.yaml")
+policy = embodied.make_policy(config)
+policy_adapter = embodied.LeRobotPolicyAdapter(
+    policy=policy,
+    preprocessor=preprocessor,
+    postprocessor=postprocessor,
+    device=config.policy.device,
+    record_action_fn=record_action_tokens,
+)
+
+result = await embodied.run_lerobot_experiment(
+    config=config,
+    policy=policy,
+    train_scenarios=train_scenarios,
+    evaluation_scenarios=held_out_scenarios,
+    environment_factory=make_environment,
+    policy_adapter=policy_adapter,
+)
+```
+
+The standard local path sets `rollout.workers: 1` and binds one adapter directly
+to the policy trained by ART. The adapter calls LeRobot's own `predict_action`
+with the original preprocessor and postprocessor. The native tensor goes
+directly to `env.step`; ART stores a JSON-safe action record separately. This
+avoids changing deployed behavior for the sake of logging.
+
+At episode start, ART resets the policy, preprocessor, and postprocessor just
+as LeRobot's native record/evaluation loops do. The configured policy seed is
+applied at reset and each policy decision, so group attempts are reproducible
+instead of merely carrying a seed in metadata. Policy calls are serialized by
+default within one process because Torch RNG and many LeRobot action queues are
+stateful. Scale rollout with isolated worker processes or devices. A parallel
+`policy_adapter_factory` must implement
+`prepare_update(policy=training_policy, update=update)` and synchronize its
+episode-isolated replicas before every train and evaluation collection.
+Returning shared state or a factory with no provable synchronization path fails
+closed rather than silently mixing episode state or rolling out stale weights.
+
+For process-isolated collection, set
+`runtime.rollout_execution.mode: local_process`. The normal LeRobot path uses
+the built-in
+`art_embodied.integrations.lerobot_process:create_lerobot_process_actor` and
+names one application `components_factory` in `actor_kwargs`. The factory only
+constructs the native environment factory, policy-adapter factory, and
+checkpoint loader; ART continues to own the episode loop, trajectory, success,
+reward, video, and phase bookkeeping. `actors_per_device` controls environment
+concurrency and embedded mode loads one policy replica in every actor.
+
+`inference_mode: batched_server` loads one inference engine per rollout device
+and lets multiple environment actors share it. This avoids both thread-unsafe
+shared-policy calls and one full model replica per simulator. Application-owned
+group rollouts can use it through the normal LeRobot process actor. The built-in
+OpenVLA engine preserves one continuous Python, NumPy, Torch CPU, and Torch CUDA
+RNG stream per stochastic group, so actor scheduling cannot mix sampling state.
+Group model calls are serialized while simulator work overlaps; benchmark the
+native model at realistic observation and group sizes rather than assuming that
+more actors are faster.
+The components, actor, and inference-engine interfaces are documented in the
+[runtime architecture](./embodied-runtime-architecture.mdx).
+OpenVLA-OFT can use the built-in importable engine
+`art_embodied.policies.inference:create_openvla_batched_inference_engine`; the
+environment components remain application-owned so the generic runtime does
+not acquire simulator-specific dependencies.
+
+Run `art-embodied validate CONFIG.yaml` before allocating accelerators. Its
+resource summary distinguishes physical device declarations, environment
+actors, model replicas, and environment slots. These quantities are not
+interchangeable: increasing embedded actors duplicates the model, while a
+batched inference server keeps one model replica per rollout device and grows
+simulator concurrency independently. ART does not guess a VRAM budget because
+it depends on the policy family, precision, action head, sequence/image shape,
+and native runtime. A conservative one-device/one-actor YAML remains valid on
+a workstation; multi-GPU execution is an explicit throughput choice.
+
+Every completed update logs `rollout/elapsed_seconds`,
+`rollout/groups_per_second`, `rollout/trajectories_per_second`, and
+`training/elapsed_seconds` with the training metrics. Live rollout progress
+updates the terminal and W&B Summary without creating history rows.
+Compare resource profiles with these measurements and task success together;
+a faster profile that changes sampling or trajectory semantics is not valid.
+
+Group-native collection is independently selected with
+`group_batching: true`. It sends all counterfactual attempts sharing one reset
+to one actor call. The actor may batch policy inference while preserving one
+environment, trajectory, reward/mask sequence, success field, and video per
+attempt. The default is `false`; existing actors keep episode-level scheduling
+and dynamic inference batching.
+
+Use `lifecycle: persistent` with disjoint rollout/training GPUs. Use
+`lifecycle: per_update` to time-share the same GPUs; the runtime explicitly
+offloads the coordinator policy while rollout actors own those devices, stops
+the actors at the phase boundary, and restores the coordinator before the
+optimizer step. Evaluation uses the rollout placement, so a one-device profile
+runs initial evaluation, train rollout, training, and periodic evaluation
+serially on that same device. `cpu_offload` is the faster time-sharing variant:
+it keeps actor processes alive but moves their policy replicas off GPU between
+phases. These choices are YAML-visible and do not require Slurm or a dedicated
+evaluation GPU.
+
+`environment.kwargs.success_key` explicitly names the Gymnasium `info` field
+used for success. ART never infers success from a task-specific reward
+threshold. Observation records contain shape and dtype summaries rather than
+embedding camera tensors in traces. The full visual episode is available as a
+bounded video instead.
+
+`rollout.max_episode_steps` is the low-level environment horizon, while
+`rollout.max_policy_steps` is the number of policy decisions. They are equal
+for a one-action-per-call policy. An action-token policy that emits eight-action
+chunks over a 512-step environment horizon uses `max_policy_steps: 64`. Strict
+RLinf profiles validate this equation against
+`training.schedule.action_chunk_size`; a mismatched horizon fails before model
+or simulator startup.
+
+`videos_per_update` and `videos_per_evaluation` cap video creation itself, not
+only W&B upload. Selection is deterministic by group/attempt or evaluation
+episode, so a 1,024-trajectory update configured for two videos writes exactly
+two rollout files.
+
+Action-chunk policies may expose a full predicted chunk separately from the
+prefix sent to the robot. The experimental `observability.lookahead_preview`
+feature asks an isolated environment clone to simulate that full chunk, then
+places the current render beside representative states from the unexecuted tail
+in temporal order. It deliberately avoids alpha-blended "ghost" overlays,
+which obscure object identity when the robot and scene move. This is a policy-
+and simulator-neutral capability: the policy returns
+`predicted_action_chunk` plus `execution_horizon`, while the environment
+implements `ActionChunkLookaheadPreview`. Unsupported policies and environments
+keep the feature disabled. Lookahead media uses stable W&B keys under
+`media/lookahead/train/*` and `media/lookahead/eval/*`; ordinary evidence videos
+remain under `media/simulation/*`. Preview frames are diagnostic counterfactuals
+and never enter rewards, trajectories, masks, or optimizer inputs.
+
+`rollout.failure_policy` and
+`rollout.minimum_completed_attempts_per_group` make simulator failures part of
+the visible experiment contract. The default template fails the update rather
+than silently turning a requested GRPO group into a one-sample, zero-signal
+group. Strict RLinf conformance requires every attempt in every group to
+complete because its fixed tensor geometry cannot represent missing rows.
+
+Policy-specific adapters may provide a custom action recorder to attach action
+tokens, old log probabilities, diffusion state, or flow state. The generic
+episode runner does not pretend that continuous LeRobot actions are action
+tokens.
+
+For environments that do not follow Gymnasium's reset/step contract, provide a
+custom rollout function while keeping the same trajectory schema:
+
+```python
+import art_embodied as embodied
+
+config = embodied.EmbodiedExperimentConfig.from_yaml("experiment.yaml")
+policy = embodied.make_policy(config)
+result = await embodied.run_embodied_experiment(
+    config=config,
+    policy=policy,
+    train_scenarios=train_scenarios,
+    rollout=your_native_lerobot_rollout,
+    evaluation_scenarios=held_out_scenarios,
+)
+```
+
+The rollout function receives a scenario and a `RolloutContext`. All attempts
+in a group share one environment seed and use distinct policy seeds. The
+function returns an `EmbodiedTrajectory` containing observations, token
+actions, old log probabilities, reward events, and media references.
+
+`run_lerobot_experiment` creates separate train and evaluation episode runners
+so phase metadata, video limits, and output paths cannot be mixed accidentally.
+It then creates the backend and W&B/Weave observer from the YAML, evaluates the
+fixed plan, and closes resources on success or failure. The built-in
+OpenVLA-OFT action-token path supports local process-isolated gradient workers:
+the coordinator prepares the complete update and owns one optimizer state,
+while workers load the base VLA once per rollout update and return gradients
+for disjoint prepared-example partitions. Later subupdates refresh only the
+LoRA state in place. Globally prepared advantages and loss denominators are
+frozen before sharding; workers never normalize partial GRPO groups. Users that
+need another distributed runtime can
+call `run_embodied_experiment` or instantiate `EmbodiedExperiment`, the backend,
+and the observer separately without changing the trajectory contract.
+
+Policy families and native objectives are capability extensions rather than
+conditionals in the runner. An integration package registers its YAML policy
+type and, where needed, its action representation/backend pair:
+
+```python
+embodied.register_policy_factory("my_lerobot_policy", make_my_policy)
+embodied.register_embodied_backend(
+    action_kind="continuous",
+    algorithm_type="grpo",
+    factory=make_my_native_backend,
+)
+```
+
+The factory owns model-specific validation of `policy.load_kwargs` and sampler
+capabilities. This is how future SmolVLA or pi0 integrations can preserve their
+native flow/diffusion mathematics without inheriting OpenVLA action-token or
+RLinf assumptions.
+
+The built-in evaluator never infers success from a reward threshold. Each
+evaluation trajectory must set `trajectory.metrics["success"]` (or an explicitly
+selected metric), and failed episodes remain in the denominator. Scenario IDs,
+episode count, and seed bases come from YAML; therefore evaluation does not
+silently drift between checkpoints.
+
+## Task-partitioned LoRA (experimental)
+
+Task-partitioned LoRA is an experimental multi-task interference control for
+Flow-SDE training. It divides the configured total LoRA rank into disjoint
+task-owned blocks. All blocks remain active in every forward pass, but a
+trajectory can update only the block assigned to its task.
+
+This is **not** inference-time routing or a mixture of experts. Inference and
+evaluation do not need a task ID to select an adapter: the complete sum of all
+LoRA blocks is always part of the policy. The task key is used only during
+training to choose which block receives the trajectory's gradient.
+
+```text
+forward(task A)  = base + block A + block B + block C
+backward(task A) = update block A only
+inference        = base + block A + block B + block C
+```
+
+The current training contract uses `EmbodiedTrajectory.task` as the task key.
+Every rollout must therefore assign a stable, non-empty key that exactly
+matches one `policy.lora.rank_partition.task_keys` entry:
+
+```python
+trajectory = embodied.EmbodiedTrajectory(
+    task="drawer_insert_v1",
+    # Keep the human-facing instruction in messages or metadata when it differs
+    # from the stable machine key.
+    metadata={"task_instruction": "Place the part inside the drawer."},
+)
+```
+
+```yaml
+policy:
+  lora:
+    enabled: true
+    rank: 128
+    alpha: 128
+    rank_partition:
+      mode: task_all_active
+      allocation: balanced
+      task_keys:
+        - drawer_insert_v1
+        - moka_pots_to_stove_v1
+        - mug_to_microwave_v1
+```
+
+Use a canonical recipe, skill, or environment task identifier rather than raw
+user prose when possible. Matching is currently closed-vocabulary and exact:
+there is no alias resolution, automatic task discovery, hierarchical routing,
+or unseen-task fallback. An unconfigured trajectory task fails before its
+gradient is applied instead of silently updating the wrong block.
+
+`allocation: balanced` assigns every rank exactly once and gives remainder
+ranks to earlier keys deterministically. For example, rank 128 over ten tasks
+produces eight rank-13 blocks and two rank-12 blocks. `alpha` must equal the
+total `rank`; each native PEFT block then uses its own rank as its alpha so all
+blocks have the same unit scaling.
+
+Task-homogeneous training microbatches preserve the mapping. The coordinator
+applies optimizer updates only to adapters present in a worker's gradient
+payload; untouched blocks retain their weights, Adam moments, optimizer step,
+and avoid AdamW decay for that task. Checkpoints still save and restore the
+complete all-active adapter set as one policy state.
+
+Start this mode from an adapter-free SFT policy. ART-Embodied rejects an
+already adapted policy rather than merging, interpolating, or repartitioning a
+previous RL LoRA implicitly. The current ten-task research profile is
+[`smolvla_libero_10_task_partitioned_flow_sde_grpo_r128_h100.yaml`](../../examples/embodied/smolvla_libero_10_task_partitioned_flow_sde_grpo_r128_h100.yaml).
+It uses LIBERO's canonical instruction strings as keys because those strings
+are stable in that benchmark; application integrations should normally use
+short machine-stable identifiers.
+
+This feature remains experimental until fixed evaluation shows that isolating
+direct writes improves multi-task learning without unacceptable regressions.
+Do not present it as the recommended default solely because its implementation
+and gradient-isolation tests pass.
+
+## Why the optimizer schedule is explicit
+
+The OpenVLA-OFT positive control follows the executed RLinf v0.1 actor
+contract. One rollout update performs these operations in order:
+
+1. Compute reward filtering and group-relative advantages over the complete
+   rollout update.
+2. Reconstruct each logical actor rank's fixed-horizon, time-major rollout
+   tensor.
+3. Apply the seeded rank-local shuffle.
+4. Split the result into sequential actor-global optimizer batches.
+5. Reuse rollout-time old log probabilities for every subupdate and apply the
+   configured PPO clipping objective.
+
+Splitting trajectory groups before step 1 changes the advantages. Replacing
+the fixed-horizon denominator with the number of observed rows changes the
+loss scale. The strict YAML validator rejects either mismatch.
+
+The reference profile has 1,024 trajectories per rollout update, 512 primitive
+steps, action chunks of 8, and four actor-global batches of 16,384 rows:
+
+```text
+1,024 trajectories x (512 / 8) policy steps
+  = 65,536 fixed-horizon rows
+  = 4 optimizer steps x 16,384 rows
+```
+
+The profile is a research positive control, not the intended lightweight
+default. Smaller LeRobot-first profiles should be adopted only after held-out
+success lift is measured against this reference.
+
+## GRPO and GSPO action-token objectives
+
+`algorithm.type: grpo` applies importance ratios at action-token granularity.
+`algorithm.type: gspo` treats one complete embodied rollout as one sequence:
+it averages the action-token log-ratio over every valid policy step, applies
+one clipped sequence ratio to the trajectory advantage, and then distributes
+that exact gradient over the sequence tokens. The GSPO validator fails closed
+unless `importance_sampling_level: sequence`, `training_unit: trajectory`,
+`score_source: trajectory_reward`, and `loss_aggregation: trajectory_mean` are
+selected together. The current implementation also requires
+`training.schedule.type: full_update` or `trajectory_minibatch`; action-level
+RLinf subupdates are not silently reinterpreted as sequence GSPO.
+
+GSPO also requires `precalculate_logprobs: true` with
+`rollout_logprob_source: recomputed_current_policy`. OpenVLA-OFT likelihoods
+can vary slightly with scorer batch shape after LoRA updates. That difference
+is tolerable under GRPO's broad token clipping range but can dominate GSPO's
+very narrow sequence-ratio range. Before any optimizer step, ART-Embodied
+therefore uses all local training workers to rescore every sampled action with
+the same `train_logprob_microbatch_size`, padding, model mode, and policy
+snapshot used by the gradient path. W&B records the rescore latency and the
+delta from rollout-time likelihoods separately from objective KL and clipping.
+
+Do not reuse GRPO's token-ratio clipping range for GSPO. The original
+[GSPO paper](https://arxiv.org/abs/2507.18071) uses left/right sequence-ratio
+ranges of `3e-4` and `4e-4`, versus `0.2` and `0.27` for GRPO, and partitions
+each rollout batch into four mini-batches. The Object research profile follows
+that geometry with four deterministic 256-trajectory subupdates.
+
+A VLA trajectory can contain dozens of image-conditioned forwards. Retaining
+all of those graphs merely to form one sequence ratio can exceed H100 memory.
+The action-token GSPO backend therefore uses an exact two-pass implementation:
+the first no-gradient pass computes the complete sequence ratio and clipping
+branch; the second recomputes one action span at a time and immediately
+backpropagates the analytically identical local derivative. RNG state is
+replayed between passes, and a unit gate compares every trainable gradient
+against the non-streamed objective.
+
+An early OpenVLA-OFT mechanical gate passed on two H100s in Slurm job `7515`:
+one 16-rollout group contained 11 successes and five failures, four
+shuffled four-trajectory mini-batches completed four optimizer steps, both
+distributed workers refreshed their adapters between subupdates, and backend
+step 4 was saved. W&B artifact/video logging and nested Weave traces also
+completed. That run predates mandatory scorer-aligned old-logprob rescore, so it
+proves only the GSPO training lifecycle, not objective correctness or a
+success-rate advantage over GRPO. A corrected GPU gate and multi-update fixed
+evaluation are required before making a learning-quality claim.
+
+Internal distributed handoff metrics retain the canonical GRPO keys used by
+the shared coordinator. Public GSPO results expose only the
+`embodied_action_token_gspo/` namespace so W&B does not create duplicate GRPO
+and GSPO panels for the same update.
+
+Use
+`examples/embodied/openvla_oft_libero_object_gspo_lora_smoke_h100.yaml` as the
+implementation gate. It is deliberately a one-update smoke profile rather than
+a recommended production hyperparameter preset. That one rollout update uses
+four 4-trajectory optimizer subupdates to exercise adapter refresh between
+mini-batches.
+
+For a learning-quality comparison, use
+`examples/embodied/openvla_oft_libero_object_gspo_lora_lr2e4_h100.yaml`. It
+matches the validated GRPO profile's model, LoRA, sampler, 1,024 trajectories
+per update, fixed evaluation matrix, and eight-GPU runtime. Its GSPO objective
+bundle, sequence clipping range, and trajectory mini-batching are the
+intentional differences. Both profiles execute four optimizer subupdates over
+the same 1,024 rollout trajectories, but the training units differ: GRPO uses
+action rows while GSPO uses complete trajectories. The 20-update profile is a
+research comparison and should not be treated as a default until fixed
+state-held-out results are available.
+
+For an implementation smoke, use
+`examples/embodied/openvla_oft_action_token_smoke.py`. It performs one real
+OpenVLA-OFT LoRA policy-gradient update on synthetic observations and removes
+the temporary checkpoint by default. Passing the smoke proves model loading,
+action-token likelihood recomputation, optimizer movement, and checkpoint
+serialization/reload. The smoke uses ART's native loader and does not import
+RLinf. It does not prove robotics task performance.
+
+Use
+`examples/embodied/openvla_oft_action_token_distributed_smoke.yaml` to run the
+same contract with two process-isolated workers and two sequential optimizer
+subupdates. The reported `distributed_policy_loads` and
+`distributed_adapter_refreshes` metrics distinguish expensive base-model loads
+from inexpensive in-place LoRA synchronization.
+
+## Configuration is the experiment contract
+
+Use YAML as the single source of truth. The schema rejects unknown fields and
+requires reset semantics, generation behavior, reward filtering, advantage
+normalization, optimizer geometry, evaluation scenarios and seeds,
+observability limits, and storage retention to be visible.
+
+See
+[`examples/embodied/openvla_oft_libero_grpo_rlinf_positive_control.yaml`](../../examples/embodied/openvla_oft_libero_grpo_rlinf_positive_control.yaml).
+
+Validate cost and optimizer geometry before loading a model:
+
+```bash
+art-embodied validate experiment.yaml
+art-embodied validate --json experiment.yaml
+```
+
+The command reports trajectories per update, total trajectories, optimizer
+subupdates, and fixed-horizon rows. Strict RLinf configurations fail validation
+when rollout rows and optimizer rows differ.
+
+For a normal LeRobot integration, start from the complete
+[`lerobot_action_token_grpo.template.yaml`](../../examples/embodied/lerobot_action_token_grpo.template.yaml).
+It uses `training.schedule.type: full_update` and contains no RLinf actor
+topology. The RLinf profile is selected only when its conformance schedule is
+explicitly requested.
+
+## Observability
+
+Only the coordinator initializes W&B and Weave. Workers return metrics and
+media references rather than creating separate runs.
+
+Fixed evaluation is a human-facing experiment contract, not an archival side
+effect. Every scheduled evaluation is committed to the **same training run**
+and the same compact history row as its optimizer update. Diagnostic and
+development evaluation use `validation/*`; sealed evaluation uses `test/*`, so
+a final claim is not silently mixed with a development curve. The precomputed
+SFT result is the first `validation/success_rate` point at native W&B Step 0.
+Every later fixed evaluation writes to that **same metric**, producing one
+continuous baseline-to-RL learning curve. Paired lift, its 95% interval,
+McNemar's p-value, and improved/regressed counts are compact companion metrics,
+not competing baseline/candidate success series. W&B's native `Step` remains
+authoritative: after the baseline row, ART-Embodied emits exactly one history
+row per completed training update. An ad-hoc calibration is retained locally
+and as evidence, but must never create another W&B run or be spliced into the
+training curve.
+
+The coordinator is the only writer of scheduled training history. It connects
+as a regular W&B primary run (`connection: primary`), not as a shared-mode
+writer. ART-Embodied's workers return global metrics, media, and artifacts to
+the coordinator, so W&B's recommended rank-zero-only topology applies. This is
+also required for native Step accumulation and Artifact lineage: W&B SDK 0.27.2
+shared mode cannot read the current native Step for `commit=False` or
+`log_artifact()`, and explicitly supplied `step=` values are ignored.
+
+Because W&B cannot guarantee ordering across writers, claim-facing scheduled
+evaluation stays inside the coordinator and is committed in the same payload as
+its training update. Interrupted-writer recovery uses `connection: resume` and
+the original run ID; shared mode is not an attachment mechanism for experiment
+phases. Precomputed SFT baseline outcomes may be collected with W&B disabled,
+or measured before the first rollout in the coordinator. Missing or invalid
+baseline evidence fails startup for a paired run rather than producing a
+candidate-only chart. This follows W&B's recommendation to
+[track a single coordinator process](https://docs.wandb.ai/models/track/log/distributed-training)
+when validation, loss, and aggregate metrics are already available at rank 0.
+
+Console output uses W&B multipart logging with bounded time and byte rollover.
+The default 60-second/1-MiB rollover keeps long-run output visible online
+without waiting for process exit. Local Slurm logs remain immutable source
+evidence and are bounded separately from W&B history.
+
+For local diagnosis during a long action-token forward/backward phase, YAML can
+enable `training.log_action_token_progress` and set its microbatch cadence.
+The JSONL file is stored under `storage.output_dir/diagnostics/` and is bounded
+by `storage.max_log_file_mb`; no hidden environment variable changes this
+experiment condition.
+
+- W&B logs update metrics, success numerator and denominator, bounded rollout
+  videos, and versioned checkpoint Models artifacts. The small decision surface
+  uses one `validation/success_rate` series, or `test/success_rate` for a sealed
+  final evaluation. Task and episode detail is stored in bounded Tables and the
+  immutable evaluation Artifact, not hundreds of scalar history keys. The
+  training decision surface is likewise limited to `train/success_rate` and
+  `train/reward_mean`; `signal/*`, `optimization/*`, `performance/*`, and
+  `train_details/*` hold progressively deeper diagnostics. This separation is
+  top-level because W&B sections are determined by the first path component.
+  Train and evaluation videos use stable slots below the top-level
+  `media/simulation/` namespace.
+- W&B Summary also receives rollout-group progress, provisional success
+  numerator/denominator, reward, current phase, and elapsed time before the
+  update completes. Provisional values do not create history rows. Each
+  completed optimizer update creates exactly one history row, so the default
+  W&B Step remains the update index. `rollout_progress_every_groups` controls
+  the online Summary and terminal cadence.
+- Held-out episodes are logged as a bounded W&B Table. Model artifacts include
+  the immutable config fingerprint, policy type, algorithm, update, and train
+  and evaluation metrics.
+- Fixed evaluation has an explicit `data_role`: `diagnostic`, `development`, or
+  `sealed_test`. Train-matched data can only be diagnostic, and sealed outcomes
+  cannot drive the `best` checkpoint alias. This prevents a development set
+  from being relabeled as an untouched final test.
+- Every evaluation writes a content-addressed evidence index. It records raw
+  outcome and state-manifest hashes, package source-tree and Git identity,
+  dependency/runtime/container versions, and the exact base/adapter or
+  transactional checkpoint evaluated. When enabled,
+  `wandb.log_evaluation_artifacts` uploads the bounded index and raw outcomes as
+  a separate W&B evaluation artifact. Public recipes set
+  `observability.delivery_failure_policy: fail_run`, so a missing claim-facing
+  W&B/Weave record aborts instead of silently continuing. Optional local users
+  may explicitly choose `best_effort`; the local evidence bundle remains the
+  durable fallback in that mode.
+- Bounded W&B videos are outcome-aware. If both outcomes occur, the sample
+  includes a success and a failure before remaining slots are filled in source
+  order, avoiding full-rollout retention merely to compare behavior. Stable
+  `media/simulation/train/{slot}` and `media/simulation/eval/{slot}` keys reuse
+  the same W&B panels across updates; task and outcome are carried by captions
+  and the episode Table instead of multiplying panel names.
+- Weave records one training-update call containing trajectory-group,
+  trajectory, evaluation, and evaluation-trajectory child calls. Each
+  trajectory contains a chronological compact step timeline and one
+  file-backed `weave.Content` video, not raw GIF/MP4 bytes.
+- When trace limits apply, a group containing both success and failure is
+  selected first; child trajectories likewise preserve both outcomes when
+  available. Original group and trajectory indices remain visible.
+- The Weave root opens when the update starts and carries the W&B run ID and
+  URL. It is finished with an exception when rollout, training, evaluation, or
+  logging fails, rather than leaving an apparently successful partial trace.
+- Only the coordinator initializes either SDK. Rollout and training workers
+  return metrics and media references, avoiding duplicate runs and disconnected
+  trace roots.
+- Runtime delivery failures are isolated per integration. They are appended to
+  bounded `storage.output_dir/telemetry_failures.jsonl`, surfaced through
+  `telemetry/degraded`, and retried by later calls. They do not invalidate an
+  optimizer update that already committed its local state. Declared contracts
+  such as required train/evaluation video still fail closed.
+
+## Checkpoint transactions and resume
+
+Distributed milestones are written to a unique same-filesystem staging
+directory. After the policy, optimizer, and RNG streams are closed, the
+coordinator records every relative path, byte size, and SHA-256 digest in
+`art_embodied_checkpoint_complete.json`, syncs the tree, and atomically renames
+it to `checkpoints/step_NNNNNN`. Retention only sees the final directory.
+
+Resume validates the completion marker and every recorded payload before
+calling `policy.load_checkpoint`. It also compares a resume-contract
+fingerprint over policy, environment, reward, rollout, algorithm, schedule,
+and optimizer math. Operational settings excluded from that contract include
+the final update target, output path, checkpoint cadence, telemetry, and
+physical device allocation. This permits preemption recovery and cluster
+resizing without silently changing the experiment objective.
+
+Pre-transactional checkpoints have no cryptographic completion evidence and
+fail closed by default. Set `storage.allow_legacy_checkpoint_resume: true`
+only for a trusted historical milestone after independently checking its
+policy manifest and training-state files.
+
+## Current limits
+
+- OpenVLA-OFT action-token GRPO is the only success-rate claim-facing policy
+  path. GSPO has a real-update implementation gate but not a long-run
+  success-rate comparison yet.
+- The built-in OpenVLA-OFT action-token backend executes on one device or local
+  process-isolated gradient workers. Worker handoffs must use bounded,
+  preferably node-local storage. The RLinf rollout tensor topology remains
+  independent of physical GPU count.
+- PI0/PI0.5 have a native-sampler-aligned Flow-SDE GRPO research path and
+  positive fixed-development-evaluation lift at update 5. Multi-seed and sealed
+  validation remain incomplete. SmolVLA has a separate native-Euler Flow-SDE
+  objective and has passed real-checkpoint sampler/rescore/gradient plus
+  one-update LIBERO lifecycle conformance. Its success-rate lift remains unproven.
+- W&B Training / Serverless RL does not yet expose an embodied backend.

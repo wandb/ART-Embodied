@@ -1,0 +1,426 @@
+# OpenVLA-OFT trajectory-level GSPO implementation smoke.
+# One complete embodied rollout is one length-normalized GSPO sequence. Task 6
+# gives the SFT policy enough horizon to produce mixed sibling outcomes, so the
+# gate requires a real optimizer update rather than only exercising no-signal
+# checkpoint plumbing. This is not a success-rate claim.
+# The smoke includes distributed pre-update old-logprob rescoring because the
+# GSPO sequence clip is narrower than OpenVLA-OFT batch-shape likelihood drift.
+schema_version: 1
+experiment:
+  project: art-embodied-openvla
+  run: openvla-oft-libero-object-gspo-lora-signal-smoke-h100
+  seed: 20260715
+  tags:
+  - openvla-oft
+  - libero-object
+  - gspo
+  - trajectory-sequence
+  - lora-lr2e4
+  - h100-smoke
+policy:
+  type: openvla_oft
+  path: Haozhan72/Openvla-oft-SFT-libero-object-traj1
+  revision: 62e5a8daba3f619c993f23b248ae04b0d9677bb5
+  device: cuda
+  dtype: bfloat16
+  trust_remote_code: true
+  load_kwargs:
+    runtime_contract: openvla_oft_v01
+    robot_platform: libero
+    attn_implementation: null
+    peft_adapter_path: null
+    dataset_statistics_path: null
+    logprob_batch_size: 32
+    strict_batched_logprobs: true
+    max_prompt_length: 128
+    prompt_template: 'In: What action should the robot take to {instruction}?
+
+      Out:'
+    lowercase_instruction: true
+    num_images_in_input: 1
+    use_proprio: false
+    action_dim: 7
+    num_action_chunks: 8
+    model_loader: native
+  lora:
+    rank_partition: null
+    enabled: true
+    rank: 32
+    alpha: 32
+    dropout: 0.0
+    init: gaussian
+    target_modules:
+    - gate_proj
+    - k_proj
+    - up_proj
+    - qkv
+    - fc1
+    - lm_head
+    - down_proj
+    - v_proj
+    - q
+    - proj
+    - kv
+    - fc2
+    - fc3
+    - q_proj
+    - o_proj
+  unnorm_key: libero_object_no_noops
+  rollout_generation:
+    do_sample: true
+    temperature: 1.6
+    top_p: 1.0
+  train_generation:
+    do_sample: true
+    temperature: 1.6
+    top_p: 1.0
+  evaluation_generation:
+    do_sample: true
+    temperature: 1.6
+    top_p: 1.0
+  trainable_parameter_strategy: openvla_oft_lora
+  force_trainable_float32: true
+environment:
+  type: libero
+  task: libero_object
+  robot_type: null
+  kwargs:
+    success_key: success
+    task_ids:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    evaluation_trial_ids:
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    simulator_compatibility: rlinf_v01
+    observation_height: 256
+    observation_width: 256
+    primary_image_key: agentview_image
+    wrist_image_key: robot0_eye_in_hand_image
+    rotate_images_180: true
+    wait_steps_after_reset: 15
+    action_chunk_size: 8
+    stop_on_success: true
+    stop_on_done: true
+    normalize_gripper: true
+    binarize_gripper: true
+    invert_gripper: true
+    control_mode: unchanged
+    init_state_selection: rlinf_v01_ordered_reset
+    reset_schedule:
+      total_reset_states: 500
+      # Seed 301 starts the deterministic RLinf stream at task 6 / trial 48,
+      # while preserving the ten-task schedule contract.
+      total_num_processes: 1
+      groups_per_process_per_rollout_epoch: 1
+      rollout_epochs_per_update: 1
+      numpy_seed: 301
+  reset:
+    reset_gripper_open: false
+  observation_processor: {}
+  action_processor: {}
+reward:
+  type: environment
+  name: success
+  terminal_only: true
+  scale: 5.0
+  kwargs: {}
+algorithm:
+  flow_sde: null
+  type: gspo
+  group_size: 16
+  clip_epsilon_low: 3.0e-4
+  clip_epsilon_high: 4.0e-4
+  kl_coefficient: 0.0
+  clip_ratio_c: null
+  importance_sampling_level: sequence
+  training_unit: trajectory
+  action_advantage_mode: example
+  score_source: trajectory_reward
+  pad_fixed_horizon_examples: false
+  filter_rewards: false
+  reward_filter_mode: drop_examples
+  rewards_lower_bound: null
+  rewards_upper_bound: null
+  loss_aggregation: trajectory_mean
+  advantage:
+    scope: group
+    normalize: true
+    extra_global_normalization: false
+    mask_zero_variance_groups: false
+    std_unbiased: false
+    epsilon: 1.0e-06
+  precalculate_logprobs: true
+  rollout_logprob_source: recomputed_current_policy
+  logprob_eval_mode: false
+  logprob_microbatch_size: 1
+  train_logprob_microbatch_size: 1
+  pre_update_logprob_kl_tolerance: 1.0e-4
+  pre_update_ratio_tolerance: 1.0e-4
+  skip_optimizer_step_without_policy_gradient_signal: true
+rollout:
+  groups_per_update: 1
+  epochs_per_update: 1
+  workers: 2
+  failure_policy: fail_update
+  minimum_completed_attempts_per_group: 16
+  max_episode_steps: 256
+  max_policy_steps: 32
+  temperature: 1.6
+  deterministic: false
+  action_payload:
+    kind: token
+    require_old_logprobs: true
+    require_prompt: true
+    require_observation: true
+    trainable_action_selection: all
+    max_trainable_actions_per_trajectory: null
+training:
+  updates: 1
+  optimizer_steps_per_update: 4
+  microbatch_size: 1
+  log_action_token_progress: true
+  action_token_progress_every_microbatches: 128
+  schedule:
+    type: trajectory_minibatch
+    minibatch_trajectories: 4
+    shuffle_seed: 1234
+  checkpoint_every_updates: 1
+  optimizer:
+    type: adamw
+    learning_rate: 0.0002
+    weight_decay: 0.01
+    beta1: 0.9
+    beta2: 0.999
+    epsilon: 1.0e-05
+    max_grad_norm: 1.0
+evaluation:
+  enabled: false
+  evaluate_before_training: false
+  pre_training_success_gate: null
+  split: train_matched
+  data_role: diagnostic
+  runtime: native_lerobot
+  baseline_outcomes_path: null
+  baseline_wait_timeout_seconds: 0
+  every_updates: 10
+  episodes: 100
+  seeds:
+  - 0
+  deterministic: false
+  temperature: 1.6
+  fixed_scenarios:
+  - libero_object/eval/task-00/trial-40
+  - libero_object/eval/task-00/trial-41
+  - libero_object/eval/task-00/trial-42
+  - libero_object/eval/task-00/trial-43
+  - libero_object/eval/task-00/trial-44
+  - libero_object/eval/task-00/trial-45
+  - libero_object/eval/task-00/trial-46
+  - libero_object/eval/task-00/trial-47
+  - libero_object/eval/task-00/trial-48
+  - libero_object/eval/task-00/trial-49
+  - libero_object/eval/task-01/trial-40
+  - libero_object/eval/task-01/trial-41
+  - libero_object/eval/task-01/trial-42
+  - libero_object/eval/task-01/trial-43
+  - libero_object/eval/task-01/trial-44
+  - libero_object/eval/task-01/trial-45
+  - libero_object/eval/task-01/trial-46
+  - libero_object/eval/task-01/trial-47
+  - libero_object/eval/task-01/trial-48
+  - libero_object/eval/task-01/trial-49
+  - libero_object/eval/task-02/trial-40
+  - libero_object/eval/task-02/trial-41
+  - libero_object/eval/task-02/trial-42
+  - libero_object/eval/task-02/trial-43
+  - libero_object/eval/task-02/trial-44
+  - libero_object/eval/task-02/trial-45
+  - libero_object/eval/task-02/trial-46
+  - libero_object/eval/task-02/trial-47
+  - libero_object/eval/task-02/trial-48
+  - libero_object/eval/task-02/trial-49
+  - libero_object/eval/task-03/trial-40
+  - libero_object/eval/task-03/trial-41
+  - libero_object/eval/task-03/trial-42
+  - libero_object/eval/task-03/trial-43
+  - libero_object/eval/task-03/trial-44
+  - libero_object/eval/task-03/trial-45
+  - libero_object/eval/task-03/trial-46
+  - libero_object/eval/task-03/trial-47
+  - libero_object/eval/task-03/trial-48
+  - libero_object/eval/task-03/trial-49
+  - libero_object/eval/task-04/trial-40
+  - libero_object/eval/task-04/trial-41
+  - libero_object/eval/task-04/trial-42
+  - libero_object/eval/task-04/trial-43
+  - libero_object/eval/task-04/trial-44
+  - libero_object/eval/task-04/trial-45
+  - libero_object/eval/task-04/trial-46
+  - libero_object/eval/task-04/trial-47
+  - libero_object/eval/task-04/trial-48
+  - libero_object/eval/task-04/trial-49
+  - libero_object/eval/task-05/trial-40
+  - libero_object/eval/task-05/trial-41
+  - libero_object/eval/task-05/trial-42
+  - libero_object/eval/task-05/trial-43
+  - libero_object/eval/task-05/trial-44
+  - libero_object/eval/task-05/trial-45
+  - libero_object/eval/task-05/trial-46
+  - libero_object/eval/task-05/trial-47
+  - libero_object/eval/task-05/trial-48
+  - libero_object/eval/task-05/trial-49
+  - libero_object/eval/task-06/trial-40
+  - libero_object/eval/task-06/trial-41
+  - libero_object/eval/task-06/trial-42
+  - libero_object/eval/task-06/trial-43
+  - libero_object/eval/task-06/trial-44
+  - libero_object/eval/task-06/trial-45
+  - libero_object/eval/task-06/trial-46
+  - libero_object/eval/task-06/trial-47
+  - libero_object/eval/task-06/trial-48
+  - libero_object/eval/task-06/trial-49
+  - libero_object/eval/task-07/trial-40
+  - libero_object/eval/task-07/trial-41
+  - libero_object/eval/task-07/trial-42
+  - libero_object/eval/task-07/trial-43
+  - libero_object/eval/task-07/trial-44
+  - libero_object/eval/task-07/trial-45
+  - libero_object/eval/task-07/trial-46
+  - libero_object/eval/task-07/trial-47
+  - libero_object/eval/task-07/trial-48
+  - libero_object/eval/task-07/trial-49
+  - libero_object/eval/task-08/trial-40
+  - libero_object/eval/task-08/trial-41
+  - libero_object/eval/task-08/trial-42
+  - libero_object/eval/task-08/trial-43
+  - libero_object/eval/task-08/trial-44
+  - libero_object/eval/task-08/trial-45
+  - libero_object/eval/task-08/trial-46
+  - libero_object/eval/task-08/trial-47
+  - libero_object/eval/task-08/trial-48
+  - libero_object/eval/task-08/trial-49
+  - libero_object/eval/task-09/trial-40
+  - libero_object/eval/task-09/trial-41
+  - libero_object/eval/task-09/trial-42
+  - libero_object/eval/task-09/trial-43
+  - libero_object/eval/task-09/trial-44
+  - libero_object/eval/task-09/trial-45
+  - libero_object/eval/task-09/trial-46
+  - libero_object/eval/task-09/trial-47
+  - libero_object/eval/task-09/trial-48
+  - libero_object/eval/task-09/trial-49
+  checkpoint_selection: last
+  kwargs:
+    seed_contract:
+      environment_mode: fixed
+      fixed_environment_seed: 0
+      policy_mode: derived
+      fixed_policy_seed: 0
+observability:
+  delivery_failure_policy: fail_run
+  wandb:
+    enabled: true
+    entity: null
+    project: art-embodied-openvla-gspo
+    connection: primary
+    run_id: null
+    resume: null
+    writer_label: null
+    console_multipart: true
+    console_chunk_max_bytes: 1048576
+    console_chunk_max_seconds: 60
+    group: openvla-oft-libero-object-gspo-signal-smoke
+    job_type: trajectory-gspo-signal-smoke
+    mode: online
+    log_model_artifacts: true
+    log_input_model_artifact: false
+    input_model_artifact_ref: null
+    log_evaluation_artifacts: true
+    log_evaluation_table: true
+    max_evaluation_table_rows: 100
+    log_rollout_progress: true
+    rollout_progress_every_groups: 4
+    log_evaluation_progress: true
+    evaluation_progress_every_episodes: 5
+  weave:
+    enabled: true
+    project: art-embodied-openvla-gspo
+    trace_trajectories: true
+    max_groups_per_update: 4
+    max_trajectories_per_group: 4
+    max_evaluation_trajectories: 8
+    use_server_cache: false
+    server_cache_dir: null
+    server_cache_size_mb: 0
+  videos_per_update: 2
+  videos_per_evaluation: 0
+  require_train_video: true
+  require_evaluation_video: false
+  video_fps: 20
+  lookahead_preview:
+    enabled: false
+    videos_per_update: 1
+    videos_per_evaluation: 1
+    max_future_frames: 10
+    future_stride: 4
+    max_panels: 4
+storage:
+  output_dir: outputs/release-validation/openvla-oft-libero-object-gspo-lora-smoke-h100
+  keep_last_checkpoints: 1
+  retain_checkpoint_updates: []
+  save_training_state: true
+  resume_from_checkpoint: null
+  allow_legacy_checkpoint_resume: false
+  max_log_file_mb: 32
+  retain_rollout_payloads: false
+runtime:
+  backend: local
+  rollout_execution:
+    mode: local_process
+    actor_factory: art_embodied.integrations.lerobot_process:create_lerobot_process_actor
+    actor_kwargs:
+      components_factory: examples.embodied.libero.components:create_components
+      components_kwargs: {}
+    actors_per_device: 1
+    group_batching: true
+    lifecycle: cpu_offload
+    policy_sync: checkpoint
+    inference_mode: batched_server
+    inference_factory: art_embodied.policies.inference:create_openvla_batched_inference_engine
+    inference_replicas_per_device: 1
+    inference_max_batch_size: 2
+    inference_max_wait_ms: 2.0
+    startup_timeout_seconds: 7200
+    request_timeout_seconds: 7200
+    actor_python_executable: null
+    inference_python_executable: null
+  worker_python_executable: null
+  rollout_devices:
+  - cuda:0
+  - cuda:1
+  training_devices:
+  - cuda:0
+  - cuda:1
+  distributed_training: true
+  training_worker_lifecycle: cpu_offload
+  worker_handoff_dir: /tmp/art-embodied
+  worker_timeout_seconds: 7200
+  max_worker_handoff_mb: 8192
+  keep_worker_handoffs: false

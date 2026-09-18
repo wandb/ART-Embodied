@@ -1,0 +1,253 @@
+[project]
+name = "art-embodied"
+version = "0.1.0rc2"
+description = "LeRobot-first trajectory-level reinforcement learning for OpenPipe ART"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "THIRD-PARTY-NOTICES"]
+dependencies = [
+    "openpipe-art==0.5.18; python_version < '3.12'",
+    "openpipe-art>=0.5.18,<=0.5.20,!=0.5.19; python_version >= '3.12'",
+    "numpy>=1.26,<3",
+    "packaging>=24",
+    "pillow>=12.3,<13",
+    "pydantic>=2.10.6,<3",
+    "pyyaml>=6,<7",
+    "typer>=0.15.2",
+]
+
+[project.scripts]
+art-embodied = "art_embodied.cli:app"
+
+[project.optional-dependencies]
+lerobot = [
+    "lerobot>=0.4.4,<0.5",
+]
+pi = [
+    "lerobot[peft,pi]==0.6.0; python_version >= '3.12'",
+]
+pi-libero = [
+    "lerobot[libero,peft,pi]==0.6.0; python_version >= '3.12'",
+    "matplotlib>=3.10.3,<4; python_version >= '3.12'",
+    "mujoco==3.8.1; python_version >= '3.12'",
+    "numba==0.61.2; python_version >= '3.12'",
+    "robosuite==1.4.0; python_version >= '3.12'",
+]
+pi0-fast = [
+    "lerobot[peft,pi]==0.6.0; python_version >= '3.12'",
+]
+pi0-fast-libero = [
+    "lerobot[libero,peft,pi]==0.6.0; python_version >= '3.12'",
+    "matplotlib>=3.10.3,<4; python_version >= '3.12'",
+    "mujoco==3.8.1; python_version >= '3.12'",
+    "numba==0.61.2; python_version >= '3.12'",
+    "robosuite==1.4.0; python_version >= '3.12'",
+    "scikit-image==0.25.2",
+    "wand==0.6.13",
+]
+smolvla = [
+    "lerobot[peft,smolvla]==0.6.0; python_version >= '3.12'",
+]
+smolvla-libero = [
+    "lerobot[libero,peft,smolvla]==0.6.0; python_version >= '3.12'",
+    "matplotlib>=3.10.3,<4; python_version >= '3.12'",
+    "mujoco==3.8.1; python_version >= '3.12'",
+    "numba==0.61.2; python_version >= '3.12'",
+    "robosuite==1.4.0; python_version >= '3.12'",
+]
+libero = [
+    "accelerate==1.14.0",
+    "hf-libero==0.1.4",
+    "h5py==3.14.0",
+    "matplotlib>=3.8,<4",
+    "mujoco==3.8.1",
+    "numba==0.61.2",
+    "numpy==1.26.4",
+    "peft==0.11.1",
+    "safetensors==0.7.0",
+    "sentencepiece==0.2.1",
+    "timm==0.9.10",
+    "tokenizers==0.19.1",
+    "torch==2.6.0",
+    "torchvision==0.21.0",
+    "transformers==4.40.1",
+]
+observability = [
+    "wandb>=0.24,<0.29",
+    "weave>=0.52.37",
+]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-asyncio>=0.25",
+    "ruff>=0.11",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/art_embodied"]
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "CHANGELOG.md",
+    "constraints/security.txt",
+    "constraints/diffusers-security.txt",
+    "docs/experimental/dependency-security.md",
+    "docs/experimental/upstream-art-compatibility.md",
+    "LICENSE",
+    "README.md",
+    "README.ja.md",
+    "README.ko.md",
+    "README.zh-CN.md",
+    "README.zh-TW.md",
+    "THIRD-PARTY-NOTICES",
+    "pyproject.toml",
+    "src/art_embodied",
+]
+
+[tool.ruff.lint]
+select = ["I"]
+
+[tool.ruff.lint.isort]
+case-sensitive = false
+known-first-party = ["art_embodied"]
+known-third-party = ["art", "lerobot", "wandb", "weave"]
+force-sort-within-sections = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = [
+    "live_api_cost: opt-in live API cost validation against provider endpoints",
+]
+
+[tool.uv]
+required-version = ">=0.12.0"
+# Temporary, scoped compatibility overrides. See README.md installation notes.
+override-dependencies = [
+    "diffusers==0.38.0",
+    "litellm==1.101.0",
+    { package = { name = "litellm", version = "1.101.0" }, dependencies = ["tokenizers>=0.19.1,<1.0"] },
+]
+constraint-dependencies = [
+    "aiohttp>=3.14.3",
+    "click>=8.4.2",
+    "cryptography>=50.0.1",
+    "fickling>=0.1.12",
+    "gitpython>=3.1.60",
+    "hydra-core>=1.3.4",
+    "pillow>=12.3.0",
+]
+conflicts = [
+    [
+        { extra = "lerobot" },
+        { extra = "libero" },
+    ],
+    [
+        { extra = "lerobot" },
+        { extra = "pi" },
+    ],
+    [
+        { extra = "lerobot" },
+        { extra = "pi-libero" },
+    ],
+    [
+        { extra = "lerobot" },
+        { extra = "pi0-fast" },
+    ],
+    [
+        { extra = "lerobot" },
+        { extra = "pi0-fast-libero" },
+    ],
+    [
+        { extra = "lerobot" },
+        { extra = "smolvla" },
+    ],
+    [
+        { extra = "lerobot" },
+        { extra = "smolvla-libero" },
+    ],
+    [
+        { extra = "libero" },
+        { extra = "pi" },
+    ],
+    [
+        { extra = "libero" },
+        { extra = "pi-libero" },
+    ],
+    [
+        { extra = "libero" },
+        { extra = "pi0-fast" },
+    ],
+    [
+        { extra = "libero" },
+        { extra = "pi0-fast-libero" },
+    ],
+    [
+        { extra = "libero" },
+        { extra = "smolvla" },
+    ],
+    [
+        { extra = "libero" },
+        { extra = "smolvla-libero" },
+    ],
+    [
+        { extra = "pi" },
+        { extra = "smolvla" },
+    ],
+    [
+        { extra = "pi" },
+        { extra = "pi0-fast" },
+    ],
+    [
+        { extra = "pi" },
+        { extra = "pi0-fast-libero" },
+    ],
+    [
+        { extra = "pi" },
+        { extra = "smolvla-libero" },
+    ],
+    [
+        { extra = "pi-libero" },
+        { extra = "smolvla" },
+    ],
+    [
+        { extra = "pi-libero" },
+        { extra = "smolvla-libero" },
+    ],
+    [
+        { extra = "pi-libero" },
+        { extra = "pi0-fast" },
+    ],
+    [
+        { extra = "pi-libero" },
+        { extra = "pi0-fast-libero" },
+    ],
+    [
+        { extra = "smolvla" },
+        { extra = "pi0-fast" },
+    ],
+    [
+        { extra = "smolvla" },
+        { extra = "pi0-fast-libero" },
+    ],
+    [
+        { extra = "smolvla-libero" },
+        { extra = "pi0-fast" },
+    ],
+    [
+        { extra = "smolvla-libero" },
+        { extra = "pi0-fast-libero" },
+    ],
+    [
+        { extra = "pi0-fast" },
+        { extra = "pi0-fast-libero" },
+    ],
+]
+
+[tool.uv.extra-build-dependencies]
+egl-probe = ["cmake>=3.20,<4"]
+hf-egl-probe = ["cmake>=3.20,<4"]

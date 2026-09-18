@@ -1,0 +1,340 @@
+schema_version: 1
+experiment:
+  project: art-embodied-gr00t-n1d7-robocasa-positive-control
+  run: gr00t-n1d7-robocasa-gr1-tabletop-24task-flow-sde-grpo-gate
+  seed: 20260814
+  tags:
+  - gr00t-n1d7
+  - robocasa
+  - gr1-tabletop
+  - 24-task
+  - flow-sde
+  - grpo
+  - positive-control-gate
+policy:
+  type: gr00t_n1d7
+  path: outputs/gr00t-n1d7-robocasa-sft/gr00t-n1d7-robocasa-gr1-tabletop-sft-u60000/checkpoint-60000
+  revision: null
+  device: cuda:0
+  dtype: bfloat16
+  trust_remote_code: false
+  load_kwargs:
+    runtime_contract: nvidia_n1d7
+    model_format: nvidia_n1d7
+    embodiment_tag: ROBOCASA_GR1_TABLETOP
+    checkpoint_subfolder: .
+    execution_horizon: 8
+    processor_action_horizon: 8
+    action_dim: 29
+    execution_action_dim: 29
+    action_components:
+    - key: left_arm
+      size: 7
+      executed: true
+      execution_order: 0
+    - key: right_arm
+      size: 7
+      executed: true
+      execution_order: 1
+    - key: left_hand
+      size: 6
+      executed: true
+      execution_order: 2
+    - key: right_hand
+      size: 6
+      executed: true
+      execution_order: 3
+    - key: waist
+      size: 3
+      executed: true
+      execution_order: 4
+    model_action_horizon: 40
+    disable_dropout: true
+    compile_model: false
+    gradient_checkpointing: false
+    train_expert_only: true
+  lora:
+    rank_partition: null
+    enabled: true
+    rank: 32
+    alpha: 32
+    dropout: 0.0
+    init: gaussian
+    target_modules:
+    - auto
+  unnorm_key: null
+  rollout_generation:
+    do_sample: true
+    temperature: 1.0
+    top_p: 1.0
+  train_generation:
+    do_sample: true
+    temperature: 1.0
+    top_p: 1.0
+  evaluation_generation:
+    do_sample: false
+    temperature: 1.0
+    top_p: 1.0
+  trainable_parameter_strategy: gr00t_n1d7_action_head_lora
+  force_trainable_float32: true
+environment:
+  type: robocasa_gr1_tabletop
+  task: robocasa-gr1-tabletop-24
+  robot_type: GR1ArmsAndWaistFourierHands
+  kwargs:
+    task_manifest: examples/embodied/robocasa/gr1_tabletop_tasks.yaml
+    task_ids: []
+    simulator_python_executable: .venv-robocasa-gr1/bin/python
+    execution_horizon: 8
+    stop_on_success: true
+    stop_on_done: true
+    success_key: success
+  reset: {}
+  observation_processor: {}
+  action_processor: {}
+reward:
+  type: environment
+  name: success
+  terminal_only: true
+  scale: 1.0
+  kwargs: {}
+algorithm:
+  flow_sde:
+    noise_level: 0.5
+    num_denoise_steps: 4
+    stochastic_transitions_per_sample: 1
+    selected_step_sampling: uniform
+    joint_logprob: false
+  type: grpo
+  group_size: 8
+  clip_epsilon_low: 0.2
+  clip_epsilon_high: 0.2
+  kl_coefficient: 0.0
+  clip_ratio_c: 3.0
+  importance_sampling_level: token
+  training_unit: action
+  action_advantage_mode: example
+  score_source: trajectory_reward
+  pad_fixed_horizon_examples: true
+  filter_rewards: true
+  reward_filter_mode: loss_mask
+  rewards_lower_bound: 0.1
+  rewards_upper_bound: 0.9
+  loss_aggregation: rlinf_chunk_mean
+  advantage:
+    scope: group
+    normalize: true
+    extra_global_normalization: false
+    mask_zero_variance_groups: false
+    std_unbiased: true
+    epsilon: 1.0e-06
+  precalculate_logprobs: false
+  rollout_logprob_source: rollout_action
+  logprob_eval_mode: false
+  logprob_microbatch_size: 8
+  train_logprob_microbatch_size: 8
+  pre_update_logprob_kl_tolerance: 0.02
+  pre_update_ratio_tolerance: 0.02
+  skip_optimizer_step_without_policy_gradient_signal: false
+rollout:
+  groups_per_update: 24
+  epochs_per_update: 1
+  workers: 8
+  failure_policy: fail_update
+  minimum_completed_attempts_per_group: 8
+  max_episode_steps: 720
+  max_policy_steps: 90
+  temperature: 1.0
+  deterministic: false
+  action_payload:
+    kind: continuous
+    require_old_logprobs: true
+    require_prompt: false
+    require_observation: false
+    trainable_action_selection: all
+    max_trainable_actions_per_trajectory: null
+training:
+  updates: 1
+  optimizer_steps_per_update: 24
+  microbatch_size: 8
+  log_action_token_progress: false
+  action_token_progress_every_microbatches: 128
+  schedule:
+    type: rlinf_actor_global_batch
+    global_batch_size: 720
+    actor_seed: 42
+    actor_world_size: 8
+    rank_local_shuffle: true
+    groups_per_process_per_rollout_epoch: 3
+    action_chunk_size: 8
+    update_epochs: 1
+    strict_geometry: true
+    pre_update_alignment_guard: first_subupdate
+    max_approximate_kl: null
+    approximate_kl_guard_scope: joint_chunk
+    min_optimizer_steps_before_kl_stop: 1
+  checkpoint_every_updates: 1
+  optimizer:
+    type: adamw
+    learning_rate: 0.0001
+    weight_decay: 0.0
+    beta1: 0.9
+    beta2: 0.95
+    epsilon: 1.0e-05
+    max_grad_norm: 1.0
+evaluation:
+  enabled: true
+  evaluate_before_training: true
+  pre_training_success_gate:
+    minimum_success_rate: 0.1
+    maximum_success_rate: 0.8
+  split: train_matched
+  data_role: diagnostic
+  runtime: native_lerobot
+  baseline_outcomes_path: null
+  baseline_wait_timeout_seconds: 0
+  every_updates: 1
+  episodes: 96
+  seeds:
+  - 0
+  - 1
+  - 2
+  - 3
+  deterministic: true
+  temperature: 1.0
+  fixed_scenarios:
+  - robocasa-gr1/PnPBottleToCabinetClose/eval
+  - robocasa-gr1/PnPCanToDrawerClose/eval
+  - robocasa-gr1/PnPCupToDrawerClose/eval
+  - robocasa-gr1/PnPMilkToMicrowaveClose/eval
+  - robocasa-gr1/PnPPotatoToMicrowaveClose/eval
+  - robocasa-gr1/PnPWineToCabinetClose/eval
+  - robocasa-gr1/PosttrainPnPNovelFromCuttingboardToBasketSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromCuttingboardToCardboardboxSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromCuttingboardToPanSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromCuttingboardToPotSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromCuttingboardToTieredbasketSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromPlacematToBasketSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromPlacematToBowlSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromPlacematToPlateSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromPlacematToTieredshelfSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromPlateToBowlSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromPlateToCardboardboxSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromPlateToPanSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromPlateToPlateSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromTrayToCardboardboxSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromTrayToPlateSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromTrayToPotSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromTrayToTieredbasketSplitA/eval
+  - robocasa-gr1/PosttrainPnPNovelFromTrayToTieredshelfSplitA/eval
+  checkpoint_selection: last
+  kwargs:
+    seed_contract:
+      environment_mode: derived
+      fixed_environment_seed: 0
+      policy_mode: derived
+      fixed_policy_seed: 0
+observability:
+  delivery_failure_policy: fail_run
+  wandb:
+    enabled: true
+    entity: wandb-japan
+    project: art-embodied-gr00t-n1d7-robocasa-positive-control
+    connection: primary
+    run_id: null
+    resume: null
+    writer_label: null
+    console_multipart: true
+    console_chunk_max_bytes: 1048576
+    console_chunk_max_seconds: 60
+    group: gr00t-n1d7-robocasa-gr1-tabletop-24task
+    job_type: trajectory-rl
+    mode: online
+    log_model_artifacts: true
+    log_input_model_artifact: true
+    input_model_artifact_ref: null
+    log_evaluation_artifacts: true
+    log_evaluation_table: true
+    max_evaluation_table_rows: 96
+    log_rollout_progress: true
+    rollout_progress_every_groups: 4
+    log_evaluation_progress: true
+    evaluation_progress_every_episodes: 8
+  weave:
+    enabled: true
+    project: art-embodied-gr00t-n1d7-robocasa-positive-control
+    trace_trajectories: true
+    max_groups_per_update: 4
+    max_trajectories_per_group: 4
+    max_evaluation_trajectories: 12
+    use_server_cache: false
+    server_cache_dir: null
+    server_cache_size_mb: 0
+  videos_per_update: 2
+  videos_per_evaluation: 8
+  require_train_video: true
+  require_evaluation_video: true
+  video_fps: 5
+  lookahead_preview:
+    enabled: false
+    videos_per_update: 1
+    videos_per_evaluation: 1
+    max_future_frames: 10
+    future_stride: 4
+    max_panels: 4
+storage:
+  output_dir: outputs/gr00t-n1d7-robocasa/gr00t-n1d7-gr1-tabletop-24task-gate
+  keep_last_checkpoints: 2
+  retain_checkpoint_updates:
+  - 1
+  save_training_state: true
+  resume_from_checkpoint: null
+  allow_legacy_checkpoint_resume: false
+  max_log_file_mb: 64
+  retain_rollout_payloads: false
+runtime:
+  backend: local
+  rollout_execution:
+    mode: local_process
+    actor_factory: art_embodied.integrations.lerobot_process:create_lerobot_process_actor
+    actor_kwargs:
+      components_factory: examples.embodied.robocasa.components:create_gr00t_n1d7_components
+      components_kwargs: {}
+    actors_per_device: 1
+    group_batching: true
+    lifecycle: per_update
+    policy_sync: checkpoint
+    inference_mode: embedded
+    inference_factory: null
+    inference_replicas_per_device: 1
+    inference_max_batch_size: 8
+    inference_max_wait_ms: 0.0
+    startup_timeout_seconds: 7200
+    request_timeout_seconds: 7200
+    actor_python_executable: null
+    inference_python_executable: null
+  worker_python_executable: null
+  rollout_devices:
+  - cuda:0
+  - cuda:1
+  - cuda:2
+  - cuda:3
+  - cuda:4
+  - cuda:5
+  - cuda:6
+  - cuda:7
+  training_devices:
+  - cuda:0
+  - cuda:1
+  - cuda:2
+  - cuda:3
+  - cuda:4
+  - cuda:5
+  - cuda:6
+  - cuda:7
+  distributed_training: true
+  training_worker_lifecycle: per_update
+  worker_handoff_dir: /tmp/art-embodied
+  worker_timeout_seconds: 7200
+  max_worker_handoff_mb: 8192
+  keep_worker_handoffs: false

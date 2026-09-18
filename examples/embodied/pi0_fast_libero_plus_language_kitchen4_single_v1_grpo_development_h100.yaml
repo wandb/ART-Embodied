@@ -1,0 +1,335 @@
+schema_version: 1
+experiment:
+  project: art-embodied-pi0-fast-libero-plus
+  run: pi0-fast-libero-plus-language-kitchen4-language-sft-r32-u100-grpo-gpt100-v2
+  seed: 20260902
+  tags:
+  - pi0-fast
+  - libero-plus
+  - language-instructions
+  - single-task
+  - kitchen-scene4
+  - grpo
+  - categorical-action-tokens
+  - lora-r32
+  - one-node
+  - groups-per-task-100
+  - trajectories-800
+  - task-balanced-loss
+  - language-sft-warm-start
+  - exact-old-logprob-rescore
+  - explicit-wandb-metric-schema
+  - panel-manifest-v1
+  - code-provenance
+  - development
+  - development-candidate
+policy:
+  type: pi0_fast
+  path: lerobot/pi0fast-libero
+  revision: 840f4b503f4c09110421c33c810a85b6684fd658
+  device: cuda
+  dtype: checkpoint
+  trust_remote_code: false
+  load_kwargs:
+    runtime_contract: lerobot_v060
+    execution_horizon: 10
+    action_dim: 7
+    max_decoding_steps: 256
+    action_tokenizer_revision: 79ae83e3cbd8786dcb84b628569f8d076ca8151e
+    observation_key_map:
+      image: observation.images.image
+      wrist_image: observation.images.image2
+      proprio_state: observation.state
+    strict_weights: true
+    compile_model: false
+    gradient_checkpointing: true
+    use_kv_cache: true
+    sft_anchor: null
+    warm_start_checkpoint: outputs/sft/pi0-fast-libero-plus-language-kitchen4-single-v2/task-08/checkpoint-step-000100
+  lora:
+    rank_partition: null
+    enabled: true
+    rank: 32
+    alpha: 32
+    dropout: 0.0
+    init: gaussian
+    target_modules:
+    - auto
+  unnorm_key: null
+  rollout_generation:
+    do_sample: true
+    temperature: 0.2
+    top_p: 1.0
+  train_generation:
+    do_sample: true
+    temperature: 0.2
+    top_p: 1.0
+  evaluation_generation:
+    do_sample: false
+    temperature: 1.0
+    top_p: 1.0
+  trainable_parameter_strategy: pi0_fast_lora
+  force_trainable_float32: true
+environment:
+  type: libero_plus
+  task: libero_10
+  robot_type: null
+  kwargs:
+    success_key: success
+    sft_anchor_task_ids: []
+    panel_manifest: examples/embodied/libero_plus/panels/libero_10_language_kitchen4_single_v1.json
+    panel_manifest_sha256: 12d309a9219d084980280f59541271ee669ec9c1ec1a4a72b0cf54877de99bda
+    evaluation_panel_split: development
+    source_revision: 4976dc30028e805ff8094b55501d532c48fec182
+    classification_sha256: faa87cce3e3ba434da01df7c77523a391b5f2912e4774330b0aa1be5f6a999e6
+    asset_archive_sha256: 96764a4bfbdaea98d4411598caeab235458318fe0f549611b93d1a323027b3cf
+    simulator_compatibility: libero_plus_cvpr2026
+    evaluation_protocol: libero_plus_pi0_fast_v1
+    observation_height: 360
+    observation_width: 360
+    primary_image_key: agentview_image
+    wrist_image_key: robot0_eye_in_hand_image
+    rotate_images_180: true
+    wait_steps_after_reset: 10
+    action_chunk_size: 10
+    capture_primitive_observations: false
+    stop_on_success: true
+    stop_on_done: true
+    normalize_gripper: false
+    binarize_gripper: false
+    invert_gripper: false
+    control_mode: relative
+    init_state_selection: balanced_task_random_reset
+    reset_schedule:
+      total_reset_states: 100
+      total_num_processes: 100
+      groups_per_process_per_rollout_epoch: 1
+      rollout_epochs_per_update: 1
+      numpy_seed: 20260902
+    training_groups_per_base_task: 100
+  reset:
+    reset_gripper_open: true
+  observation_processor: {}
+  action_processor: {}
+reward:
+  type: environment
+  name: success
+  terminal_only: true
+  scale: 1.0
+  kwargs: {}
+algorithm:
+  flow_sde: null
+  type: grpo
+  group_size: 8
+  clip_epsilon_low: 0.2
+  clip_epsilon_high: 0.2
+  kl_coefficient: 0.0
+  clip_ratio_c: null
+  importance_sampling_level: token
+  training_unit: action
+  action_advantage_mode: example
+  score_source: trajectory_reward
+  pad_fixed_horizon_examples: false
+  filter_rewards: false
+  reward_filter_mode: drop_examples
+  rewards_lower_bound: null
+  rewards_upper_bound: null
+  loss_aggregation: task_balanced_trajectory_mean
+  advantage:
+    scope: group
+    normalize: true
+    extra_global_normalization: false
+    mask_zero_variance_groups: false
+    std_unbiased: true
+    epsilon: 1.0e-06
+  precalculate_logprobs: true
+  rollout_logprob_source: recomputed_current_policy
+  logprob_eval_mode: true
+  logprob_microbatch_size: 1
+  train_logprob_microbatch_size: 1
+  pre_update_logprob_kl_tolerance: 0.02
+  pre_update_ratio_tolerance: 0.02
+  skip_optimizer_step_without_policy_gradient_signal: false
+rollout:
+  groups_per_update: 100
+  epochs_per_update: 1
+  workers: 8
+  failure_policy: fail_update
+  minimum_completed_attempts_per_group: 8
+  max_episode_steps: 520
+  max_policy_steps: 52
+  temperature: 0.2
+  deterministic: false
+  action_payload:
+    kind: token
+    require_old_logprobs: true
+    require_prompt: true
+    require_observation: true
+    trainable_action_selection: uniform_grid
+    max_trainable_actions_per_trajectory: 4
+training:
+  updates: 100
+  optimizer_steps_per_update: 1
+  microbatch_size: 1
+  log_action_token_progress: true
+  action_token_progress_every_microbatches: 128
+  schedule:
+    type: full_update
+  checkpoint_every_updates: 1
+  optimizer:
+    type: adamw
+    learning_rate: 2.0e-06
+    weight_decay: 0.01
+    beta1: 0.9
+    beta2: 0.999
+    epsilon: 1.0e-05
+    max_grad_norm: 1.0
+evaluation:
+  enabled: true
+  evaluate_before_training: true
+  pre_training_success_gate:
+    minimum_success_rate: 0.1
+    maximum_success_rate: 0.8
+  split: held_out
+  data_role: development
+  runtime: native_lerobot
+  baseline_outcomes_path: outputs/baselines/pi0-fast-libero-plus-language-kitchen4-language-sft-r32-u100-v2/evaluation/update_000000_episode_outcomes.json
+  baseline_wait_timeout_seconds: 0
+  every_updates: 5
+  episodes: 14
+  seeds:
+  - 0
+  deterministic: true
+  temperature: 1.0
+  fixed_scenarios:
+  - libero_plus/development/eval-000/task-1237
+  - libero_plus/development/eval-001/task-1236
+  - libero_plus/development/eval-002/task-1221
+  - libero_plus/development/eval-003/task-1208
+  - libero_plus/development/eval-004/task-1212
+  - libero_plus/development/eval-005/task-1225
+  - libero_plus/development/eval-006/task-1227
+  - libero_plus/development/eval-007/task-1226
+  - libero_plus/development/eval-008/task-1224
+  - libero_plus/development/eval-009/task-1223
+  - libero_plus/development/eval-010/task-1249
+  - libero_plus/development/eval-011/task-1251
+  - libero_plus/development/eval-012/task-1243
+  - libero_plus/development/eval-013/task-1248
+  checkpoint_selection: evaluation_success
+  kwargs:
+    seed_contract:
+      environment_mode: fixed
+      fixed_environment_seed: 0
+      policy_mode: derived
+      fixed_policy_seed: 0
+observability:
+  delivery_failure_policy: fail_run
+  wandb:
+    enabled: true
+    entity: wandb-japan
+    project: art-embodied-pi0-fast-libero-plus
+    connection: primary
+    run_id: null
+    resume: null
+    writer_label: null
+    console_multipart: true
+    console_chunk_max_bytes: 1048576
+    console_chunk_max_seconds: 60
+    log_system_metrics: false
+    save_code: true
+    group: pi0-fast-libero-plus-language-kitchen4-single-v2-development
+    job_type: trajectory-rl
+    mode: online
+    log_model_artifacts: true
+    log_input_model_artifact: false
+    input_model_artifact_ref: null
+    log_evaluation_artifacts: true
+    log_evaluation_table: true
+    max_evaluation_table_rows: 50
+    log_rollout_progress: true
+    rollout_progress_every_groups: 4
+    log_evaluation_progress: true
+    evaluation_progress_every_episodes: 5
+  weave:
+    enabled: true
+    project: art-embodied-pi0-fast-libero-plus
+    trace_trajectories: true
+    max_groups_per_update: 4
+    max_trajectories_per_group: 4
+    max_evaluation_trajectories: 8
+    use_server_cache: false
+    server_cache_dir: null
+    server_cache_size_mb: 0
+  videos_per_update: 2
+  videos_per_evaluation: 8
+  require_train_video: true
+  require_evaluation_video: true
+  video_fps: 20
+  lookahead_preview:
+    enabled: false
+    videos_per_update: 1
+    videos_per_evaluation: 1
+    max_future_frames: 10
+    future_stride: 4
+    max_panels: 4
+storage:
+  output_dir: outputs/development/pi0-fast-libero-plus-language-kitchen4-language-sft-r32-u100-grpo-gpt100-v2
+  keep_last_checkpoints: 2
+  retain_checkpoint_updates:
+  - 20
+  - 40
+  - 60
+  - 80
+  - 100
+  save_training_state: true
+  resume_from_checkpoint: null
+  allow_legacy_checkpoint_resume: false
+  max_log_file_mb: 64
+  retain_rollout_payloads: false
+runtime:
+  backend: local
+  rollout_execution:
+    mode: local_process
+    actor_factory: art_embodied.integrations.lerobot_process:create_lerobot_process_actor
+    actor_kwargs:
+      components_factory: examples.embodied.libero.pi0_fast_components:create_pi0_fast_components
+      components_kwargs: {}
+    actors_per_device: 1
+    group_batching: true
+    lifecycle: cpu_offload
+    policy_sync: checkpoint
+    inference_mode: embedded
+    inference_factory: null
+    inference_replicas_per_device: 1
+    inference_max_batch_size: 1
+    inference_max_wait_ms: 0.0
+    startup_timeout_seconds: 7200
+    request_timeout_seconds: 7200
+    actor_python_executable: null
+    inference_python_executable: null
+  worker_python_executable: null
+  rollout_devices:
+  - cuda:0
+  - cuda:1
+  - cuda:2
+  - cuda:3
+  - cuda:4
+  - cuda:5
+  - cuda:6
+  - cuda:7
+  training_devices:
+  - cuda:0
+  - cuda:1
+  - cuda:2
+  - cuda:3
+  - cuda:4
+  - cuda:5
+  - cuda:6
+  - cuda:7
+  distributed_training: true
+  training_worker_lifecycle: cpu_offload
+  worker_handoff_dir: /tmp/art-embodied
+  worker_timeout_seconds: 7200
+  max_worker_handoff_mb: 8192
+  keep_worker_handoffs: false

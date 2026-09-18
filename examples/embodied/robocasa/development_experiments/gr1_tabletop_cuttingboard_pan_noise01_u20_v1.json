@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "kind": "art_embodied_development_experiment_preregistration",
+  "name": "gr1-tabletop-cuttingboard-pan-noise01-u20-v1",
+  "created_at_utc": "2026-08-19T15:49:00Z",
+  "question": "Does a fresh-SFT, one-task, 20-update trajectory-level GRPO run with the post-oracle admitted Flow-SDE sampler produce a clear native-ODE success-rate lift?",
+  "scope": {
+    "method": "LeRobot-first trajectory-level GRPO",
+    "task": "PosttrainPnPNovelFromCuttingboardToPanSplitA",
+    "data_role": "development",
+    "mechanism_gate_only": true,
+    "original_eight_task_claim_eligible": false,
+    "sealed_test_eligible": false,
+    "ppo_out_of_scope": true
+  },
+  "frozen_inputs": {
+    "config": "examples/embodied/gr00t_n1d7_robocasa_gr1_tabletop_cuttingboard_pan_noise01_u20_development.yaml",
+    "config_sha256": "3cf61ac4d6dc0a31de4832725a8c140d93e5b42754ede048092a6816f20715f4",
+    "sft_checkpoint": "outputs/gr00t-n1d7-robocasa-sft/gr00t-n1d7-robocasa-gr1-tabletop-sft-u60000/checkpoint-60000",
+    "sft_completion_marker_sha256": "7a8f8a0d155282f782013d0b32f397f9b81667d1411db07a5e5d8fc34b70df3e",
+    "post_oracle_sampler_report": "outputs/gr00t-n1d7-robocasa-sampler-calibration/cuttingboard-pan-k4-noise01-post-oracle-v1/post-oracle-sampler-calibration-report.json",
+    "post_oracle_sampler_report_sha256": "bce1e07cc4ece61fc313a0a4ba73a23e9e2451c87b3d3b2978bdc5517c938695",
+    "post_oracle_sampler_decision": "pass",
+    "post_oracle_sde_minus_ode": -0.005859375,
+    "post_oracle_reset_cluster_ci95": [-0.060546875, 0.048828125],
+    "oracle_manifest_sha256": "c3a8c2d3d6c6e42441ba80f535bc2cbf7913343d3c3931e1e466a9b90c8ac17c",
+    "oracle_frontier8_evidence_sha256": "b52f668613777545336f00f056bbf27e654e1ae7a8d8e2f8256c961bef5ebc66",
+    "art_oracle_footprint_evidence_sha256": "e0d6d98fcb18a8e99db330cfa669c9cea840b2faa4d704a1357b81e304447728",
+    "environment_conformance_report": "outputs/conformance/robocasa-gr1-cuttingboard-pan-noise01-u20-v1.json",
+    "environment_conformance_report_sha256": "840303be12ad05bbd3aa29ebf58a25cf18eece4f342154ec879ba9c4c4f95301",
+    "policy_conformance_report": "outputs/conformance/gr00t-n17-robocasa-policy-cuttingboard-pan-noise01-u20-v2.json",
+    "policy_conformance_report_sha256": "225ade587c822622b1f7ca83ed840cdd06cb0d4c717917c04d35f753cc19b46c",
+    "wandb_roundtrip_report": "outputs/conformance/gr00t-n17-robocasa-single-task-wandb-preflight-20260819.json",
+    "wandb_roundtrip_report_sha256": "ea86c3158dc3588faa8be7eeb8d166f9452387033a8996d553b1e984e0963a39",
+    "implementation_sha256": {
+      "examples/embodied/robocasa/environment.py": "eb93502b6c332728cbf697debbc1dde10d60050afbce6c6bfea56f45cb5c6fd2",
+      "examples/embodied/robocasa/simulator_worker.py": "ffeb85e74de2368684b5f2224ada3ceaed9d5e79f8d3c02059aaaa31f8a889fd",
+      "examples/embodied/robocasa/rollout.py": "b60df7996617d2d1d6179acf6bec084d9d1a65e809ab3af64ae29f59e3cc105d",
+      "examples/embodied/robocasa/components.py": "dddcf4b8af21fa7d0e0dde52837652121e01c6911b218b87ebe975634d72e4c7",
+      "src/art_embodied/integrations/gr00t_flow_sde.py": "fc8d26c94281e300327d09d315ce32f0891de4271a7a7b06fdf3ea082c180bc3",
+      "src/art_embodied/policies/gr00t_n1d7_flow_sde.py": "e7b3be6c0a9af6c97980232a2645c093b2fb5eef3353f571c754ee06c4531bb8",
+      "src/art_embodied/backends/flow_sde_grpo.py": "5948eb5a1117374645047fbd87864d150774457dadd88392d10c40b3da2a5f4c",
+      "src/art_embodied/experiment.py": "5f2708751a4cdf106bcaf94597dbe944c0d8e4593192150fbfca696bed745445",
+      "src/art_embodied/evaluation.py": "2b57d81d0794353dd1627e6a3031095b22812e0c805d29521915066d3a17127a"
+    }
+  },
+  "training_contract": {
+    "fresh_sft_start": true,
+    "resume_checkpoint": null,
+    "updates": 20,
+    "groups_per_update": 32,
+    "group_size": 8,
+    "trajectories_per_update": 256,
+    "rollout_actors": 16,
+    "lora_rank": 64,
+    "lora_alpha": 64,
+    "learning_rate": 0.00003,
+    "optimizer_steps_per_update": 24,
+    "global_batch_size": 960,
+    "reward": {
+      "mode": "task_progress",
+      "grasp": 0.1,
+      "placement": 0.75,
+      "terminal_only": true
+    },
+    "flow_sde": {
+      "noise_level": 0.1,
+      "denoise_steps": 4,
+      "execution_horizon": 8
+    },
+    "maximum_environment_steps": 720,
+    "no_success_futility_stop_before_update": 20
+  },
+  "evaluation_contract": {
+    "runtime": "native_lerobot",
+    "sampler": "native_flow_ode",
+    "evaluate_before_training": true,
+    "evaluation_updates": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+    "episodes_per_evaluation": 64,
+    "environment_seeds": {
+      "start": 400,
+      "count": 64,
+      "mode": "configured"
+    },
+    "pairing": "Every candidate evaluation reuses the exact scenario and environment reset seeds measured at update 0 in the same run.",
+    "primary_candidate": "update 20 only",
+    "intermediate_use": "health and trend diagnostics only; no maximum-over-checkpoints selection"
+  },
+  "primary_gate": {
+    "completed_baseline_episodes": 64,
+    "completed_update20_episodes": 64,
+    "failed_episodes": 0,
+    "update20_success_rate_lift_positive": true,
+    "paired_lift_ci95_lower_bound_above_zero": true,
+    "improved_pairs_exceed_regressed_pairs": true,
+    "mcnemar_exact_p_at_most": 0.05,
+    "partial_progress_cannot_pass": true
+  },
+  "health_interpretation": {
+    "report_training_success_curve": true,
+    "report_native_evaluation_success_curve": true,
+    "directional_alignment_is_rule_of_thumb": true,
+    "level_alignment_is_not_a_formal_gate": "Training uses fresh derived reset seeds and stochastic Flow-SDE, whereas evaluation uses a fixed configured reset panel and native ODE.",
+    "nonfinite_metrics_or_missing_gradient_signal": "stop as an operational failure",
+    "lack_of_early_success_lift": "continue through update 20"
+  },
+  "decision_rule": {
+    "on_pass": "Permit one independent same-task replication on disjoint development seeds, then test the frozen recipe across the original frontier eight before any sealed evaluation.",
+    "on_failure": "Stop, release GPUs, and review the full 20-update train/evaluation curves. Do not run powered replication or sealed evaluation.",
+    "on_operational_failure": "Stop fail-closed; a partial run cannot establish lift.",
+    "sealed_test": "The existing sealed panels remain unopened. A new panel/version tied to the eventual eight-task recipe must be frozen before that candidate is selected."
+  },
+  "resource_budget": {
+    "training_jobs": 1,
+    "gpus": 8,
+    "maximum_training_trajectories": 5120,
+    "maximum_updates": 20,
+    "automatic_restart_attempts": 0,
+    "sealed_jobs": 0
+  }
+}

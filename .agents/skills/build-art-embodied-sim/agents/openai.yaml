@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prototype ART-Embodied Sim"
+  short_description: "Experimentally scaffold simulation candidates"
+  default_prompt: "Use $build-art-embodied-sim to prototype a simulation candidate from my task photos and instructions, run the available validation gates, and report every unverified assumption."

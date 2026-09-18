@@ -1,0 +1,279 @@
+# Two-GPU, two-sub-update implementation smoke. This verifies that persistent
+# workers load the base VLA once and refresh only LoRA state between sub-updates.
+schema_version: 1
+experiment:
+  project: art-embodied
+  run: openvla-oft-action-token-distributed-smoke
+  seed: 20260715
+  tags:
+    - openvla-oft
+    - action-token
+    - smoke
+    - persistent-workers
+policy:
+  type: openvla_oft
+  path: Haozhan72/Openvla-oft-SFT-libero-object-traj1
+  revision: 62e5a8daba3f619c993f23b248ae04b0d9677bb5
+  device: cuda:0
+  dtype: bfloat16
+  trust_remote_code: true
+  load_kwargs:
+    runtime_contract: openvla_oft_v01
+    robot_platform: libero
+    attn_implementation: null
+    peft_adapter_path: null
+    dataset_statistics_path: null
+    logprob_batch_size: 4
+    strict_batched_logprobs: true
+    max_prompt_length: 128
+    prompt_template: |-
+      In: What action should the robot take to {instruction}?
+      Out:
+    lowercase_instruction: true
+    num_images_in_input: 1
+    use_proprio: false
+    action_dim: 7
+    num_action_chunks: 8
+    model_loader: native
+  lora:
+    rank_partition: null
+    enabled: true
+    rank: 32
+    alpha: 16
+    dropout: 0.0
+    init: gaussian
+    target_modules:
+      - gate_proj
+      - k_proj
+      - up_proj
+      - qkv
+      - fc1
+      - lm_head
+      - down_proj
+      - v_proj
+      - q
+      - proj
+      - kv
+      - fc2
+      - fc3
+      - q_proj
+      - o_proj
+  unnorm_key: libero_object_no_noops
+  rollout_generation:
+    do_sample: true
+    temperature: 1.6
+    top_p: 1.0
+  train_generation:
+    do_sample: true
+    temperature: 1.6
+    top_p: 1.0
+  evaluation_generation:
+    do_sample: false
+    temperature: 1.0
+    top_p: 1.0
+  trainable_parameter_strategy: openvla_oft_lora
+  force_trainable_float32: true
+environment:
+  type: synthetic_smoke
+  task: openvla_oft_action_token_update
+  robot_type: null
+  kwargs:
+    success_key: success
+  reset:
+    reset_gripper_open: false
+  observation_processor:
+    owner: smoke_script
+  action_processor:
+    owner: openvla_oft
+reward:
+  type: custom
+  name: synthetic_preference
+  terminal_only: true
+  scale: 1.0
+  kwargs:
+    purpose: optimizer_plumbing_only
+algorithm:
+  flow_sde: null
+  type: grpo
+  group_size: 4
+  clip_epsilon_low: 0.2
+  clip_epsilon_high: 0.2
+  kl_coefficient: 0.0
+  clip_ratio_c: null
+  importance_sampling_level: token
+  training_unit: action
+  action_advantage_mode: example
+  score_source: trajectory_reward
+  pad_fixed_horizon_examples: true
+  filter_rewards: false
+  reward_filter_mode: drop_examples
+  rewards_lower_bound: null
+  rewards_upper_bound: null
+  loss_aggregation: trajectory_mean
+  advantage:
+    scope: group
+    normalize: true
+    extra_global_normalization: false
+    mask_zero_variance_groups: false
+    std_unbiased: false
+    epsilon: 1.0e-6
+  precalculate_logprobs: false
+  rollout_logprob_source: rollout_action
+  logprob_eval_mode: false
+  logprob_microbatch_size: 4
+  train_logprob_microbatch_size: 1
+  pre_update_logprob_kl_tolerance: 0.02
+  pre_update_ratio_tolerance: 0.02
+  skip_optimizer_step_without_policy_gradient_signal: true
+rollout:
+  groups_per_update: 2
+  epochs_per_update: 1
+  workers: 1
+  failure_policy: fail_update
+  minimum_completed_attempts_per_group: 4
+  max_episode_steps: 1
+  max_policy_steps: 1
+  temperature: 1.6
+  deterministic: false
+  action_payload:
+    kind: token
+    require_old_logprobs: true
+    require_prompt: true
+    require_observation: true
+    trainable_action_selection: all
+    max_trainable_actions_per_trajectory: null
+training:
+  updates: 1
+  optimizer_steps_per_update: 2
+  microbatch_size: 1
+  log_action_token_progress: false
+  action_token_progress_every_microbatches: 1
+  schedule:
+    type: rlinf_actor_global_batch
+    global_batch_size: 4
+    actor_seed: 20260715
+    actor_world_size: 2
+    rank_local_shuffle: true
+    groups_per_process_per_rollout_epoch: 1
+    action_chunk_size: 1
+    update_epochs: 1
+    strict_geometry: true
+    pre_update_alignment_guard: first_subupdate
+    max_approximate_kl: null
+    approximate_kl_guard_scope: joint_chunk
+    min_optimizer_steps_before_kl_stop: 1
+  checkpoint_every_updates: 1
+  optimizer:
+    type: adamw
+    learning_rate: 1.0e-5
+    weight_decay: 0.0
+    beta1: 0.9
+    beta2: 0.999
+    epsilon: 1.0e-8
+    max_grad_norm: 1.0
+evaluation:
+  enabled: false
+  evaluate_before_training: false
+  pre_training_success_gate: null
+  split: held_out
+  data_role: development
+  runtime: native_lerobot
+  baseline_outcomes_path: null
+  baseline_wait_timeout_seconds: 0
+  every_updates: 1
+  episodes: 4
+  seeds: []
+  deterministic: true
+  temperature: 1.0
+  fixed_scenarios: []
+  checkpoint_selection: last
+  kwargs: {}
+observability:
+  delivery_failure_policy: fail_run
+  wandb:
+    enabled: false
+    entity: null
+    project: art-embodied
+    connection: primary
+    run_id: null
+    resume: null
+    writer_label: null
+    console_multipart: true
+    console_chunk_max_bytes: 1048576
+    console_chunk_max_seconds: 60
+    group: null
+    job_type: distributed-smoke-test
+    mode: disabled
+    log_model_artifacts: false
+    log_input_model_artifact: false
+    input_model_artifact_ref: null
+    log_evaluation_artifacts: true
+    log_evaluation_table: false
+    max_evaluation_table_rows: 0
+    log_rollout_progress: false
+    rollout_progress_every_groups: 1
+    log_evaluation_progress: false
+    evaluation_progress_every_episodes: 1
+  weave:
+    enabled: false
+    project: art-embodied
+    trace_trajectories: false
+    max_groups_per_update: 0
+    max_trajectories_per_group: 0
+    max_evaluation_trajectories: 0
+    use_server_cache: false
+    server_cache_dir: null
+    server_cache_size_mb: 0
+  videos_per_update: 0
+  videos_per_evaluation: 0
+  require_train_video: false
+  require_evaluation_video: false
+  video_fps: 10
+  lookahead_preview:
+    enabled: false
+    videos_per_update: 1
+    videos_per_evaluation: 1
+    max_future_frames: 10
+    future_stride: 4
+    max_panels: 4
+storage:
+  output_dir: outputs/openvla-oft-action-token-distributed-smoke
+  keep_last_checkpoints: 1
+  retain_checkpoint_updates: []
+  save_training_state: true
+  resume_from_checkpoint: null
+  allow_legacy_checkpoint_resume: false
+  max_log_file_mb: 16
+  retain_rollout_payloads: false
+runtime:
+  backend: local
+  rollout_execution:
+    mode: in_process
+    actor_factory: null
+    actor_kwargs: {}
+    actors_per_device: 1
+    group_batching: false
+    lifecycle: per_update
+    policy_sync: shared
+    inference_mode: embedded
+    inference_factory: null
+    inference_replicas_per_device: 1
+    inference_max_batch_size: 1
+    inference_max_wait_ms: 0.0
+    startup_timeout_seconds: 7200
+    request_timeout_seconds: 7200
+    actor_python_executable: null
+    inference_python_executable: null
+  worker_python_executable: null
+  rollout_devices:
+    - cuda:0
+    - cuda:1
+  training_devices:
+    - cuda:0
+    - cuda:1
+  distributed_training: true
+  training_worker_lifecycle: per_update
+  worker_handoff_dir: /tmp/art-embodied
+  worker_timeout_seconds: 7200
+  max_worker_handoff_mb: 8192
+  keep_worker_handoffs: false

@@ -1,0 +1,1933 @@
+{
+  "entries": [
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260723,
+      "id": "libero_10/generated-held-out/task-00/state-00",
+      "nearest_official_l2": 0.0639539643148113,
+      "nearest_official_max_abs": 0.030655797212635755,
+      "state_key": "task_00_state_00",
+      "state_length": 123,
+      "state_sha256": "a6fb3bd30992aa1ed847b3954051cb2b049f03f41c3251f405a92fb3d2e10f14",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258750689,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260724,
+      "id": "libero_10/generated-held-out/task-00/state-01",
+      "nearest_official_l2": 0.0682347533662953,
+      "nearest_official_max_abs": 0.029859685011681233,
+      "state_key": "task_00_state_01",
+      "state_length": 123,
+      "state_sha256": "855c68e1117f86031d9bcaa13569a00b2b91ffedae2d2bf0bf26f4f173a8378c",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258747025,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260725,
+      "id": "libero_10/generated-held-out/task-00/state-02",
+      "nearest_official_l2": 0.06971224643160812,
+      "nearest_official_max_abs": 0.0302899099994099,
+      "state_key": "task_00_state_02",
+      "state_length": 123,
+      "state_sha256": "3cca5c75f8e56ce675e9b299bceeeae2f45059dee2f3b3eef9c1ea0a3b377223",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258750689,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260726,
+      "id": "libero_10/generated-held-out/task-00/state-03",
+      "nearest_official_l2": 0.06574967498770838,
+      "nearest_official_max_abs": 0.028772845062311703,
+      "state_key": "task_00_state_03",
+      "state_length": 123,
+      "state_sha256": "25462bb2480df9161de25ffe2f0bdb844d91303e9f87822c3e19430354c1337d",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258746938,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260727,
+      "id": "libero_10/generated-held-out/task-00/state-04",
+      "nearest_official_l2": 0.05676351140463495,
+      "nearest_official_max_abs": 0.02941003602942388,
+      "state_key": "task_00_state_04",
+      "state_length": 123,
+      "state_sha256": "1df07580d4cdf6aaf127ba69ea9203610f2054f4c28e52c276c8f0d83f65c697",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258749651,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260728,
+      "id": "libero_10/generated-held-out/task-00/state-05",
+      "nearest_official_l2": 0.05467851500095508,
+      "nearest_official_max_abs": 0.024915608303041934,
+      "state_key": "task_00_state_05",
+      "state_length": 123,
+      "state_sha256": "6ae18f0c4d0a877de81227106d570d53b208b32e4b213162266434986c532374",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.755742625874834,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260729,
+      "id": "libero_10/generated-held-out/task-00/state-06",
+      "nearest_official_l2": 0.07177779805067291,
+      "nearest_official_max_abs": 0.028772845062311703,
+      "state_key": "task_00_state_06",
+      "state_length": 123,
+      "state_sha256": "d11454949e66f7d350a4660f7d283a8d949f34d8a8cbe7468009ef0f812e08ca",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258748184,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260730,
+      "id": "libero_10/generated-held-out/task-00/state-07",
+      "nearest_official_l2": 0.06729107487055082,
+      "nearest_official_max_abs": 0.027672382503797666,
+      "state_key": "task_00_state_07",
+      "state_length": 123,
+      "state_sha256": "39873da49897640683f7661c7235c99f013023a309d772aeb67d2bbc1f28915f",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258747485,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260731,
+      "id": "libero_10/generated-held-out/task-00/state-08",
+      "nearest_official_l2": 0.06765534048864112,
+      "nearest_official_max_abs": 0.028772845062311703,
+      "state_key": "task_00_state_08",
+      "state_length": 123,
+      "state_sha256": "3d50211f36254b49b16e6f777b5c4a54e48eb4ea5265557a87e89b6d2f48ad5f",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258747744,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "generation_seed": 20260732,
+      "id": "libero_10/generated-held-out/task-00/state-09",
+      "nearest_official_l2": 0.06209963433156139,
+      "nearest_official_max_abs": 0.028772845062311703,
+      "state_key": "task_00_state_09",
+      "state_length": 123,
+      "state_sha256": "2fa8fcd263662aee8b48f8381191f38d82a64b0882069e146f9e6c7c4641b7ec",
+      "task_id": 0,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258746872,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260723,
+      "id": "libero_10/generated-held-out/task-01/state-00",
+      "nearest_official_l2": 0.05843904176918662,
+      "nearest_official_max_abs": 0.027601806908766652,
+      "state_key": "task_01_state_00",
+      "state_length": 123,
+      "state_sha256": "f87f3ed39431a78984e6faf806fb85c91e9532d43c606e983db42dd2d0a6795e",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258748139,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260724,
+      "id": "libero_10/generated-held-out/task-01/state-01",
+      "nearest_official_l2": 0.05792634059628283,
+      "nearest_official_max_abs": 0.023466583598401425,
+      "state_key": "task_01_state_01",
+      "state_length": 123,
+      "state_sha256": "44168d35961308f1070381d4b084f0822c31b054e2ed9ab54eb284aa2c812863",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258748999,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260725,
+      "id": "libero_10/generated-held-out/task-01/state-02",
+      "nearest_official_l2": 0.05673523819848798,
+      "nearest_official_max_abs": 0.02485657344709937,
+      "state_key": "task_01_state_02",
+      "state_length": 123,
+      "state_sha256": "62f3b4005a8083eae992f1b8e29837dcffff4cf5dd6492f2927ef9db5e18dcf5",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258749815,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260726,
+      "id": "libero_10/generated-held-out/task-01/state-03",
+      "nearest_official_l2": 0.054795189075674475,
+      "nearest_official_max_abs": 0.023228879422494353,
+      "state_key": "task_01_state_03",
+      "state_length": 123,
+      "state_sha256": "150f89f0467261b25a5038bc763b9f1c00c52aa351904104f7c11f0ab23aa1c9",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258750689,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260727,
+      "id": "libero_10/generated-held-out/task-01/state-04",
+      "nearest_official_l2": 0.0767485256303644,
+      "nearest_official_max_abs": 0.029252826584240665,
+      "state_key": "task_01_state_04",
+      "state_length": 123,
+      "state_sha256": "48844448d69126a8623bc280dc18faf61b65f62bfbf8e1d171b2ebfb078c474c",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258749623,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260728,
+      "id": "libero_10/generated-held-out/task-01/state-05",
+      "nearest_official_l2": 0.0639297853518337,
+      "nearest_official_max_abs": 0.02514025924762686,
+      "state_key": "task_01_state_05",
+      "state_length": 123,
+      "state_sha256": "2a878812cecca5bd9599d184a479fcc1f6730139a23b7a42b646f1350c68c160",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258750276,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260729,
+      "id": "libero_10/generated-held-out/task-01/state-06",
+      "nearest_official_l2": 0.05398552693467436,
+      "nearest_official_max_abs": 0.022415774414388134,
+      "state_key": "task_01_state_06",
+      "state_length": 123,
+      "state_sha256": "fc2b787fc535d35f9e18cf47621674f4838e17ce7dd0aa04e3c43211c4feb278",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258748058,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260730,
+      "id": "libero_10/generated-held-out/task-01/state-07",
+      "nearest_official_l2": 0.06725660374747053,
+      "nearest_official_max_abs": 0.029431411258732196,
+      "state_key": "task_01_state_07",
+      "state_length": 123,
+      "state_sha256": "b8bfe3db11a91af37bd0e6d87b9cb5c509b6e7323c6f8683dba147494049472c",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258748998,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260731,
+      "id": "libero_10/generated-held-out/task-01/state-08",
+      "nearest_official_l2": 0.07135334534228856,
+      "nearest_official_max_abs": 0.029643363632395087,
+      "state_key": "task_01_state_08",
+      "state_length": 123,
+      "state_sha256": "37c839fba28d5988cc428cb65fe61fb756e35f10aa15fd510f12c08e7d9ba0be",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258746972,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+      "generation_seed": 21260732,
+      "id": "libero_10/generated-held-out/task-01/state-09",
+      "nearest_official_l2": 0.06976840476694147,
+      "nearest_official_max_abs": 0.030886451594483555,
+      "state_key": "task_01_state_09",
+      "state_length": 123,
+      "state_sha256": "1ce3afcecd96bc20de7d892ec47193f40e45e7903c3f460a56dbe4241c8df5b7",
+      "task_id": 1,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7557426258748948,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260723,
+      "id": "libero_10/generated-held-out/task-02/state-00",
+      "nearest_official_l2": 0.033958420224244605,
+      "nearest_official_max_abs": 0.023670500166744626,
+      "state_key": "task_02_state_00",
+      "state_length": 47,
+      "state_sha256": "ba89e7f584b55d9b65e81956e5373cf2e3fa52e4e043a727116d447ba2df8c97",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260724,
+      "id": "libero_10/generated-held-out/task-02/state-01",
+      "nearest_official_l2": 0.03124223615387882,
+      "nearest_official_max_abs": 0.023169325846046144,
+      "state_key": "task_02_state_01",
+      "state_length": 47,
+      "state_sha256": "264019fb6a046cae2604e581081798cabfa70d8a0f0a19d7b28afbf2d9635b0f",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260725,
+      "id": "libero_10/generated-held-out/task-02/state-02",
+      "nearest_official_l2": 0.045920560800082486,
+      "nearest_official_max_abs": 0.02234050065334403,
+      "state_key": "task_02_state_02",
+      "state_length": 47,
+      "state_sha256": "7400795836d8909f504d04bbda554079958531ebc9424c1c84da130aa60572a1",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260726,
+      "id": "libero_10/generated-held-out/task-02/state-03",
+      "nearest_official_l2": 0.04444852311122114,
+      "nearest_official_max_abs": 0.02623567941644156,
+      "state_key": "task_02_state_03",
+      "state_length": 47,
+      "state_sha256": "0bb1e5c00da0ec8c91c713bfb7835214ac1cacdca415f170f25ab81ae5465c76",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260727,
+      "id": "libero_10/generated-held-out/task-02/state-04",
+      "nearest_official_l2": 0.037242044663681396,
+      "nearest_official_max_abs": 0.021636892121452377,
+      "state_key": "task_02_state_04",
+      "state_length": 47,
+      "state_sha256": "447bdb2feaa644d0d8927402ad429ca54fff5a148a4c4a798042955afede9e28",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260728,
+      "id": "libero_10/generated-held-out/task-02/state-05",
+      "nearest_official_l2": 0.04261926318090421,
+      "nearest_official_max_abs": 0.02152593028569305,
+      "state_key": "task_02_state_05",
+      "state_length": 47,
+      "state_sha256": "40dca7c9c619955f69a87f7019eaeb5467c2aa419b766ebd7918069804304f40",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260729,
+      "id": "libero_10/generated-held-out/task-02/state-06",
+      "nearest_official_l2": 0.04564311996614461,
+      "nearest_official_max_abs": 0.02343255138290788,
+      "state_key": "task_02_state_06",
+      "state_length": 47,
+      "state_sha256": "3d7a1816df562fe1be5e6ab006a69fd62e489e6001084b9be2282919066958fc",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260730,
+      "id": "libero_10/generated-held-out/task-02/state-07",
+      "nearest_official_l2": 0.03639689935072933,
+      "nearest_official_max_abs": 0.021636892121452377,
+      "state_key": "task_02_state_07",
+      "state_length": 47,
+      "state_sha256": "e69ae7692cad894192968a8a0f6b5dd219ca5cc964d5bc8ae3eb6439d4984760",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260731,
+      "id": "libero_10/generated-held-out/task-02/state-08",
+      "nearest_official_l2": 0.040698041228997096,
+      "nearest_official_max_abs": 0.021636892121452377,
+      "state_key": "task_02_state_08",
+      "state_length": 47,
+      "state_sha256": "53b1df62239a2fadb53e9024d6ab146095e242d751e137426d4573cac0d6dbd0",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "491835cc2eb6956f7ce3d1ee4e266377116168fe453e6529fe105e3b0333635d",
+      "generation_seed": 22260732,
+      "id": "libero_10/generated-held-out/task-02/state-09",
+      "nearest_official_l2": 0.03601146239179886,
+      "nearest_official_max_abs": 0.020950538063905552,
+      "state_key": "task_02_state_09",
+      "state_length": 47,
+      "state_sha256": "32b35958d39f00cc32baba8b40b3f2aca621d48b4db5de6821a3b8985b10f430",
+      "task_id": 2,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7537870634359243,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260723,
+      "id": "libero_10/generated-held-out/task-03/state-00",
+      "nearest_official_l2": 0.044947319913100615,
+      "nearest_official_max_abs": 0.022737788371840702,
+      "state_key": "task_03_state_00",
+      "state_length": 51,
+      "state_sha256": "c8a06d7be02d947f62ee5dfb5a01a967ff7e18897b6572a1eddcd1752ca5254b",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260724,
+      "id": "libero_10/generated-held-out/task-03/state-01",
+      "nearest_official_l2": 0.03367904636238096,
+      "nearest_official_max_abs": 0.01731390746580874,
+      "state_key": "task_03_state_01",
+      "state_length": 51,
+      "state_sha256": "be4b69ffc6cf9fdaa4a337ca3e4ad516d58d8b4229454c5d694fe9bd7e0780fd",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260725,
+      "id": "libero_10/generated-held-out/task-03/state-02",
+      "nearest_official_l2": 0.044455226005168096,
+      "nearest_official_max_abs": 0.022629313706675536,
+      "state_key": "task_03_state_02",
+      "state_length": 51,
+      "state_sha256": "a3821a6fdc14e1d5d1ed4b73f55417a8d59e107b88e20c03bdac247bb0528789",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260726,
+      "id": "libero_10/generated-held-out/task-03/state-03",
+      "nearest_official_l2": 0.04243148914702796,
+      "nearest_official_max_abs": 0.022737788371840702,
+      "state_key": "task_03_state_03",
+      "state_length": 51,
+      "state_sha256": "fd1f492ec8eff47a7425df2f62bfbb18f459081e43879e99979e780924546f78",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260727,
+      "id": "libero_10/generated-held-out/task-03/state-04",
+      "nearest_official_l2": 0.035283938005532575,
+      "nearest_official_max_abs": 0.0166645826510212,
+      "state_key": "task_03_state_04",
+      "state_length": 51,
+      "state_sha256": "41548ed0dbf093e36f017b5c7fc2928d606170b371cb3c0fad148059d9b31b87",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260728,
+      "id": "libero_10/generated-held-out/task-03/state-05",
+      "nearest_official_l2": 0.04449619176069337,
+      "nearest_official_max_abs": 0.022737788371840702,
+      "state_key": "task_03_state_05",
+      "state_length": 51,
+      "state_sha256": "72a003d4a24b29c73ca788f1d9b9e2295ce8f2feaa4e69e4cc11a34b10b0f493",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260729,
+      "id": "libero_10/generated-held-out/task-03/state-06",
+      "nearest_official_l2": 0.040886793250415006,
+      "nearest_official_max_abs": 0.022737788371840702,
+      "state_key": "task_03_state_06",
+      "state_length": 51,
+      "state_sha256": "a464c32d55bed2a392550c32461c317a444f91ef4629d00857e5f5243abc398d",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260730,
+      "id": "libero_10/generated-held-out/task-03/state-07",
+      "nearest_official_l2": 0.03688798483549776,
+      "nearest_official_max_abs": 0.020161402481976676,
+      "state_key": "task_03_state_07",
+      "state_length": 51,
+      "state_sha256": "fdc46a9206b90ad825b997d5345f6248dea5c07fb1811fa9b4547d9c4734f595",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260731,
+      "id": "libero_10/generated-held-out/task-03/state-08",
+      "nearest_official_l2": 0.03563792071725028,
+      "nearest_official_max_abs": 0.01731390746580874,
+      "state_key": "task_03_state_08",
+      "state_length": 51,
+      "state_sha256": "2577f85e26882f11e4f7509d4ded0b9734c6e392cf7de197e7bf83ce2167a805",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "5255fe54d7f25fad4dee8fa30a30033d8cb908f1708d953c91ab609264fb4fb8",
+      "generation_seed": 23260732,
+      "id": "libero_10/generated-held-out/task-03/state-09",
+      "nearest_official_l2": 0.03768978667764194,
+      "nearest_official_max_abs": 0.020989669242792636,
+      "state_key": "task_03_state_09",
+      "state_length": 51,
+      "state_sha256": "5d5b60cac8096d9b7d0da377fa4b64bb86371adcd7e60f8dd591137f1d5c7a4c",
+      "task_id": 3,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571983420292978,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260723,
+      "id": "libero_10/generated-held-out/task-04/state-00",
+      "nearest_official_l2": 0.05192185033305228,
+      "nearest_official_max_abs": 0.02878764662680373,
+      "state_key": "task_04_state_00",
+      "state_length": 84,
+      "state_sha256": "1329efa0cbec3505e27c68a92ea86c202683af5e158422084c3e2fcbb199956e",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260724,
+      "id": "libero_10/generated-held-out/task-04/state-01",
+      "nearest_official_l2": 0.054704086418921674,
+      "nearest_official_max_abs": 0.02779254807407483,
+      "state_key": "task_04_state_01",
+      "state_length": 84,
+      "state_sha256": "ab892c6c8bcb5a2aaa61cd82a0e6d799a14e1ecef974236170748ecfa6a0c870",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260725,
+      "id": "libero_10/generated-held-out/task-04/state-02",
+      "nearest_official_l2": 0.06662026313550144,
+      "nearest_official_max_abs": 0.03028100243872689,
+      "state_key": "task_04_state_02",
+      "state_length": 84,
+      "state_sha256": "221951e9a858db15f3588e7a5a5a1f789d866d2a86a4a5620ee88eb13565ad0d",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260726,
+      "id": "libero_10/generated-held-out/task-04/state-03",
+      "nearest_official_l2": 0.062305352704637454,
+      "nearest_official_max_abs": 0.027664582524591357,
+      "state_key": "task_04_state_03",
+      "state_length": 84,
+      "state_sha256": "5ff6241a17f6d8037df7eaba7384fba84c801691115e5f2ac3747421bf8e41cf",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260727,
+      "id": "libero_10/generated-held-out/task-04/state-04",
+      "nearest_official_l2": 0.059277336509858294,
+      "nearest_official_max_abs": 0.029664850153554134,
+      "state_key": "task_04_state_04",
+      "state_length": 84,
+      "state_sha256": "cc37b1365b0c281978d3fd1c8cd6076a041b3e4f23eba97666ecd491670983c2",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260728,
+      "id": "libero_10/generated-held-out/task-04/state-05",
+      "nearest_official_l2": 0.05273688290001992,
+      "nearest_official_max_abs": 0.020972939952820853,
+      "state_key": "task_04_state_05",
+      "state_length": 84,
+      "state_sha256": "04eeee7c2df8337982bd5c061e024d34ed0a733ae2db9eacdb67783b1a6a46db",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260729,
+      "id": "libero_10/generated-held-out/task-04/state-06",
+      "nearest_official_l2": 0.06045684924224563,
+      "nearest_official_max_abs": 0.030094999259624805,
+      "state_key": "task_04_state_06",
+      "state_length": 84,
+      "state_sha256": "2e568ca9ea9c27f70444e7b0092d5f4e9c1427837f1a9c8f471417a761463102",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260730,
+      "id": "libero_10/generated-held-out/task-04/state-07",
+      "nearest_official_l2": 0.06370184373810354,
+      "nearest_official_max_abs": 0.02779254807407483,
+      "state_key": "task_04_state_07",
+      "state_length": 84,
+      "state_sha256": "121b878f45d0c733a22f02e18debdfccfb10dcc534f263e739132ab6959060b6",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260731,
+      "id": "libero_10/generated-held-out/task-04/state-08",
+      "nearest_official_l2": 0.05433371480809339,
+      "nearest_official_max_abs": 0.025543159144299832,
+      "state_key": "task_04_state_08",
+      "state_length": 84,
+      "state_sha256": "2a5b97523bd7a00c0f09368f8ac650dc0063ad25eed31d689da7b99a8d365e7a",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+      "generation_seed": 24260732,
+      "id": "libero_10/generated-held-out/task-04/state-09",
+      "nearest_official_l2": 0.053211779598532113,
+      "nearest_official_max_abs": 0.028404880154404122,
+      "state_key": "task_04_state_09",
+      "state_length": 84,
+      "state_sha256": "14608e4798680861b095f0daf6bc2aa2c1d1231fc37e7d27ec74c52a59785f00",
+      "task_id": 4,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7563993143787687,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260723,
+      "id": "libero_10/generated-held-out/task-05/state-00",
+      "nearest_official_l2": 0.05270526389734145,
+      "nearest_official_max_abs": 0.029135693549625113,
+      "state_key": "task_05_state_00",
+      "state_length": 45,
+      "state_sha256": "950fcd14d3c10323339aab98aa8dd7df5e8c7c4156d37c174b25e1ef3a817a8a",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763747,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260724,
+      "id": "libero_10/generated-held-out/task-05/state-01",
+      "nearest_official_l2": 0.05930621757567764,
+      "nearest_official_max_abs": 0.031252715519636154,
+      "state_key": "task_05_state_01",
+      "state_length": 45,
+      "state_sha256": "b635d44c12191a9158eaa0401bfca87b0429192ca11894c75a309e44487b6ac0",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763747,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260725,
+      "id": "libero_10/generated-held-out/task-05/state-02",
+      "nearest_official_l2": 0.04884095260480276,
+      "nearest_official_max_abs": 0.024480353652799353,
+      "state_key": "task_05_state_02",
+      "state_length": 45,
+      "state_sha256": "a06a1bf3ec586044f28a562986df3e62fd39b70863093354b6c30e6801a2c02a",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763746,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260726,
+      "id": "libero_10/generated-held-out/task-05/state-03",
+      "nearest_official_l2": 0.05870732728242063,
+      "nearest_official_max_abs": 0.030694597178430705,
+      "state_key": "task_05_state_03",
+      "state_length": 45,
+      "state_sha256": "6d96c1b7d3b7bef31f6be1623da1639a8946750593049b50c4041895659a7ecf",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763746,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260727,
+      "id": "libero_10/generated-held-out/task-05/state-04",
+      "nearest_official_l2": 0.05422219413587948,
+      "nearest_official_max_abs": 0.03054809041149814,
+      "state_key": "task_05_state_04",
+      "state_length": 45,
+      "state_sha256": "7489a48dfd6fe3d55adcd2bdf0e4d6f8fdb207ceb28aa6bd475db4f50840c930",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763747,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260728,
+      "id": "libero_10/generated-held-out/task-05/state-05",
+      "nearest_official_l2": 0.0490262868818798,
+      "nearest_official_max_abs": 0.022937487713193566,
+      "state_key": "task_05_state_05",
+      "state_length": 45,
+      "state_sha256": "d6d7857c12b277f07207917e04f6f6c2fcdfb32951a6632cf8bcd866b2719c7c",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763746,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260729,
+      "id": "libero_10/generated-held-out/task-05/state-06",
+      "nearest_official_l2": 0.059257823824660674,
+      "nearest_official_max_abs": 0.03079232541838584,
+      "state_key": "task_05_state_06",
+      "state_length": 45,
+      "state_sha256": "93805280d1a88507ccde67e3d6bce2d4cb90bb98a6a3729164fe13ed9632421c",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763747,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260730,
+      "id": "libero_10/generated-held-out/task-05/state-07",
+      "nearest_official_l2": 0.05159408546305912,
+      "nearest_official_max_abs": 0.031150590867493833,
+      "state_key": "task_05_state_07",
+      "state_length": 45,
+      "state_sha256": "bf729aba9b11a3cbf0671f2280d7753711ec1060a54454a314e5f572c17403b4",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763746,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260731,
+      "id": "libero_10/generated-held-out/task-05/state-08",
+      "nearest_official_l2": 0.05658414957826842,
+      "nearest_official_max_abs": 0.033060735232076144,
+      "state_key": "task_05_state_08",
+      "state_length": 45,
+      "state_sha256": "7931bc446e8b53f23ff83c1370b5117f74a93136f674666d293581a0843af606",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763746,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+      "generation_seed": 25260732,
+      "id": "libero_10/generated-held-out/task-05/state-09",
+      "nearest_official_l2": 0.05429189513161211,
+      "nearest_official_max_abs": 0.02860806997781684,
+      "state_key": "task_05_state_09",
+      "state_length": 45,
+      "state_sha256": "ea95747b4e0bfe61bd1a942c1a40104724826e9efa60c524aa6227bd5b039046",
+      "task_id": 5,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7541656656763746,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260723,
+      "id": "libero_10/generated-held-out/task-06/state-00",
+      "nearest_official_l2": 0.051363433555164276,
+      "nearest_official_max_abs": 0.02687944404391925,
+      "state_key": "task_06_state_00",
+      "state_length": 71,
+      "state_sha256": "6efabe7228c3596ee3dde3196d50337c935c7b218a554e51ab9bcf43997dc794",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718112346357,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260724,
+      "id": "libero_10/generated-held-out/task-06/state-01",
+      "nearest_official_l2": 0.054359461625798196,
+      "nearest_official_max_abs": 0.0277445284302344,
+      "state_key": "task_06_state_01",
+      "state_length": 71,
+      "state_sha256": "f74d785ba602dd1b627b4851330121f9cb92fc493fc7ebf14db5b1f45cf2e14f",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546727350193563,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260725,
+      "id": "libero_10/generated-held-out/task-06/state-02",
+      "nearest_official_l2": 0.05466211978776288,
+      "nearest_official_max_abs": 0.027680573544765108,
+      "state_key": "task_06_state_02",
+      "state_length": 71,
+      "state_sha256": "7c21e73c277b53e7429e197d86c8dc87335ab3c78a3070dfe45a63e4ba1c2dcd",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718115709279,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260726,
+      "id": "libero_10/generated-held-out/task-06/state-03",
+      "nearest_official_l2": 0.054755451566456524,
+      "nearest_official_max_abs": 0.027183456912391196,
+      "state_key": "task_06_state_03",
+      "state_length": 71,
+      "state_sha256": "9dad7fb930bb988a1cc62da5142166d9a1c652c8a6d16b0648ab9d6aac8db218",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718115707133,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260727,
+      "id": "libero_10/generated-held-out/task-06/state-04",
+      "nearest_official_l2": 0.05032831540368785,
+      "nearest_official_max_abs": 0.02290690567125822,
+      "state_key": "task_06_state_04",
+      "state_length": 71,
+      "state_sha256": "fc1289bc434a4526fc8b2e77908adef2c079c3c3b4286eaaa5457d5d4baced03",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718115709279,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260728,
+      "id": "libero_10/generated-held-out/task-06/state-05",
+      "nearest_official_l2": 0.040093363677147095,
+      "nearest_official_max_abs": 0.01964968533264455,
+      "state_key": "task_06_state_05",
+      "state_length": 71,
+      "state_sha256": "81042142da1c6f8104b34a067b444ae1bccb4c5b2435c0e532ea71f3fef64841",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718115709279,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260729,
+      "id": "libero_10/generated-held-out/task-06/state-06",
+      "nearest_official_l2": 0.051689625185667866,
+      "nearest_official_max_abs": 0.025021154346783536,
+      "state_key": "task_06_state_06",
+      "state_length": 71,
+      "state_sha256": "1f837816ca79d11be20cbaa440409c4b3a95504b5e025768ee7d35b0beea074d",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718115709279,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260730,
+      "id": "libero_10/generated-held-out/task-06/state-07",
+      "nearest_official_l2": 0.0481764445793049,
+      "nearest_official_max_abs": 0.021916275972071395,
+      "state_key": "task_06_state_07",
+      "state_length": 71,
+      "state_sha256": "f8ab7641b329688b296622cbbf1cb603211d6656dc7712f35bc0849c777ee357",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718174774218,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260731,
+      "id": "libero_10/generated-held-out/task-06/state-08",
+      "nearest_official_l2": 0.039584225003937296,
+      "nearest_official_max_abs": 0.021598925202435212,
+      "state_key": "task_06_state_08",
+      "state_length": 71,
+      "state_sha256": "c98101f66f4c01bec949536dbc29622031eae3d1dee2322de70cfbc49499dc99",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718115709279,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "dbc9464b424cdc9b771b92d0b8a8c185b1b539f6a4133b323dc858bcf8f6a9c2",
+      "generation_seed": 26260732,
+      "id": "libero_10/generated-held-out/task-06/state-09",
+      "nearest_official_l2": 0.05097543248706674,
+      "nearest_official_max_abs": 0.02536905210063589,
+      "state_key": "task_06_state_09",
+      "state_length": 71,
+      "state_sha256": "519c71c4aff30d1d19000f9101563e34167736866c8eda3f03e62855978b150a",
+      "task_id": 6,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7546718115707133,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260723,
+      "id": "libero_10/generated-held-out/task-07/state-00",
+      "nearest_official_l2": 0.04958749556044254,
+      "nearest_official_max_abs": 0.02448016525409713,
+      "state_key": "task_07_state_00",
+      "state_length": 84,
+      "state_sha256": "1283aacd073fc1621369c4ad4c19a4f82e7b311c7ca87588ceb3ca40b31d6bea",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166133851,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260724,
+      "id": "libero_10/generated-held-out/task-07/state-01",
+      "nearest_official_l2": 0.05002894326302127,
+      "nearest_official_max_abs": 0.02319369584078329,
+      "state_key": "task_07_state_01",
+      "state_length": 84,
+      "state_sha256": "9651a2d44c40bfddee5af4827315a0abc2adc5811f5cd2b49bcb864bc4740e95",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166132117,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260725,
+      "id": "libero_10/generated-held-out/task-07/state-02",
+      "nearest_official_l2": 0.05827457375603514,
+      "nearest_official_max_abs": 0.027486990709375214,
+      "state_key": "task_07_state_02",
+      "state_length": 84,
+      "state_sha256": "a11c5ef6641f35f3ca7590a5f75ab36c010d84925b846fb96561d2f4bf145a75",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166131293,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260726,
+      "id": "libero_10/generated-held-out/task-07/state-03",
+      "nearest_official_l2": 0.051733475691117255,
+      "nearest_official_max_abs": 0.02689078763918948,
+      "state_key": "task_07_state_03",
+      "state_length": 84,
+      "state_sha256": "5e7da2e9a8d8ed58b29eb3cc9c5ce0a833c648f26ce44d99752d217425b3d666",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166133711,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260727,
+      "id": "libero_10/generated-held-out/task-07/state-04",
+      "nearest_official_l2": 0.05450513487886626,
+      "nearest_official_max_abs": 0.02399499398247843,
+      "state_key": "task_07_state_04",
+      "state_length": 84,
+      "state_sha256": "ce6db2e0a5095d74834b214c4e6f41d3560872e5b7f27fe96a33129d859b6a6d",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166133179,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260728,
+      "id": "libero_10/generated-held-out/task-07/state-05",
+      "nearest_official_l2": 0.048354768932338296,
+      "nearest_official_max_abs": 0.02302021547837331,
+      "state_key": "task_07_state_05",
+      "state_length": 84,
+      "state_sha256": "052b94828e7c1e19be29105ef76f4e01aebaeb3e2e78bb6e3527f363a17c1c59",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166131612,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260729,
+      "id": "libero_10/generated-held-out/task-07/state-06",
+      "nearest_official_l2": 0.050436873435746106,
+      "nearest_official_max_abs": 0.02527193676382397,
+      "state_key": "task_07_state_06",
+      "state_length": 84,
+      "state_sha256": "645019eccb6e0e4405045beb857d430eabdfa022f3681838504c844a01078aed",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166134054,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260730,
+      "id": "libero_10/generated-held-out/task-07/state-07",
+      "nearest_official_l2": 0.054987849678950776,
+      "nearest_official_max_abs": 0.02437147156595665,
+      "state_key": "task_07_state_07",
+      "state_length": 84,
+      "state_sha256": "326607b5c08a772924c770f6c70ae5700a7002de82336d3b72299b0853e179a9",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166133406,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260731,
+      "id": "libero_10/generated-held-out/task-07/state-08",
+      "nearest_official_l2": 0.05183822911138063,
+      "nearest_official_max_abs": 0.024738555201713024,
+      "state_key": "task_07_state_08",
+      "state_length": 84,
+      "state_sha256": "6c43a8b80e6a03dccd2a3735b2dd548c7c7a00894f0940195f5b42b59080e56a",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166132338,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "e27ab37f512fe42e35771d6130f531e6a9656929e7b4c60b348b81360cf5675d",
+      "generation_seed": 27260732,
+      "id": "libero_10/generated-held-out/task-07/state-09",
+      "nearest_official_l2": 0.05622819117858081,
+      "nearest_official_max_abs": 0.02448016525409713,
+      "state_key": "task_07_state_09",
+      "state_length": 84,
+      "state_sha256": "f09fda95bd84beea6ff8eb0c4c00d222645d2168140aef9b31867ac2766f093e",
+      "task_id": 7,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7547923166132531,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260723,
+      "id": "libero_10/generated-held-out/task-08/state-00",
+      "nearest_official_l2": 0.0713918983304768,
+      "nearest_official_max_abs": 0.04295107035723844,
+      "state_key": "task_08_state_00",
+      "state_length": 47,
+      "state_sha256": "13eb5ce55fe06511620af5b4a4d4b4c74e81d4a6bbd2eadfb8b676fdef4378a6",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260724,
+      "id": "libero_10/generated-held-out/task-08/state-01",
+      "nearest_official_l2": 0.04473130474631226,
+      "nearest_official_max_abs": 0.02622867095938264,
+      "state_key": "task_08_state_01",
+      "state_length": 47,
+      "state_sha256": "68f655e5126e78bf33b801e421442333788cd914a68f90d8e3501a2456a583c3",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260725,
+      "id": "libero_10/generated-held-out/task-08/state-02",
+      "nearest_official_l2": 0.05289469269479297,
+      "nearest_official_max_abs": 0.03209981603249634,
+      "state_key": "task_08_state_02",
+      "state_length": 47,
+      "state_sha256": "a7101a21645d371a3e959eee5aba56d4c738e7ad66c5aaf484293dc66c9b642f",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260726,
+      "id": "libero_10/generated-held-out/task-08/state-03",
+      "nearest_official_l2": 0.059881767192063486,
+      "nearest_official_max_abs": 0.03857663360967612,
+      "state_key": "task_08_state_03",
+      "state_length": 47,
+      "state_sha256": "ba08d77c3617c0802c9e03ea4275ef453612a1e65e853ad7631184633bb91aa0",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260727,
+      "id": "libero_10/generated-held-out/task-08/state-04",
+      "nearest_official_l2": 0.06468442064581724,
+      "nearest_official_max_abs": 0.03766973672920004,
+      "state_key": "task_08_state_04",
+      "state_length": 47,
+      "state_sha256": "86678dfb637bf12ecfe88a6668838985553c03be2e607287f21ecccda2d811dd",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260728,
+      "id": "libero_10/generated-held-out/task-08/state-05",
+      "nearest_official_l2": 0.07785532927907278,
+      "nearest_official_max_abs": 0.04911067942423587,
+      "state_key": "task_08_state_05",
+      "state_length": 47,
+      "state_sha256": "c997287b81cfdbf877990837df06110a575fef4e1a66770ab5e689749945bf8f",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260729,
+      "id": "libero_10/generated-held-out/task-08/state-06",
+      "nearest_official_l2": 0.05141869691781633,
+      "nearest_official_max_abs": 0.027751965113087515,
+      "state_key": "task_08_state_06",
+      "state_length": 47,
+      "state_sha256": "48c0c2d56fd0b97bc8b84536c037ac5313ab1e9030746d64a7fd2a429d43f108",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260730,
+      "id": "libero_10/generated-held-out/task-08/state-07",
+      "nearest_official_l2": 0.0521845917237206,
+      "nearest_official_max_abs": 0.02772468924955044,
+      "state_key": "task_08_state_07",
+      "state_length": 47,
+      "state_sha256": "639b750afb013c9f21e8321305ef17055c540111e5a4ff26952ba0513431b34f",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260731,
+      "id": "libero_10/generated-held-out/task-08/state-08",
+      "nearest_official_l2": 0.06792057304828504,
+      "nearest_official_max_abs": 0.0367647447797701,
+      "state_key": "task_08_state_08",
+      "state_length": 47,
+      "state_sha256": "abfc3d2e618ab480e6fda22f106c4f15711e9e6f28fcf7fb4de2593d3c2af152",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "ae1299a707d3e810096ad648948c517de40474bcdacca93a15e17d191e34454a",
+      "generation_seed": 28260732,
+      "id": "libero_10/generated-held-out/task-08/state-09",
+      "nearest_official_l2": 0.052436989275759564,
+      "nearest_official_max_abs": 0.028251299444801065,
+      "state_key": "task_08_state_09",
+      "state_length": 47,
+      "state_sha256": "8dadf7475495ba3bc4acda0bac28594719c6ddb8d9eecb4893eb170b0df18885",
+      "task_id": 8,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7504634430646437,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260723,
+      "id": "libero_10/generated-held-out/task-09/state-00",
+      "nearest_official_l2": 0.05527668733281824,
+      "nearest_official_max_abs": 0.025909192857647936,
+      "state_key": "task_09_state_00",
+      "state_length": 47,
+      "state_sha256": "772eb3db0f526ec9f21b820e3c4528e6e2c46461571d33fde8bddef1980c5287",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260724,
+      "id": "libero_10/generated-held-out/task-09/state-01",
+      "nearest_official_l2": 0.061002850612374294,
+      "nearest_official_max_abs": 0.035756070286154684,
+      "state_key": "task_09_state_01",
+      "state_length": 47,
+      "state_sha256": "c17c0845ae855c2b4f34c99f2f035bfe8b07621398ae0e5d7fd8bf8b15ffdc2b",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260725,
+      "id": "libero_10/generated-held-out/task-09/state-02",
+      "nearest_official_l2": 0.05975447948190275,
+      "nearest_official_max_abs": 0.035756070286154684,
+      "state_key": "task_09_state_02",
+      "state_length": 47,
+      "state_sha256": "e7f53bcfd0b6533785bc1306993e01bcec8e69001347d3b553febf9baed027de",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260726,
+      "id": "libero_10/generated-held-out/task-09/state-03",
+      "nearest_official_l2": 0.061060847272634666,
+      "nearest_official_max_abs": 0.03299566107266888,
+      "state_key": "task_09_state_03",
+      "state_length": 47,
+      "state_sha256": "4d4962ce9b0bc9b43d1602ca3483d6a88db62e83bb0fa404d7142bdce572413b",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260727,
+      "id": "libero_10/generated-held-out/task-09/state-04",
+      "nearest_official_l2": 0.056253986030185825,
+      "nearest_official_max_abs": 0.025217292377554962,
+      "state_key": "task_09_state_04",
+      "state_length": 47,
+      "state_sha256": "62a9b9d643edaf87f10b46a66f0e91608a0cf258d2697e1d0006a6dcf18b2728",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260728,
+      "id": "libero_10/generated-held-out/task-09/state-05",
+      "nearest_official_l2": 0.06672600436837359,
+      "nearest_official_max_abs": 0.035756070286154684,
+      "state_key": "task_09_state_05",
+      "state_length": 47,
+      "state_sha256": "642cc78ac9744c419487455122826d90a270192cdf747dd4b7e71afa90727c5d",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260729,
+      "id": "libero_10/generated-held-out/task-09/state-06",
+      "nearest_official_l2": 0.051259346773522015,
+      "nearest_official_max_abs": 0.02671796023311912,
+      "state_key": "task_09_state_06",
+      "state_length": 47,
+      "state_sha256": "50d8d0094472f49d0e3404f5b01867367ec91c93b192b8680b93ba70d9cf1ee7",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260730,
+      "id": "libero_10/generated-held-out/task-09/state-07",
+      "nearest_official_l2": 0.05895685921207281,
+      "nearest_official_max_abs": 0.028388654830529526,
+      "state_key": "task_09_state_07",
+      "state_length": 47,
+      "state_sha256": "a1970cfc079a5b82a10f89614305dc513b18fcad320dc229b601cfc926df259b",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260731,
+      "id": "libero_10/generated-held-out/task-09/state-08",
+      "nearest_official_l2": 0.059698107801918414,
+      "nearest_official_max_abs": 0.03558275083592477,
+      "state_key": "task_09_state_08",
+      "state_length": 47,
+      "state_sha256": "0842ad3c3b948065ee4b9fb9d010c1f61c7d937e62696feb73667e775bad9232",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    },
+    {
+      "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "generation_seed": 29260732,
+      "id": "libero_10/generated-held-out/task-09/state-09",
+      "nearest_official_l2": 0.04777095040013751,
+      "nearest_official_max_abs": 0.027800812193609005,
+      "state_key": "task_09_state_09",
+      "state_length": 47,
+      "state_sha256": "c58e9255a1ce7f524c8baf37fe9e0cf347f6bfa5eade247d969d6aea3288c84e",
+      "task_id": 9,
+      "validation": {
+        "initial_success": false,
+        "observations_finite": true,
+        "settle_state_l2_delta": 0.7571609895803706,
+        "settle_state_max_abs_delta": 0.7500000000000006,
+        "settled_state_finite": true,
+        "success_after_settle": false
+      }
+    }
+  ],
+  "generator": {
+    "base_seed": 20260723,
+    "created_at_utc": "2026-07-21T12:57:24.232154+00:00",
+    "max_attempts_per_task": 1000,
+    "official_state_count_per_task": 50,
+    "policy_loaded": false,
+    "rejection_counts": {
+      "generated_duplicate": 0,
+      "initial_success": 0,
+      "non_finite": 0,
+      "official_duplicate": 0,
+      "settle_error": 0
+    },
+    "reset_gripper_open": true,
+    "selection_uses_model_outcomes": false,
+    "simulator_runtime": {
+      "compatibility": "rlinf_v01",
+      "distribution_version": "source-checkout",
+      "path_source": "configured",
+      "provider": "rlinf-source-checkout"
+    },
+    "states_per_task": 10,
+    "wait_steps_after_reset": 15
+  },
+  "schema_version": 1,
+  "simulator_compatibility": "rlinf_v01",
+  "state_archive": "states.npz",
+  "state_archive_sha256": "a4ba61f4510d198db70fa0127f89e13d2fc9f60257672942c8b489a5b2ec3edd",
+  "suite_name": "libero_10"
+}

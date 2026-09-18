@@ -1,0 +1,101 @@
+"""Run the model-backed GR00T N1.7 Flow-SDE conformance gate."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+import numpy as np
+import torch
+
+from art_embodied.backends.flow_sde import TRANSIENT_FLOW_SDE_ROLLOUT_KEY
+from art_embodied.config import EmbodiedExperimentConfig
+from art_embodied.integrations.gr00t_flow_sde import GR00TN17FlowSDEPolicyAdapter
+from art_embodied.policies.factory import make_policy
+
+
+def run(config_path: Path) -> dict[str, object]:
+    """Verify native decode, rollout/rescore alignment, and LoRA gradients."""
+
+    config = EmbodiedExperimentConfig.from_yaml(config_path)
+    if config.policy.type != "gr00t_n1d7":
+        raise ValueError("N1.7 conformance requires policy.type='gr00t_n1d7'")
+    policy = make_policy(config)
+    observation = {
+        "image": np.zeros((256, 256, 3), dtype=np.uint8),
+        "wrist_image": np.zeros((256, 256, 3), dtype=np.uint8),
+        "proprio_state": np.zeros(8, dtype=np.float32),
+    }
+    task = "pick up the black bowl and place it on the plate"
+
+    policy.eval()
+    eval_prediction = GR00TN17FlowSDEPolicyAdapter(
+        policy=policy,
+        sampling_mode="eval",
+    ).predict(observation, task=task, step=0, seed=11)
+    rollout_prediction = GR00TN17FlowSDEPolicyAdapter(policy=policy).predict(
+        observation,
+        task=task,
+        step=0,
+        seed=17,
+    )
+    retained = rollout_prediction.action.metadata[TRANSIENT_FLOW_SDE_ROLLOUT_KEY]
+    policy.train()
+    rescored = policy.flow_sde_logprobs(retained.to(policy.device))
+    old = retained.transition.old_logprobs[
+        :, : policy.execution_horizon, : policy.action_dim
+    ].to(rescored.device)
+    maximum_delta = float((rescored.detach() - old).abs().max().item())
+    (-rescored.mean()).backward()
+    gradients = [
+        parameter.grad
+        for parameter in policy.parameters()
+        if parameter.requires_grad and parameter.grad is not None
+    ]
+    if not gradients:
+        raise RuntimeError("N1.7 conformance produced no trainable gradients")
+    finite = all(bool(torch.isfinite(gradient).all()) for gradient in gradients)
+    trainable_names = [
+        name for name, parameter in policy.named_parameters() if parameter.requires_grad
+    ]
+    if any("action_head.model" not in name for name in trainable_names):
+        raise RuntimeError("N1.7 LoRA escaped the audited DiT surface")
+
+    return {
+        "schema_version": 1,
+        "model_id": policy.model_id,
+        "revision": policy.revision,
+        "checkpoint_subfolder": policy.checkpoint_subfolder,
+        "model_action_horizon": policy.model_action_horizon,
+        "processor_action_horizon": policy.processor_action_horizon,
+        "execution_horizon": policy.execution_horizon,
+        "native_action_shape": list(np.asarray(eval_prediction.native_action).shape),
+        "predicted_action_shape": list(
+            np.asarray(eval_prediction.predicted_action_chunk).shape
+        ),
+        "rollout_rescore_max_abs_delta": maximum_delta,
+        "trainable_tensor_count": len(trainable_names),
+        "gradient_tensor_count": len(gradients),
+        "all_gradients_finite": finite,
+        "ok": maximum_delta <= 1.0e-5 and finite,
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("config", type=Path)
+    parser.add_argument("--output", type=Path)
+    args = parser.parse_args()
+    result = run(args.config)
+    encoded = json.dumps(result, indent=2, sort_keys=True)
+    print(encoded)
+    if args.output is not None:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(encoded + "\n", encoding="utf-8")
+    if not result["ok"]:
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    main()

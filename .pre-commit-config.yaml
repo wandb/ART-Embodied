@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.11
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: uv-lock-check
+        name: uv.lock sync check
+        entry: uv lock --check
+        language: system
+        pass_filenames: false
+
+      - id: addon-package-tests
+        name: ART-Embodied package and lifecycle tests
+        entry: >-
+          uv run --extra dev pytest -q
+          tests/test_embodied_art_compat.py
+          tests/test_embodied_cli.py
+          tests/test_embodied_config.py
+          tests/test_embodied_local_process_backend.py
+          tests/test_embodied_observability.py
+          tests/test_embodied_package_boundary.py
+          tests/test_embodied_rollout_process.py
+          tests/test_embodied_runner.py
+          tests/test_embodied_utils.py
+        language: system
+        pass_filenames: false
+        stages: [manual]

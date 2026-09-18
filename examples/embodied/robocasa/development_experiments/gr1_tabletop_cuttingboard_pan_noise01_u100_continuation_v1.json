@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "kind": "art_embodied_development_experiment_preregistration",
+  "name": "gr1-tabletop-cuttingboard-pan-noise01-u100-continuation-v1",
+  "created_at_utc": "2026-08-19T18:12:32Z",
+  "decision_time": {
+    "parent_job": 1084,
+    "parent_wandb_run_id": "1970sjop",
+    "latest_completed_update_when_frozen": 8,
+    "primary_update20_outcome_observed": false,
+    "reason": "The user clarified that 20 updates are an intermediate diagnostic and that a 100-200 update learning curve is required for a generally publishable result."
+  },
+  "question": "Does the admitted one-task GRPO recipe produce a sustained native-ODE success-rate lift when the existing policy and Adam state are continued from update 20 through the prospectively selected update-100 endpoint?",
+  "scope": {
+    "method": "LeRobot-first trajectory-level GRPO",
+    "task": "PosttrainPnPNovelFromCuttingboardToPanSplitA",
+    "data_role": "development",
+    "mechanism_gate_only": true,
+    "original_eight_task_claim_eligible": false,
+    "sealed_test_eligible_on_pass": true,
+    "ppo_out_of_scope": true
+  },
+  "frozen_inputs": {
+    "config": "examples/embodied/robocasa/development_experiments/gr1_tabletop_cuttingboard_pan_noise01_u100_continuation_v1.yaml",
+    "config_sha256": "e903c3cc34b388fd15ed244b75f2b062b78c44552833c0021ae3e8ab92de63a3",
+    "parent_config": "examples/embodied/gr00t_n1d7_robocasa_gr1_tabletop_cuttingboard_pan_noise01_u20_development.yaml",
+    "parent_config_sha256": "3cf61ac4d6dc0a31de4832725a8c140d93e5b42754ede048092a6816f20715f4",
+    "parent_preregistration": "examples/embodied/robocasa/development_experiments/gr1_tabletop_cuttingboard_pan_noise01_u20_v1.json",
+    "parent_preregistration_sha256": "36225011e50dda93953ae7717d605f10fcffa13e0f538bc8b26bc921e6d005d3",
+    "expected_resume_checkpoint": "outputs/gr00t-n1d7-robocasa-single-task/cuttingboard-pan-noise01-r010-r075-r64-lr3e5-u20-v1/checkpoints/step-000020",
+    "expected_baseline_outcomes": "outputs/gr00t-n1d7-robocasa-single-task/cuttingboard-pan-noise01-r010-r075-r64-lr3e5-u20-v1/evaluation/update_000000_episode_outcomes.json",
+    "expected_parent_adjudication": "outputs/gr00t-n1d7-robocasa-single-task/cuttingboard-pan-noise01-r010-r075-r64-lr3e5-u20-v1/development_adjudication.json",
+    "parent_wandb_run_id": "1970sjop",
+    "resume_contract_fingerprint": "691554e6497ccb86",
+    "sft_completion_marker_sha256": "7a8f8a0d155282f782013d0b32f397f9b81667d1411db07a5e5d8fc34b70df3e",
+    "post_oracle_sampler_report_sha256": "bce1e07cc4ece61fc313a0a4ba73a23e9e2451c87b3d3b2978bdc5517c938695",
+    "environment_conformance_report_sha256": "840303be12ad05bbd3aa29ebf58a25cf18eece4f342154ec879ba9c4c4f95301",
+    "policy_conformance_report_sha256": "225ade587c822622b1f7ca83ed840cdd06cb0d4c717917c04d35f753cc19b46c",
+    "wandb_roundtrip_report_sha256": "ea86c3158dc3588faa8be7eeb8d166f9452387033a8996d553b1e984e0963a39",
+    "implementation_sha256": {
+      "examples/embodied/robocasa/environment.py": "eb93502b6c332728cbf697debbc1dde10d60050afbce6c6bfea56f45cb5c6fd2",
+      "examples/embodied/robocasa/simulator_worker.py": "ffeb85e74de2368684b5f2224ada3ceaed9d5e79f8d3c02059aaaa31f8a889fd",
+      "examples/embodied/robocasa/rollout.py": "b60df7996617d2d1d6179acf6bec084d9d1a65e809ab3af64ae29f59e3cc105d",
+      "examples/embodied/robocasa/components.py": "dddcf4b8af21fa7d0e0dde52837652121e01c6911b218b87ebe975634d72e4c7",
+      "src/art_embodied/integrations/gr00t_flow_sde.py": "fc8d26c94281e300327d09d315ce32f0891de4271a7a7b06fdf3ea082c180bc3",
+      "src/art_embodied/policies/gr00t_n1d7_flow_sde.py": "e7b3be6c0a9af6c97980232a2645c093b2fb5eef3353f571c754ee06c4531bb8",
+      "src/art_embodied/backends/flow_sde_grpo.py": "5948eb5a1117374645047fbd87864d150774457dadd88392d10c40b3da2a5f4c",
+      "src/art_embodied/experiment.py": "5f2708751a4cdf106bcaf94597dbe944c0d8e4593192150fbfca696bed745445",
+      "src/art_embodied/evaluation.py": "2b57d81d0794353dd1627e6a3031095b22812e0c805d29521915066d3a17127a"
+    }
+  },
+  "training_contract": {
+    "fresh_restart": false,
+    "resume_update": 20,
+    "final_update": 100,
+    "incremental_updates": 80,
+    "same_experiment_seed": 20260814,
+    "same_policy_state": true,
+    "same_adam_state": true,
+    "same_wandb_run": true,
+    "groups_per_update": 32,
+    "group_size": 8,
+    "trajectories_per_update": 256,
+    "incremental_training_trajectories": 20480,
+    "total_training_trajectories": 25600,
+    "rollout_actors": 16,
+    "lora_rank": 64,
+    "lora_alpha": 64,
+    "learning_rate": 0.00003,
+    "optimizer_steps_per_update": 24,
+    "global_batch_size": 960,
+    "reward": {
+      "mode": "task_progress",
+      "grasp": 0.1,
+      "placement": 0.75,
+      "terminal_only": true
+    },
+    "flow_sde": {
+      "noise_level": 0.1,
+      "denoise_steps": 4,
+      "execution_horizon": 8
+    }
+  },
+  "update20_admission_gate": {
+    "purpose": "Operational and collapse screening only; update-20 statistical significance is not required because 20 updates are acknowledged as underpowered.",
+    "parent_run_completed": true,
+    "step20_checkpoint_complete": true,
+    "all_20_training_rollouts_complete": true,
+    "all_preregistered_update0_to_update20_evaluations_complete": true,
+    "failed_training_or_evaluation_episodes": 0,
+    "resume_contract_exact_match": true,
+    "minimum_update20_native_ode_success_rate": 0.25,
+    "nonfinite_or_missing_gradient_signal": false
+  },
+  "evaluation_contract": {
+    "runtime": "native_lerobot",
+    "sampler": "native_flow_ode",
+    "baseline": "reuse the exact 64 update-0 outcomes from the parent run",
+    "continuation_evaluation_updates": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100],
+    "full_curve_updates": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100],
+    "episodes_per_evaluation": 64,
+    "environment_seeds": {
+      "start": 400,
+      "count": 64,
+      "mode": "configured"
+    },
+    "primary_candidate": "update 100 only",
+    "durability_window": [90, 95, 100],
+    "intermediate_use": "health and trend diagnostics only; no maximum-over-checkpoints selection"
+  },
+  "primary_gate": {
+    "completed_baseline_episodes": 64,
+    "completed_update100_episodes": 64,
+    "failed_episodes": 0,
+    "update100_success_rate_lift_positive": true,
+    "paired_lift_ci95_lower_bound_above_zero": true,
+    "improved_pairs_exceed_regressed_pairs": true,
+    "mcnemar_exact_p_at_most": 0.05,
+    "at_least_two_of_updates_90_95_100_above_baseline": true,
+    "partial_progress_cannot_pass": true
+  },
+  "decision_rule": {
+    "on_pass": "Freeze update 100 as the one-task candidate and evaluate it once on a new untouched seed/state sealed panel. Do not tune from sealed outcomes.",
+    "on_failure": "Stop after update 100, release GPUs, and inspect the complete curve. Do not select an intermediate checkpoint post hoc.",
+    "on_operational_failure": "Stop fail-closed; resume only from the most recent complete checkpoint under the same frozen contract.",
+    "independent_training_seed": "Run only after the update-100 mechanism result and sealed evaluation justify a powered replication; do not insert another disposable 20-update run."
+  },
+  "resource_budget": {
+    "continuation_training_jobs": 1,
+    "gpus": 8,
+    "maximum_incremental_training_trajectories": 20480,
+    "maximum_total_training_trajectories": 25600,
+    "maximum_update": 100,
+    "automatic_fresh_restarts": 0,
+    "sealed_jobs_before_candidate_freeze": 0
+  }
+}

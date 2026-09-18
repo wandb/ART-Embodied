@@ -1,0 +1,4 @@
+# TODO: Replace this scaffold with the closest validated examples/embodied
+# recipe and point its environment factory at lerobot/env.py.
+schema_version: 1
+use_case_pack: TODO
