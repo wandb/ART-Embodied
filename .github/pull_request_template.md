@@ -1,22 +1,21 @@
 ## Change
 
-Describe the user-visible change and compatibility impact.
+Describe the change, related issue, and any compatibility impact.
 
 ## Validation
 
-- [ ] Scratch probes/configurations/diaries stayed separate during development;
-      only implementation, tests, maintained recipes and concise docs are staged.
-- [ ] Shipped entrypoints do not depend on scratch or archived research helpers;
-      any existing dependency requiring retention is explicitly identified.
-- [ ] Clean-checkout tests, optional numerical/W&B tests and package checks pass.
-- [ ] For accelerator-path changes or pruning: final-tree commit/source hashes,
-      resolved recipe, runtime/input-model identity and GPU/W&B evidence linked.
-      Otherwise explain why the accelerator gate is not applicable.
-- [ ] Checkpoint, history, native update/media axes, evaluation, videos and model
-      uploads verified; App rendering marked verified or explicitly unverified.
-- [ ] Execution inputs have not changed since the linked accelerator evidence.
-- [ ] Learning claims include real-task development and separate sealed evidence,
-      or explicitly state that this PR makes no new learning-quality claim.
+List the tests you ran and their results. Mention any checks you could not run.
+For policy, simulator, or learning changes, include the recipe and shareable
+experiment evidence when available.
 
-List remaining limitations and skipped checks. See CONTRIBUTING.md for the
-final-tree validation order. Never include secrets or large generated assets.
+GPU access is not required to submit a PR. Maintainers can help with GPU
+validation before merging when the change needs it.
+
+## Checklist
+
+- [ ] Added or updated tests and documentation where relevant.
+- [ ] Reviewed the diff for credentials, private information, and generated files.
+- [ ] Described remaining limitations or validation needed.
+
+See [CONTRIBUTING.md](https://github.com/wandb/ART-Embodied/blob/main/CONTRIBUTING.md)
+for development and validation guidance.
