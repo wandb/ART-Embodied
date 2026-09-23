@@ -2,7 +2,9 @@
 
 from pathlib import Path
 import re
+import tomllib
 
+from packaging.version import Version
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,3 +32,13 @@ def test_actions_are_pinned_and_checkout_drops_credentials():
 def test_codeowners_declares_maintaining_team():
     owners = (ROOT / ".github/CODEOWNERS").read_text().splitlines()
     assert "* @wandb/art-embodied" in owners
+
+
+def test_anyio_security_floor_in_standard_install_profiles():
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text())
+    assert "anyio>=4.14.2" in project["tool"]["uv"]["constraint-dependencies"]
+    assert "anyio>=4.14.2" in (ROOT / "constraints/security.txt").read_text().splitlines()
+    lock = tomllib.loads((ROOT / "uv.lock").read_text())
+    versions = [p["version"] for p in lock["package"] if p["name"] == "anyio"]
+    assert versions
+    assert all(Version(version) >= Version("4.14.2") for version in versions)
