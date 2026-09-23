@@ -13,10 +13,22 @@ def test_no_internal_research_directories():
 
 def test_contributor_scratch_guidance_keeps_internal_records_outside_git():
     guide = (ROOT / "CONTRIBUTING.md").read_text()
-    section = guide.split("### Keep experiments PR-ready from the start", 1)[1]
-    assert "`ART_EMBODIED_PRIVATE_DIR`, outside every Git" in section
+    section = guide.split("## Submitting a pull request", 1)[1]
+    assert (
+        "Keep internal notes, operational records, and private data outside Git."
+        in section
+    )
     assert "research worktree/branch" not in section
     assert "versioned archival" not in section
+
+
+def test_contributor_validation_does_not_require_personal_gpu_access():
+    guide = (ROOT / "CONTRIBUTING.md").read_text()
+    template = (ROOT / ".github/pull_request_template.md").read_text()
+    assert "You do not need access to a GPU" in guide
+    assert "Maintainers can run" in guide
+    assert "GPU access is not required" in template
+    assert "H100" not in guide
 
 
 def test_examples_and_launchers_do_not_embed_personal_mount_paths():

@@ -1,162 +1,103 @@
 # Contributing to ART-Embodied
 
-ART-Embodied is a LeRobot-first add-on for OpenPipe ART. Contributions should
-preserve that boundary: ART owns experiment/model lifecycle, LeRobot owns native
-policies and environments, and each policy family owns its sampler-aligned RL
-objective.
+Bug reports, documentation improvements, tests, and code contributions are
+welcome. ART-Embodied adds trajectory-level reinforcement learning and experiment
+management to LeRobot workflows using OpenPipe ART.
+
+## Getting started
+
+For small fixes, open a pull request directly. For a new policy, simulator,
+training objective, or substantial API change, open an issue first so we can
+agree on the scope and validation plan.
+
+When reporting a bug, include the recipe, package versions, expected behavior,
+and a minimal reproduction. Include relevant logs or experiment links when you
+can share them, but remove credentials and private information.
 
 ## Development setup
 
-ART-Embodied supports Python 3.11 and 3.12 and uses `uv`:
+Fork the repository on GitHub, then clone your fork and create a branch:
 
 ```bash
-git clone https://github.com/wandb/ART-Embodied.git
+git clone https://github.com/YOUR-USERNAME/ART-Embodied.git
 cd ART-Embodied
+git switch -c my-change
 git config core.hooksPath .githooks
-uv sync --extra dev
+uv sync --python 3.12 --locked --extra dev
 ```
 
-The package imports as `art_embodied`. Do not add modules to the upstream
-`art` namespace or vendor OpenPipe ART into this distribution.
+Core development supports Python 3.11 and 3.12. The setup above is enough for
+core tests. Policy and simulator changes need the corresponding environment
+from the [README](README.md#install). Keep those environments separate.
 
-## Before opening a pull request
+The package imports as `art_embodied`. OpenPipe ART is a dependency, so changes
+belong in this package rather than in a bundled copy of `art`.
 
-Keep internal notes and operational records outside Git, in the owner-only
-directory specified by `ART_EMBODIED_PRIVATE_DIR`. This directory must be outside
-every Git checkout. Do not add these records to research branches.
-Local hooks and CI reject private paths and marked internal content, including
-content added in an earlier commit and subsequently removed. Review unmarked
-documents manually; automated checks cannot recognize all internal information.
+## Testing your changes
 
-Run the add-on-owned CPU checks:
+Run the core checks from the repository root:
 
 ```bash
-uv run --extra dev ruff check \
+uv run --locked --extra dev ruff check \
   src/art_embodied \
   tests/test_embodied_*.py \
   examples/embodied/*.py \
   examples/embodied/libero/*.py
-
-uv run --extra dev pytest -q \
-  tests/test_embodied_art_compat.py \
-  tests/test_embodied_cli.py \
-  tests/test_embodied_config.py \
-  tests/test_embodied_local_process_backend.py \
-  tests/test_embodied_observability.py \
-  tests/test_embodied_package_boundary.py \
-  tests/test_embodied_rollout_process.py \
-  tests/test_embodied_runner.py \
-  tests/test_embodied_utils.py
-
+uv run --locked --extra dev pytest -q
 uv build
 ```
 
-Changes to policy loading, action likelihoods, distributed training,
-checkpointing, or simulator integration require the relevant accelerator gate.
-For OpenVLA-OFT that means at least one real H100 optimizer update followed by
-checkpoint reload. Changes that claim learning quality also require the fixed
-native evaluation described in
-`docs/experimental/embodied-release-validation.mdx`; a loader smoke or lower
-surrogate loss is not sufficient evidence.
+Tests requiring optional dependencies may be skipped in the core environment.
+CI also runs numerical and W&B regression tests with additional dependencies.
+Add regression tests for fixes and describe which checks you ran in your PR.
 
-### Empirical policy-opening gate
+Validation depends on the change:
 
-A new policy or simulator path must pass a real-task positive control before it
-is tested with harder tasks or additional research variables. Unit tests,
-loader smoke tests, finite gradients, checkpoint reloads, and one successful
-optimizer update establish mechanical correctness only; they do not establish
-that the RL implementation can improve a policy.
+| Change | Expected validation |
+| --- | --- |
+| Documentation | Check instructions, examples, and links. No GPU is needed. |
+| Core APIs, configuration, or utilities | Relevant unit tests and the core checks above. |
+| Policy execution, likelihoods, distributed training, checkpointing, or simulator behavior | Relevant CPU tests and GPU validation agreed with a maintainer, including an update and checkpoint reload where applicable. |
+| New policy or simulator support, or learning-performance claims | Real-task rollouts and fixed evaluations comparing the starting and trained policies. Distinguish development results from a separate held-out final test. |
 
-The positive control must:
+You do not need access to a GPU to submit a contribution. Maintainers can run
+GPU validation when needed on hardware appropriate for the affected policy.
+Mention unavailable checks in your PR so we can arrange them before merging.
 
-- use the released checkpoint and native runtime that users will actually run;
-- use one real benchmark task with measured headroom and prior evidence that the
-  base policy can perform the task;
-- exclude instruction or visual perturbations, domain randomization, multitask
-  training, task routing, replay, branching, and other experimental mechanisms;
-- run enough updates and fixed development evaluations to demonstrate a
-  sustained success-rate lift rather than a favorable single evaluation;
-- log standalone `train/*` and `validation/*` metrics, media, configuration, and
-  checkpoints to W&B, with the sealed evaluation pair prepared in advance.
+For learning changes, start with a controlled benchmark before adding further
+experimental variables. Share the recipe, checkpoint identity, and evaluation
+results. W&B metrics, videos, and artifacts should refer to the same training
+update, including after resume. See the
+[validation guide](docs/experimental/embodied-release-validation.mdx) for details.
 
-Only after this gate passes should experiments add one failure mode at a time.
-For example, qualify single-task learning before multitask balancing, and
-qualify the unperturbed task before testing language or camera robustness. If
-the positive control fails, treat the policy integration or base RL recipe as
-unqualified and debug it before interpreting results from harder settings.
+## Design guidelines
 
-## Design rules
+- Keep shared training and experiment-management code independent of any one
+  policy, simulator, or cluster scheduler.
+- Put policy-specific sampling and likelihood logic in policy adapters, and
+  environment-specific behavior in simulator integrations.
+- Use YAML for reproducible experiment settings. Reserve environment variables
+  for credentials and machine-specific configuration.
+- Preserve existing policy behavior and checkpoint compatibility, or explain
+  the migration required by your change.
+- Keep W&B and Weave optional. When enabled, preserve consistent metrics,
+  media, evaluation records, and trajectory traces across adapters.
 
-- Keep generic control-plane code independent of LIBERO, Slurm, and any one
-  policy family.
-- Put simulator/task-specific behavior in its integration or example package.
-- Keep YAML as the reproducible experiment contract. Environment variables are
-  for secrets and explicit operational overrides only.
-- W&B and Weave emission must be no-op when disabled. When enabled, metrics,
-  videos, artifacts, and trajectory traces must share the same update identity.
-- Preserve native policy samplers and their action likelihoods.
-- Do not claim a model family as supported until a warm-start baseline and an
-  RL checkpoint have been compared with the same fixed native evaluator.
-- Do not combine policy bring-up with robustness or multitask experiments. Pass
-  the empirical policy-opening gate first, then change one variable at a time.
+## Submitting a pull request
 
-## Pull requests
+Open your PR against `main` and describe the change, any related issue,
+compatibility impact, and test results. Small, focused PRs are easier to review.
+Draft PRs are welcome when you need feedback or help with validation.
 
-Describe the user-visible behavior, compatibility impact, tests run, and any
-remaining unsupported path. Include W&B run links or compact local evidence for
-learning-quality changes, but never commit API keys, `.env` files, model weights,
-large rollout payloads, or generated videos.
+Keep internal notes, operational records, and private data outside Git. Submit
+reusable code, tests, maintained recipes, and concise documentation. Do not
+commit credentials, model weights, generated videos, or large rollout files.
+Hooks and CI check for some private content, but review your diff as well.
 
-### Keep experiments PR-ready from the start
+The `art-embodied` team reviews contributions. A maintainer will help identify
+any additional checks needed before merging. If you change execution-related
+code after validation, rerun the affected checks or ask for help doing so.
 
-Do not accumulate a research diary in the feature branch and sort it out only
-after an experiment succeeds. Separate the deliverable from scratch work when
-creating files:
-
-- Keep reusable implementation in `src/`, regression tests in `tests/`, and
-  maintained reproduction entrypoints/recipes in `examples/` or `scripts/`.
-- Keep one-off probes, intermediate recipe variants, run-specific launch files
-  and investigation notes in `ART_EMBODIED_PRIVATE_DIR`, outside every Git
-  checkout. Ignore rules are a fallback, not a place to store internal records.
-- Never make shipped entrypoints depend on scratch helpers. Extract reusable
-  functionality into a maintained module with tests instead of importing an
-  entire one-off investigation script.
-- Stage explicit deliverable paths and review the staged name list and diffstat
-  after each implementation increment. Do not use blanket `git add .` or
-  `git add -A` to package an experiment. Ignore rules are not a secrets scanner.
-- Preserve full provenance in experiment outputs and W&B. On success, add the
-  final recipe, concise result/reproduction documentation and evidence links,
-  rather than copying every intermediate report into the PR.
-
-The intended outcome is that a successful experiment is already running the
-PR-ready implementation. Final review and checks should verify that boundary,
-not trigger a large post-success cleanup and another experiment solely because
-research files became runtime dependencies.
-
-### Final-tree validation order
-
-Finish the release boundary before spending GPU time on release validation:
-
-1. Select the implementation, recipes, regression tests and concise user docs.
-   Keep one-off investigations outside Git; retain all runtime dependencies.
-2. Test a separate Git checkout of the proposed merge tree with no research
-   outputs or archived helpers. Run core and optional numerical/W&B suites,
-   packaging checks and entrypoint checks before allocating GPUs.
-3. Run the affected policy's accelerator gate from that exact checkout. Record
-   its commit, source checksums, resolved recipe, runtime versions, input model
-   identity and W&B run. Do not change unrelated qualified policy environments.
-4. Read back the optimizer/checkpoint and W&B history, native update/media axes,
-   evaluation records, videos and model bytes. Report storage verification and
-   App-rendering verification separately. Keep the PR unqualified on failures.
-
-For a packaging/pruning regression gate, retain the successful recipe's real
-batch size, parallelism, precision and evaluation panel, and use a separate
-run/output directory. One full update tests execution, not learning quality;
-it does not replace the empirical policy-opening gate or sealed comparison.
-Do not overwrite or resume a published result merely to test packaging.
-
-Pruning after this GPU gate defeats the ordering: changes to runtime code,
-imports, recipes, assets or dependencies invalidate the affected evidence and
-require requalification. Documentation-only follow-ups can reuse it when the
-unchanged execution inputs are explicitly verified. Link the final-tree proof
-in the PR rather than asking the user to request a GPU check separately.
+Only submit material you have permission to contribute, and retain required
+third-party license notices. Maintainers will confirm any required contribution
+agreement before merging.
