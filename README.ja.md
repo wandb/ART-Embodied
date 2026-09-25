@@ -86,7 +86,7 @@ ART-EmbodiedはARTのモデル管理APIを使い、軌道のグループ化、�
 | [PI0 / LIBERO Spatial](https://wandb.ai/wandb-japan/art-embodied-pi0-positive-control-reference/runs/941byojx) | Flow-SDE GRPO | 100 | 63/100 | **99/100** | **+36 point** |
 | [PI0.5 / LIBERO Long](https://wandb.ai/wandb-japan/art-embodied-pi05-positive-control-reference/runs/t0a9mnd3) | Flow-SDE GRPO | 250（best dev） | 48/100 | **84/100** | **+36 point** |
 | [SmolVLA / LIBERO Long](https://wandb.ai/wandb-japan/art-embodied-smolvla-positive-control-v3/runs/s4xwc2jm) | Flow-SDE GRPO | 180（best dev） | 42/100 | **69/100** | **+27 point** |
-| GR00T N1.7 / RoboCasa Cuttingboard-to-Pan（[開発run](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task/runs/1970sjop)、[sealed test](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11)） | Flow-SDE GRPO | 100（sealed） | 111/192 | **139/192** | **+14.6 point** |
+| GR00T N1.7 / RoboCasa Cuttingboard-to-Pan | Flow-SDE GRPO | 100（sealed） | 111/192 | **139/192** | **+14.6 point** |
 | [PI0-FAST / LIBERO Long (単一タスク)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/a1hx8rsf) | Action-token GRPO | 100 (開発評価) | 70/100 | **89/100** | **+19 ポイント** |
 | [PI0-FAST / LIBERO Long (単一タスク)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/ww9b5upu) | Action-token GRPO | 100 (sealed) | [73/100](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/r56aa76y) | **83/100** | **+10 ポイント** |
 
@@ -112,7 +112,7 @@ sealedの改善幅+10ポイントの対応付き95%信頼区間は[0, 20]ポイ�
 - **OpenVLA-OFT Spatial:** 同じバックエンドを使用し、SFTチェックポイント、タスク群、評価セット、W&Bプロジェクトを分けて検証。更新30で82/100、更新100で88/100でした。比較対象はSFTです。
 - **PI0 / PI0.5:** K4/noise 0.5のFlow-SDEサンプラーを使用し、1更新あたり1,024軌道を収集。PI0は更新130まで97--99/100を維持しました。PI0.5はrank 32/alpha 32のLoRAで300更新し、更新250の最高値84/100に対し最終値は81/100でした。
 - **SmolVLA:** 200更新。更新100後にアクションエキスパートのLoRA適用範囲とrankを拡大しました。更新180で最高値69/100となり、最終更新200では61/100に低下しました。
-- **GR00T N1.7:** RoboCasa GR1の`PnPCounterToCab`、Cuttingboard-to-Panが対象です。NVIDIAのレシピで60kステップ学習したSFTから、rank 64/alpha 64のLoRAで100更新を連続実行。固定した開発用64エピソードでチェックポイントを選び、独立監査後に1回のsealed評価を実施しました。[SFT 111/192](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/j11avofl)に対し、[GRPOは139/192](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11)でした。学習時はFlow-SDE、評価時は公式のODEサンプラーを使い、前処理・後処理、身体構成、正規化も公式設定を維持しています。
+- **GR00T N1.7:** RoboCasa GR1の`PnPCounterToCab`、Cuttingboard-to-Panが対象です。NVIDIAのレシピで60kステップ学習したSFTから、rank 64/alpha 64のLoRAで100更新を連続実行。固定した開発用64エピソードでチェックポイントを選び、独立監査後に1回のsealed評価を実施しました。SFT 111/192に対し、GRPOは139/192でした。学習時はFlow-SDE、評価時は公式のODEサンプラーを使い、前処理・後処理、身体構成、正規化も公式設定を維持しています。
 
 上のW&Bリンクから指標、動画、モデルアーティファクト、軌道トレースを確認できます。
 再現レシピと初期状態のマニフェストは`examples/embodied/`にあります。
@@ -555,3 +555,9 @@ advantageと損失の集約、LIBERO評価を検証する際に参照しまし�
 ART-EmbodiedはOpenPipe ARTのアドオンで、ロボティクス関連の依存は追加インストールできます。
 再現可能なベンチマーク、ポリシー・シミュレータのアダプター、W&B・Weave連携への
 貢献を歓迎します。[CONTRIBUTING.md](CONTRIBUTING.md)を参照してください。
+
+## ライセンス
+
+本リポジトリのコードには[Apache-2.0ライセンス](LICENSE)が適用されます。
+第三者のソフトウェア、モデル、チェックポイント、データセットには、それぞれのライセンスが適用されます。
+出典と利用条件は[THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES)を参照してください。

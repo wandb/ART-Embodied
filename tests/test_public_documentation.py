@@ -6,6 +6,48 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_project_copyright_and_translated_license_notices():
+    assert "Copyright 2026 CoreWeave, Inc." in (ROOT / "LICENSE").read_text()
+    for name in (
+        "README.md",
+        "README.ja.md",
+        "README.ko.md",
+        "README.zh-CN.md",
+        "README.zh-TW.md",
+    ):
+        text = (ROOT / name).read_text()
+        assert "Apache-2.0" in text, name
+        assert "](LICENSE)" in text, name
+        assert "[THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES)" in text, name
+
+
+def test_gr00t_results_remain_without_hosted_model_or_video_links():
+    paths = list(ROOT.glob("README*.md"))
+    paths += list((ROOT / "docs").rglob("*.md"))
+    paths += list((ROOT / "docs").rglob("*.mdx"))
+    paths += list((ROOT / "examples").rglob("README.md"))
+    for path in paths:
+        text = path.read_text()
+        assert not re.search(r"https://wandb\.ai/[^\s)\]>]*gr00t", text), path
+        if path.parent == ROOT:
+            row = next(
+                line for line in text.splitlines() if line.startswith("| GR00T N1.7 /")
+            )
+            assert "111/192" in row
+            assert "139/192" in row
+            assert "+14.6" in row
+    assert (ROOT / "scripts/download-robocasa-gr1-dataset.sh").is_file()
+
+
+def test_third_party_notices_separate_code_and_asset_licenses():
+    notice = (ROOT / "THIRD-PARTY-NOTICES").read_text()
+    assert "CC BY-NC 4.0" in notice
+    assert "https://creativecommons.org/licenses/by-nc/4.0/" in notice
+    assert "https://huggingface.co/nvidia/GR00T-N1.7-3B" in notice
+    assert "Fine-tuning a checkpoint does not replace" in notice
+    assert "Older Git history" not in notice
+
+
 def test_no_internal_research_directories():
     for name in ("research", "proposals"):
         assert not (ROOT / "docs" / name).exists()

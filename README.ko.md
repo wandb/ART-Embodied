@@ -87,7 +87,7 @@ OpenVLA 백엔드는 ART의 `LocalBackend`, AOM, Serverless Training과
 | [PI0 / LIBERO Spatial](https://wandb.ai/wandb-japan/art-embodied-pi0-positive-control-reference/runs/941byojx) | Flow-SDE GRPO | 100 | 63/100 | **99/100** | **+36 point** |
 | [PI0.5 / LIBERO Long](https://wandb.ai/wandb-japan/art-embodied-pi05-positive-control-reference/runs/t0a9mnd3) | Flow-SDE GRPO | 250 (best dev) | 48/100 | **84/100** | **+36 point** |
 | [SmolVLA / LIBERO Long](https://wandb.ai/wandb-japan/art-embodied-smolvla-positive-control-v3/runs/s4xwc2jm) | Flow-SDE GRPO | 180 (best dev) | 42/100 | **69/100** | **+27 point** |
-| GR00T N1.7 / RoboCasa Cuttingboard-to-Pan ([개발 run](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task/runs/1970sjop), [sealed test](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11)) | Flow-SDE GRPO | 100 (sealed) | 111/192 | **139/192** | **+14.6 point** |
+| GR00T N1.7 / RoboCasa Cuttingboard-to-Pan | Flow-SDE GRPO | 100 (sealed) | 111/192 | **139/192** | **+14.6 point** |
 | [PI0-FAST / LIBERO Long (단일 태스크)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/a1hx8rsf) | Action-token GRPO | 100 (개발 평가) | 70/100 | **89/100** | **+19 %p** |
 | [PI0-FAST / LIBERO Long (단일 태스크)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/ww9b5upu) | Action-token GRPO | 100 (sealed) | [73/100](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/r56aa76y) | **83/100** | **+10 %p** |
 
@@ -114,7 +114,7 @@ PI0-FAST는 LIBERO Long의 "put both moka pots on the stove" 태스크를 대상
 - **OpenVLA-OFT Spatial:** 같은 백엔드를 사용하되 SFT 체크포인트, 태스크 모음, 평가 세트, W&B 프로젝트를 분리했습니다. 업데이트 30에서 82/100, 업데이트 100에서 88/100을 기록했습니다. 비교 기준은 SFT입니다.
 - **PI0 / PI0.5:** K4/noise 0.5 Flow-SDE 샘플러와 업데이트당 1,024개 궤적을 사용했습니다. PI0는 업데이트 130까지 97--99/100을 유지했습니다. PI0.5는 rank 32/alpha 32 LoRA로 300회 업데이트했으며, 업데이트 250의 최고 점수 84/100에 비해 최종 점수는 81/100이었습니다.
 - **SmolVLA:** 200회 업데이트했으며, 업데이트 100 이후 액션 전문가의 어댑터 적용 범위와 rank를 확장했습니다. 업데이트 180에서 69/100으로 최고점을 기록한 뒤 최종 업데이트 200에서는 61/100으로 하락했습니다.
-- **GR00T N1.7:** RoboCasa GR1 `PnPCounterToCab`의 Cuttingboard-to-Pan 태스크입니다. NVIDIA 레시피로 60k 스텝 학습한 SFT 체크포인트에서 rank 64/alpha 64 LoRA로 100회 연속 업데이트했습니다. 고정 개발 에피소드 64개로 체크포인트를 선택하고 독립 감사를 거쳐 sealed 평가를 한 번 진행했습니다. [SFT 111/192](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/j11avofl) 대비 [GRPO 139/192](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11)였습니다. 학습에는 Flow-SDE, 평가에는 공식 ODE 샘플러를 사용하며 공식 프로세서, 로봇 구성, 정규화를 유지합니다.
+- **GR00T N1.7:** RoboCasa GR1 `PnPCounterToCab`의 Cuttingboard-to-Pan 태스크입니다. NVIDIA 레시피로 60k 스텝 학습한 SFT 체크포인트에서 rank 64/alpha 64 LoRA로 100회 연속 업데이트했습니다. 고정 개발 에피소드 64개로 체크포인트를 선택하고 독립 감사를 거쳐 sealed 평가를 한 번 진행했습니다. SFT 111/192 대비 GRPO 139/192였습니다. 학습에는 Flow-SDE, 평가에는 공식 ODE 샘플러를 사용하며 공식 프로세서, 로봇 구성, 정규화를 유지합니다.
 
 위 W&B 링크에서 지표, 영상, 모델 아티팩트, 궤적 트레이스를 확인할 수 있습니다.
 재현 레시피와 초기 상태 명세는 `examples/embodied/`에 있습니다.
@@ -558,3 +558,9 @@ ART-Embodied는 자체 실행 환경(`model_loader: native`)을 사용하며 RLi
 ART-Embodied는 OpenPipe ART의 애드온이며 로봇 관련 의존성은 선택적으로 설치합니다.
 재현 가능한 벤치마크, 정책·시뮬레이터 어댑터, W&B·Weave 연동에 대한 기여를
 환영합니다. [CONTRIBUTING.md](CONTRIBUTING.md)를 참고하세요.
+
+## 라이선스
+
+이 저장소의 코드에는 [Apache-2.0 라이선스](LICENSE)가 적용됩니다.
+타사 소프트웨어, 모델, 체크포인트, 데이터셋에는 각각의 라이선스가 적용됩니다.
+출처와 이용 조건은 [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES)를 참고하세요.
