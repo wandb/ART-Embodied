@@ -297,6 +297,18 @@ an argument list and load policy dependencies without initializing ART.
 For GR00T N1.7 with RoboCasa, keep the policy and simulator in separate pinned
 Python 3.12 environments:
 
+#### NVIDIA dataset license
+
+The `download-robocasa-gr1-dataset.sh` script downloads the
+`nvidia/PhysicalAI-Robotics-GR00T-Teleop-Sim` dataset. The dataset is not
+included in this repository and is not covered by this repository's
+Apache-2.0 license. NVIDIA makes the dataset available under the
+[CC BY-NC 4.0 license](https://creativecommons.org/licenses/by-nc/4.0/).
+
+Review and comply with NVIDIA's dataset terms before downloading or using it.
+
+
+
 The GR00T N1.7 installer requires Git LFS, micromamba, CMake, and C++ build tools.
 
 ```bash
