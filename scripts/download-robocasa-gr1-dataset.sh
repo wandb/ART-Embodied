@@ -22,7 +22,6 @@ max_attempts="${ART_EMBODIED_HF_DOWNLOAD_ATTEMPTS:-12}"
 expected_file_count=48193
 
 dataset_license_url="https://creativecommons.org/licenses/by-nc/4.0/"
-dataset_license_url="https://creativecommons.org/licenses/by-nc/4.0/"
 cat >&2 <<EOF
 NOTICE: ${dataset_id} is a third-party NVIDIA dataset licensed under CC BY-NC 4.0.
 It is not included in ART-Embodied and is not covered by ART-Embodied's Apache-2.0 license.
