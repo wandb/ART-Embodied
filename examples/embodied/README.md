@@ -227,12 +227,7 @@ examples/embodied/robocasa/sealed_tests/gr1_tabletop_cuttingboard_pan_u100_v1.js
 ```
 
 The SFT baseline scored 111/192 and update 100 scored 139/192, a paired lift of
-`+14.6` points with 95% CI `[+5.2,+24.0]` and exact McNemar `p=0.00335`. Public
-W&B runs:
-
-- [SFT sealed baseline](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/j11avofl)
-- [Update-100 sealed candidate](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11)
-- [100-update development run](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task/runs/1970sjop)
+`+14.6` points with 95% CI `[+5.2,+24.0]` and exact McNemar `p=0.00335`.
 
 This validates policy loading, official preprocessing and embodiment handling,
 native ODE evaluation, Flow-SDE rollout collection, trajectory-level GRPO,

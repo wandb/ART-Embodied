@@ -84,7 +84,7 @@ OpenVLA 后端独立于 ART 的 `LocalBackend`、AOM 和 Serverless Training 运
 | [PI0 / LIBERO Spatial](https://wandb.ai/wandb-japan/art-embodied-pi0-positive-control-reference/runs/941byojx) | Flow-SDE GRPO | 100 | 63/100 | **99/100** | **+36 个百分点** |
 | [PI0.5 / LIBERO Long](https://wandb.ai/wandb-japan/art-embodied-pi05-positive-control-reference/runs/t0a9mnd3) | Flow-SDE GRPO | 250（best dev） | 48/100 | **84/100** | **+36 个百分点** |
 | [SmolVLA / LIBERO Long](https://wandb.ai/wandb-japan/art-embodied-smolvla-positive-control-v3/runs/s4xwc2jm) | Flow-SDE GRPO | 180（best dev） | 42/100 | **69/100** | **+27 个百分点** |
-| GR00T N1.7 / RoboCasa Cuttingboard-to-Pan（[开发 run](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task/runs/1970sjop)、[sealed test](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11)） | Flow-SDE GRPO | 100（sealed） | 111/192 | **139/192** | **+14.6 个百分点** |
+| GR00T N1.7 / RoboCasa Cuttingboard-to-Pan | Flow-SDE GRPO | 100（sealed） | 111/192 | **139/192** | **+14.6 个百分点** |
 | [PI0-FAST / LIBERO Long (单任务)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/a1hx8rsf) | Action-token GRPO | 100 (开发评估) | 70/100 | **89/100** | **+19 个百分点** |
 | [PI0-FAST / LIBERO Long (单任务)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/ww9b5upu) | Action-token GRPO | 100 (封存测试) | [73/100](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/r56aa76y) | **83/100** | **+10 个百分点** |
 
@@ -108,7 +108,7 @@ PI0-FAST 在 LIBERO Long 的“将两个摩卡壶放到炉灶上”任务中，�
 - **OpenVLA-OFT Spatial：** 使用相同后端，分别设置 SFT 检查点、任务集、评估集和 W&B 项目。更新 30 时为 82/100，更新 100 时为 88/100。本次比较以 SFT 为基准。
 - **PI0 / PI0.5：** 使用 K4/noise 0.5 Flow-SDE 采样器，每次更新采集 1,024 条轨迹。PI0 到更新 130 仍保持 97--99/100。PI0.5 使用 rank 32/alpha 32 LoRA，完成 300 次更新；更新 250 时最高为 84/100，最终为 81/100。
 - **SmolVLA：** 共 200 次更新，在更新 100 后扩大动作专家的适配器范围和 rank。更新 180 时最高为 69/100，最终更新 200 时降至 61/100。
-- **GR00T N1.7：** RoboCasa GR1 `PnPCounterToCab` 的 Cuttingboard-to-Pan 任务。从按 NVIDIA 配方训练 60k 步的固定 SFT 检查点开始，以 rank 64/alpha 64 LoRA 连续训练 100 次更新。用固定的 64 回合开发集选定检查点，独立审核后进行一次封存评估：[SFT 111/192](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/j11avofl)，[GRPO 139/192](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11)。训练使用 Flow-SDE，评估使用官方 ODE 采样器，并保留官方处理器、机器人构型和归一化设置。
+- **GR00T N1.7：** RoboCasa GR1 `PnPCounterToCab` 的 Cuttingboard-to-Pan 任务。从按 NVIDIA 配方训练 60k 步的固定 SFT 检查点开始，以 rank 64/alpha 64 LoRA 连续训练 100 次更新。用固定的 64 回合开发集选定检查点，独立审核后进行一次封存评估：SFT 111/192，GRPO 139/192。训练使用 Flow-SDE，评估使用官方 ODE 采样器，并保留官方处理器、机器人构型和归一化设置。
 
 上方的 W&B 链接包含指标、视频、模型制品和轨迹追踪。
 复现配方和初始状态清单位于 `examples/embodied/`。
@@ -545,3 +545,9 @@ observability:
 ART-Embodied 是 OpenPipe ART 的附加组件，机器人相关依赖可按需安装。
 欢迎贡献可复现的基准、策略和模拟器适配器，以及 W&B、Weave 集成。
 详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+## 许可证
+
+本仓库代码采用 [Apache-2.0 许可证](LICENSE)。
+第三方软件、模型、检查点和数据集仍适用各自的许可证。
+来源及使用条款见 [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES)。

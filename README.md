@@ -86,7 +86,7 @@ Success counts before and after training, evaluated on matched initial states:
 | [PI0 / LIBERO Spatial](https://wandb.ai/wandb-japan/art-embodied-pi0-positive-control-reference/runs/941byojx) | Flow-SDE GRPO | 100 | 63/100 | **99/100** | **+36 points** |
 | [PI0.5 / LIBERO Long](https://wandb.ai/wandb-japan/art-embodied-pi05-positive-control-reference/runs/t0a9mnd3) | Flow-SDE GRPO | 250 (best dev) | 48/100 | **84/100** | **+36 points** |
 | [SmolVLA / LIBERO Long](https://wandb.ai/wandb-japan/art-embodied-smolvla-positive-control-v3/runs/s4xwc2jm) | Flow-SDE GRPO | 180 (best dev) | 42/100 | **69/100** | **+27 points** |
-| GR00T N1.7 / RoboCasa Cuttingboard-to-Pan ([development run](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task/runs/1970sjop), [sealed test](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11)) | Flow-SDE GRPO | 100 (sealed) | 111/192 | **139/192** | **+14.6 points** |
+| GR00T N1.7 / RoboCasa Cuttingboard-to-Pan | Flow-SDE GRPO | 100 (sealed) | 111/192 | **139/192** | **+14.6 points** |
 | [PI0-FAST / LIBERO Long (single task)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/a1hx8rsf) | Action-token GRPO | 100 (development) | 70/100 | **89/100** | **+19 points** |
 | [PI0-FAST / LIBERO Long (single task)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/ww9b5upu) | Action-token GRPO | 100 (sealed) | [73/100](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/r56aa76y) | **83/100** | **+10 points** |
 
@@ -114,7 +114,7 @@ remain open. See the [recipe and full results](docs/experimental/pi0-fast-long-r
 - **OpenVLA-OFT Spatial:** The same backend, with a separate SFT checkpoint, suite, evaluation set, and W&B project. It scored 82/100 at update 30 and 88/100 at update 100. This run was evaluated against SFT.
 - **PI0 / PI0.5:** K4/noise-0.5 Flow-SDE sampler and 1,024 trajectories per update. PI0 stayed at 97--99/100 through update 130. PI0.5 used rank-32/alpha-32 LoRA and finished 300 updates at 81/100, after peaking at 84/100 at update 250.
 - **SmolVLA:** 200 updates, with the action-expert adapter scope and rank expanded after update 100. Success peaked at 69/100 at update 180 and fell to 61/100 at update 200.
-- **GR00T N1.7:** RoboCasa GR1 `PnPCounterToCab`, Cuttingboard-to-Pan. Rank-64/alpha-64 LoRA, 100 uninterrupted updates from the pinned 60k-step SFT checkpoint trained with NVIDIA's recipe. Checkpoint selection used 64 development episodes, followed by an independent audit and one sealed evaluation: [SFT 111/192](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/j11avofl) versus [GRPO 139/192](https://wandb.ai/wandb-japan/art-embodied-gr00t-n1d7-robocasa-single-task-sealed/runs/kjpzsj11). Training uses Flow-SDE; evaluation uses the native ODE sampler with the official processor, embodiment, and normalization.
+- **GR00T N1.7:** RoboCasa GR1 `PnPCounterToCab`, Cuttingboard-to-Pan. Rank-64/alpha-64 LoRA, 100 uninterrupted updates from the pinned 60k-step SFT checkpoint trained with NVIDIA's recipe. Checkpoint selection used 64 development episodes, followed by an independent audit and one sealed evaluation: SFT 111/192 versus GRPO 139/192. Training uses Flow-SDE; evaluation uses the native ODE sampler with the official processor, embodiment, and normalization.
 
 The W&B links above include metrics, videos, model artifacts, and trajectory
 traces. Reproduction recipes and state manifests are under `examples/embodied/`.
@@ -584,3 +584,9 @@ runtime (`model_loader: native`); RLinf is not a dependency.
 ART-Embodied is an add-on to OpenPipe ART, with optional robotics dependencies.
 Contributions are welcome for reproducible benchmarks, policy and simulator
 adapters, and W&B/Weave integration. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+The [Apache-2.0 license](LICENSE) covers the code in this repository.
+Third-party software, models, checkpoints, and datasets retain their own licenses.
+See [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES).

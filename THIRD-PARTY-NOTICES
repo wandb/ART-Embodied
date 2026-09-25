@@ -1,30 +1,27 @@
-ART-Embodied is distributed under the Apache License 2.0 as an independent
-licensing decision of this project. This license choice is not inherited from,
-or selected to match, any referenced implementation including RLinf.
+ART-Embodied code is distributed under the Apache License 2.0.
+Copyright 2026 CoreWeave, Inc.
 
-The `art-embodied` wheel and source distribution contain only the
-`art_embodied` package owned by this project. They do not vendor OpenPipe ART,
+The `art-embodied` wheel and source distribution do not vendor OpenPipe ART,
 LeRobot, RLinf, TorchTune, DeepEP, LIBERO, or model source code. Runtime
 dependencies are installed as separate distributions and remain governed by
 their respective licenses.
 
 The current source tree and distributions do not contain project-owned or
-vendored GPL- or LGPL-licensed code. Historical Unsloth-derived notebook
-examples were removed from the source tree before the ART-Embodied package
-boundary was established. Older Git history can still contain those examples.
+vendored GPL- or LGPL-licensed code.
 
 OpenPipe ART
 ------------
 
 - Repository: https://github.com/OpenPipe/ART
-- License: Apache License 2.0
+- License: Apache License 2.0 (https://github.com/OpenPipe/ART/blob/main/LICENSE)
+- Attribution: Copyright 2025 OpenPipe, Inc.
 - Relationship: required runtime dependency (`openpipe-art`), not vendored.
 
 LeRobot
 -------
 
 - Repository: https://github.com/huggingface/lerobot
-- License: Apache License 2.0
+- License: Apache License 2.0 (https://github.com/huggingface/lerobot/blob/main/LICENSE)
 - Relationship: optional policy/environment integration dependency, not
   vendored.
 
@@ -53,9 +50,56 @@ LIBERO
 ------
 
 - Repository: https://github.com/Lifelong-Robot-Learning/LIBERO
-- License: MIT License
+- License: MIT License (https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/LICENSE)
 - Relationship: optional benchmark/simulator dependency, not vendored.
 
-Model checkpoints and datasets are not redistributed in the ART-Embodied
-package. Users must review the licenses and terms attached to each model,
-dataset, simulator, and robot asset they select.
+Other policy and simulator integrations
+--------------------------------------
+
+- OpenVLA-OFT, Moo Jin Kim, Chelsea Finn, and Percy Liang: MIT License.
+  https://github.com/moojink/openvla-oft/blob/main/LICENSE
+- openpi, Physical Intelligence: Apache License 2.0 (source code).
+  https://github.com/Physical-Intelligence/openpi/blob/main/LICENSE
+- Isaac-GR00T, NVIDIA: Apache License 2.0 (source code).
+  https://github.com/NVIDIA/Isaac-GR00T/blob/main/LICENSE
+- RoboCasa GR1 tabletop tasks, NVIDIA GEAR: MIT License.
+  https://github.com/robocasa/robocasa-gr1-tabletop-tasks/blob/main/LICENSE
+- robosuite, Stanford Vision and Learning Lab and UT Robot Perception and Learning Lab: MIT License.
+  https://github.com/ARISE-Initiative/robosuite/blob/master/LICENSE
+- MuJoCo, Google DeepMind: Apache License 2.0.
+  https://github.com/google-deepmind/mujoco/blob/main/LICENSE
+
+Models, checkpoints, and datasets
+--------------------------------
+
+The following publishers provide assets used by the policy integrations and
+reported experiments. These assets are not redistributed in the ART-Embodied
+package. Their model/dataset cards and the license files at the selected
+revision govern their use, separately from the source-code licenses above.
+Fine-tuning a checkpoint does not replace its underlying license with Apache-2.0.
+
+- OpenVLA-OFT SFT checkpoints, Haozhan72 (MIT as declared in their model cards):
+  https://huggingface.co/Haozhan72/Openvla-oft-SFT-libero-object-traj1
+  https://huggingface.co/Haozhan72/Openvla-oft-SFT-libero-spatial-traj1
+- PI0 and PI0.5 SFT checkpoints, RLinf (see each checkpoint's terms):
+  https://huggingface.co/RLinf/RLinf-Pi0-LIBERO-Spatial-Object-Goal-SFT
+  https://huggingface.co/RLinf/RLinf-Pi0-LIBERO-Long-SFT
+  https://huggingface.co/RLinf/RLinf-Pi05-SFT
+- PI0 / PI0.5 LeRobot checkpoints (Gemma terms as declared in their model cards):
+  https://huggingface.co/lerobot/pi0_libero_finetuned_v044
+  https://huggingface.co/lerobot/pi05_libero_finetuned_v044
+- PI0-FAST LeRobot checkpoint and FAST tokenizer (see their model cards and terms):
+  https://huggingface.co/lerobot/pi0fast-libero
+  https://huggingface.co/physical-intelligence/fast
+- SmolVLA, Hugging Face (Apache-2.0 as declared in the model card):
+  https://huggingface.co/lerobot/smolvla_base
+- GR00T N1.7, NVIDIA (see model card and model license):
+  https://huggingface.co/nvidia/GR00T-N1.7-3B
+  https://huggingface.co/nvidia/GR00T-N1.7-3B/blob/main/LICENSE
+- PhysicalAI-Robotics-GR00T-Teleop-Sim, NVIDIA: CC BY-NC 4.0.
+  https://huggingface.co/datasets/nvidia/PhysicalAI-Robotics-GR00T-Teleop-Sim
+  https://creativecommons.org/licenses/by-nc/4.0/
+
+Use of the NVIDIA dataset is subject to its non-commercial restriction.
+For other datasets, checkpoints, and robot assets, consult the original
+publisher's terms before use.
