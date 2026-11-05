@@ -389,6 +389,7 @@ def test_libero_settings_are_complete_and_match_action_geometry() -> None:
 
 def test_libero_policy_observation_matches_lerobot_v060_processor() -> None:
     torch = pytest.importorskip("torch")
+    pytest.importorskip("lerobot", minversion="0.6.0")
     from lerobot.processor.env_processor import LiberoProcessorStep
 
     image = np.arange(4 * 5 * 3, dtype=np.uint8).reshape(4, 5, 3)

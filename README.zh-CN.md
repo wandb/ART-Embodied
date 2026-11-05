@@ -164,17 +164,17 @@ runtime:
 ### 已验证的兼容性
 
 ART-Embodied 与 OpenPipe ART 一起安装，包名为 `art_embodied`。
-`0.1.0rc2` 根据运行环境支持 ART 0.5.18 和 0.5.20：
+当前检出版本在 Python 3.12 及以上使用 ART 0.5.24，并保留对 0.5.18 和 0.5.20 的支持。`0.1.0rc2` 发布包不包含此次更新。
 
 | 运行环境 | OpenPipe ART | 用途 |
 | --- | --- | --- |
-| Python 3.12 及以上默认环境 | `0.5.20` | PI0 / PI0.5、PI0-FAST、SmolVLA 配置 |
+| Python 3.12 及以上默认环境 | `0.5.24` | PI0 / PI0.5、PI0-FAST、SmolVLA 配置 |
 | Python 3.11 | `0.5.18` | 既有 OpenVLA-OFT 配置（LeRobot `>=0.4.4,<0.5`） |
 | GR00T N1.7 专用 Python 3.12 环境 | `0.5.18` | NVIDIA 固定依赖的原生环境 |
 
-以下安装命令指定 ART 版本。NVIDIA 要求 SciPy 1.15.3，而 ART 0.5.20 要求
+以下安装命令指定 ART 版本。NVIDIA 要求 SciPy 1.15.3，而 ART 0.5.24 要求
 SciPy 1.17，因此 GR00T 安装脚本保留 ART 0.5.18。既有 ART 0.5.18 环境仍受支持。
-ART 0.5.20 已通过包安装、数值计算、更新与恢复及 W&B 检查；具体范围请参阅
+ART 0.5.24 已通过包安装、数值计算、更新与恢复及 W&B 检查；具体范围请参阅
 [兼容性验证报告](docs/experimental/upstream-art-compatibility.md)。
 标准环境使用 `constraints/security.txt`，NVIDIA 专用环境保留单独的版本约束。
 安装方式的差异及注意事项见[依赖配置与安全](docs/experimental/dependency-security.md)。
@@ -205,7 +205,7 @@ art-embodied doctor --profile libero
 若在 checkout 中以 uv 开发：
 
 请使用 uv 0.12.0 或更新版本。`uv sync --locked` 会覆盖依赖约束，使用
-LiteLLM 1.101.0 和 Diffusers 0.38.0。GR00T N1.7 安装脚本只覆盖 Diffusers，
+LiteLLM 1.101.3、Diffusers 0.38.0 和 Pillow 13.0.0。LeRobot 0.6.0 要求 Pillow <13，因此其配置需使用 uv，而非 plain pip。GR00T N1.7 安装脚本只覆盖 Diffusers，
 并使用 Safetensors 0.8.0。这些设置替换上游的旧版本约束，不修改上游包。
 普通 pip 安装不会应用这些覆盖设置。
 
@@ -225,10 +225,8 @@ PI0/PI0.5 Flow-SDE 请使用独立的 Python 3.12 环境，安装
 LeRobot 0.6 和 Transformers 5：
 
 ```bash
-python3.12 -m venv .venv-pi
-source .venv-pi/bin/activate
-python -m pip install -c constraints/security.txt 'openpipe-art==0.5.20' '.[pi-libero]'
-art-embodied doctor --profile pi
+uv sync --python 3.12 --locked --extra pi-libero
+uv run --no-sync art-embodied doctor --profile pi
 ```
 
 请为不同用途分别创建环境：

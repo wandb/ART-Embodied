@@ -13,9 +13,9 @@ ROOT = Path(__file__).parents[1]
 def test_litellm_override_is_scoped_to_the_tested_release() -> None:
     project = tomllib.loads((ROOT / "pyproject.toml").read_text())
     overrides = project["tool"]["uv"]["override-dependencies"]
-    assert "litellm==1.101.0" in overrides
+    assert "litellm==1.101.3" in overrides
     assert {
-        "package": {"name": "litellm", "version": "1.101.0"},
+        "package": {"name": "litellm", "version": "1.101.3"},
         "dependencies": ["tokenizers>=0.19.1,<1.0"],
     } in overrides
     # Other packages must retain their own Tokenizers requirements.
@@ -32,8 +32,8 @@ def test_lock_uses_patched_litellm_without_upgrading_policy_dependencies() -> No
     for package in lock["package"]:
         versions.setdefault(package["name"], set()).add(package["version"])
     expected = {
-        "litellm": {"1.101.0"},
-        "openpipe-art": {"0.5.18", "0.5.20"},
+        "litellm": {"1.101.3"},
+        "openpipe-art": {"0.5.18", "0.5.24"},
         "tokenizers": {"0.19.1", "0.22.2"},
         "transformers": {"4.40.1", "5.5.4"},
         "torch": {"2.6.0", "2.10.0"},

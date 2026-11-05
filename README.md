@@ -172,17 +172,18 @@ See the [single-GPU PI0.5 example](examples/embodied/pi05_libero_object_flow_sde
 ### Validated compatibility
 
 ART-Embodied installs the `art_embodied` package alongside OpenPipe ART.
-Release `0.1.0rc2` supports ART 0.5.18 and 0.5.20 in separate runtime profiles:
+The current checkout targets ART 0.5.24 on Python 3.12+, retaining support for
+0.5.18 and 0.5.20. Release `0.1.0rc2` predates this update.
 
 | Environment | OpenPipe ART | Use |
 | --- | --- | --- |
-| Python 3.12+ default | `0.5.20` | PI0 / PI0.5, PI0-FAST, SmolVLA profiles |
+| Python 3.12+ default | `0.5.24` | PI0 / PI0.5, PI0-FAST, SmolVLA profiles |
 | Python 3.11 | `0.5.18` | Existing OpenVLA-OFT profile (LeRobot `>=0.4.4,<0.5`) |
 | GR00T N1.7 dedicated Python 3.12 environment | `0.5.18` | NVIDIA's pinned native runtime |
 
 The install commands below select the ART version; the GR00T installer retains
-0.5.18 because NVIDIA pins SciPy 1.15.3, while ART 0.5.20 requires SciPy 1.17.
-Existing ART 0.5.18 environments remain supported. ART 0.5.20 passed package,
+0.5.18 because NVIDIA pins SciPy 1.15.3, while ART 0.5.24 requires SciPy 1.17.
+Existing ART 0.5.18 environments remain supported. ART 0.5.24 passed package,
 numerical, update/resume, and W&B checks; see the
 [compatibility report](docs/experimental/upstream-art-compatibility.md) for coverage.
 Standard installs apply `constraints/security.txt`; native NVIDIA environments
@@ -216,7 +217,8 @@ and reloaded the checkpoint from the installed package.
 For uv-based development in the checkout:
 
 Use uv 0.12.0 or newer. `uv sync --locked` applies compatibility overrides for
-LiteLLM 1.101.0 and Diffusers 0.38.0. The GR00T N1.7 installer applies only the
+LiteLLM 1.101.3, Diffusers 0.38.0, and Pillow 13.0.0. LeRobot 0.6.0 declares
+Pillow <13, so its profiles use uv rather than plain pip. The GR00T N1.7 installer applies only the
 Diffusers override, with Safetensors 0.8.0. These overrides replace older upstream
 requirements without editing upstream packages. Plain pip does not apply them.
 
@@ -236,10 +238,8 @@ Use a separate Python 3.12 environment for PI0/PI0.5 Flow-SDE, with
 LeRobot 0.6 and Transformers 5:
 
 ```bash
-python3.12 -m venv .venv-pi
-source .venv-pi/bin/activate
-python -m pip install -c constraints/security.txt 'openpipe-art==0.5.20' '.[pi-libero]'
-art-embodied doctor --profile pi
+uv sync --python 3.12 --locked --extra pi-libero
+uv run --no-sync art-embodied doctor --profile pi
 ```
 
 LeRobot's PI processor uses the gated

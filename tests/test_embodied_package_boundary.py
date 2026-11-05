@@ -120,7 +120,10 @@ def test_addon_distribution_owns_only_art_embodied_namespace() -> None:
         assert str(art_version_for_python(python_version)) in matching[0].specifier
         assert "0.5.18" in matching[0].specifier
         assert ("0.5.20" in matching[0].specifier) is (python_version != "3.11")
-        for unqualified in ("0.5.17", "0.5.19", "0.5.21", "0.6.0"):
+        assert ("0.5.24" in matching[0].specifier) is (python_version != "3.11")
+        for unqualified in (
+            "0.5.17", "0.5.19", "0.5.21", "0.5.22", "0.5.23", "0.5.25", "0.6.0"
+        ):
             assert unqualified not in matching[0].specifier
     assert not any(
         "rlinf" in dependency.lower()
@@ -148,6 +151,11 @@ def test_gr00t_n1d7_installer_retains_native_dependencies() -> None:
     ):
         assert f"'{requirement}'" in constraints
     assert '--constraint "${constraints}"' in installer
+    workflow = (ROOT / ".github/workflows/package-install.yml").read_text()
+    assert (
+        "uv pip compile --no-config --python-version 3.12 /tmp/gr00t-art-retained.in"
+        in workflow
+    )
 
 
 def test_diffusers_security_override_matches_lock_and_installer() -> None:
@@ -233,8 +241,7 @@ def test_readme_languages_share_release_and_art_install_profiles() -> None:
             in readme
         ), name
         assert (
-            "python -m pip install -c constraints/security.txt "
-            "'openpipe-art==0.5.20' '.[pi-libero]'"
+            "uv sync --python 3.12 --locked --extra pi-libero"
             in readme
         ), name
         assert "uv sync --python 3.11 --extra libero" in readme, name
