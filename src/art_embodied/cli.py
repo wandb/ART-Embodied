@@ -81,6 +81,8 @@ def diagnose_runtime(
         typer.echo(f"  status: {'compatible' if report.compatible else 'incompatible'}")
         for issue in report.issues:
             typer.echo(f"  issue: {issue}")
+        for warning in report.security_warnings:
+            typer.echo(f"  security warning: {warning}")
     if not report.compatible:
         raise typer.Exit(1)
 

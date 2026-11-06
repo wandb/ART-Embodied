@@ -10,6 +10,7 @@ from art_embodied.compatibility import (
     TESTED_ART_VERSION,
     VALIDATED_GR00T_N1D5_PACKAGES,
     VALIDATED_GR00T_N1D7_PACKAGES,
+    VALIDATED_OPENVLA_OFT_V01_PACKAGES,
     VALIDATED_PI0_FAST_PACKAGES,
     VALIDATED_PI_PACKAGES,
     VALIDATED_SMOLVLA_PACKAGES,
@@ -99,6 +100,57 @@ def test_control_plane_ignores_unrequested_lerobot_version(monkeypatch) -> None:
 
     assert report.compatible is True
     assert report.lerobot_version == "0.6.0"
+
+
+@pytest.mark.parametrize(
+    "profile, packages, warning_expected",
+    [
+        ("libero", VALIDATED_OPENVLA_OFT_V01_PACKAGES, True),
+        ("gr00t_n1d5", VALIDATED_GR00T_N1D5_PACKAGES, True),
+        ("gr00t_n1d7", VALIDATED_GR00T_N1D7_PACKAGES, True),
+        ("pi", VALIDATED_PI_PACKAGES, False),
+        ("pi0_fast", VALIDATED_PI0_FAST_PACKAGES, False),
+        ("smolvla", VALIDATED_SMOLVLA_PACKAGES, False),
+    ],
+)
+def test_checkpoint_security_warnings_do_not_change_compatibility(
+    monkeypatch, profile, packages, warning_expected
+):
+    versions = {
+        "openpipe-art": str(TESTED_ART_VERSION),
+        "lerobot": "0.6.0",
+        **packages,
+    }
+    versions["torch"] += "+cu128"
+    monkeypatch.setattr(metadata, "version", versions.__getitem__)
+
+    report = runtime_compatibility_report(profile=profile)
+
+    assert report.compatible
+    assert report.issues == ()
+    assert bool(report.security_warnings) is warning_expected
+    assert report.as_dict()["security_warnings"] == list(report.security_warnings)
+    if warning_expected:
+        assert "GHSA-63cw-57p8-fm3p" in report.security_warnings[0]
+        assert "weights_only=True" in report.security_warnings[0]
+
+
+@pytest.mark.parametrize("installed", [None, "2.9.1", "2.10.0rc1", "2.10.0", "2.10.0+cpu"])
+def test_checkpoint_security_warning_uses_installed_version(monkeypatch, installed):
+    versions = {"openpipe-art": str(TESTED_ART_VERSION)}
+    versions.update(VALIDATED_OPENVLA_OFT_V01_PACKAGES)
+    versions["torch"] = installed
+
+    def version(name):
+        value = versions.get(name)
+        if value is None:
+            raise metadata.PackageNotFoundError(name)
+        return value
+
+    monkeypatch.setattr(metadata, "version", version)
+    report = runtime_compatibility_report(profile="libero")
+    assert not report.compatible  # None of these is the qualified 2.6.0 pin.
+    assert bool(report.security_warnings) is (installed in {"2.9.1", "2.10.0rc1"})
 
 
 def test_runtime_report_rejects_untested_art_and_lerobot(monkeypatch) -> None:

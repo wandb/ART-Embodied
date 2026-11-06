@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+## 0.1.0rc3
+
+- Support OpenPipe ART 0.5.24 on Python 3.12+, retaining the qualified
+  ART 0.5.18 and 0.5.20 environments.
+- Update security dependencies, including Pillow 13.0.0, LiteLLM 1.101.3,
+  certifi, GitPython, and filelock. Keep the native GR00T environment separate.
+- Disable orjson source builds in checkout installs and the documented pip
+  commands. A compatible wheel is required.
+- Report the older Torch profiles' checkpoint-loading risk in `doctor` output.
+  Policy-specific Torch pins are unchanged; use only trusted model and
+  training-state files. See [dependency precautions](docs/experimental/dependency-security.md).
+- Verify ART compatibility with package and CPU regressions, fixed-input GPU
+  comparisons, and two PI0-FAST updates with checkpoint resume and W&B checks.
+  See [validation coverage](docs/experimental/upstream-art-compatibility.md).
+
 ## 0.1.0rc2
 
 ### Compatibility

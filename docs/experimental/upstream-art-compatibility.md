@@ -1,8 +1,8 @@
 # Upstream ART Compatibility
 
-The current checkout selects ART 0.5.24 for Python 3.12+. Python 3.11 and
+Version `0.1.0rc3` selects ART 0.5.24 for Python 3.12+. Python 3.11 and
 native GR00T environments retain ART 0.5.18. Existing environments are not
-upgraded in place. Release `0.1.0rc2` predates this update.
+upgraded in place. Version `0.1.0rc2` predates this update.
 
 ## Runtime Selection
 

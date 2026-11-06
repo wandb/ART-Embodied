@@ -172,8 +172,8 @@ See the [single-GPU PI0.5 example](examples/embodied/pi05_libero_object_flow_sde
 ### Validated compatibility
 
 ART-Embodied installs the `art_embodied` package alongside OpenPipe ART.
-The current checkout targets ART 0.5.24 on Python 3.12+, retaining support for
-0.5.18 and 0.5.20. Release `0.1.0rc2` predates this update.
+Version `0.1.0rc3` targets ART 0.5.24 on Python 3.12+, retaining support for
+0.5.18 and 0.5.20.
 
 | Environment | OpenPipe ART | Use |
 | --- | --- | --- |
@@ -189,6 +189,10 @@ numerical, update/resume, and W&B checks; see the
 Standard installs apply `constraints/security.txt`; native NVIDIA environments
 keep separate pins. See [dependency profiles and security](docs/experimental/dependency-security.md)
 for installation differences and remaining precautions.
+
+The older Torch versions in OpenVLA-OFT and native GR00T environments require
+trusted checkpoints, including files loaded with `weights_only=True`.
+`doctor` checks compatibility, not overall security.
 
 Import ART with `import art` and the add-on with `import art_embodied as embodied`.
 

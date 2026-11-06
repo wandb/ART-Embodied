@@ -48,7 +48,7 @@ def test_dependency_guidance_matches_current_overrides() -> None:
         assert version in guide, requirement.name
     assert "Plain pip" in guide
     assert "GR00T N1.7" in guide
-    assert "existing RC2 release assets" in guide
+    assert f"`{project['project']['version']}`" in guide
 
 
 def _absolute_imports(path: Path) -> set[str]:
@@ -248,6 +248,17 @@ def test_readme_languages_share_release_and_art_install_profiles() -> None:
         assert "./scripts/install-gr00t-n1d7-runtime.sh" in readme, name
         assert "https://github.com/nejumi/ART-Embodied.git" not in readme, name
         assert "0.1.0rc2.dev0" not in readme, name
+
+
+def test_release_version_matches_lock_and_existing_guides() -> None:
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text())
+    version = project["project"]["version"]
+    lock = tomllib.loads((ROOT / "uv.lock").read_text())
+    package = next(item for item in lock["package"] if item["name"] == "art-embodied")
+    assert package["version"] == version
+    assert f"## {version}\n" in (ROOT / "CHANGELOG.md").read_text()
+    for name in ("dependency-security.md", "upstream-art-compatibility.md"):
+        assert f"`{version}`" in (ROOT / "docs/experimental" / name).read_text()
 
 
 def test_security_constraints_match_uv_and_locked_versions() -> None:

@@ -1,9 +1,8 @@
 # Dependency Profiles and Security
 
-The current checkout includes dependency updates made after `0.1.0rc2`.
-The existing RC2 release assets do not include all of these changes.
-Use the checkout instructions in the [README](../../README.md) for the
-updated profiles.
+Version `0.1.0rc3` includes the November 2026 dependency updates.
+Earlier packages and existing environments are not updated automatically.
+Use the installation instructions in the [README](../../README.md).
 
 ## Installation Profiles
 
@@ -55,6 +54,13 @@ policy-specific Torch and Transformers versions, LeRobot's Datasets/fsspec and
 Setuptools constraints, and dependencies in separate
 native runtimes. The root lockfile is not an inventory of every worker
 environment. Review the resolved packages for the profile you deploy.
+
+OpenVLA-OFT (Torch 2.6.0) and the native GR00T profiles (Torch 2.5.1/2.9.0)
+remain affected by a [checkpoint-loading advisory](https://github.com/pytorch/pytorch/security/advisories/GHSA-63cw-57p8-fm3p)
+fixed in Torch 2.10.0. `weights_only=True` does not protect these older
+versions against malicious checkpoints. The PI0/PI0.5, PI0-FAST, and SmolVLA
+profiles use Torch 2.10.0. `doctor` reports this warning for the checked
+profile separately from compatibility errors; it is not a vulnerability scan.
 
 - Use trusted checkpoints, tokenizer assets, datasets, repositories, and
   experiment configurations. Some loaders execute model code or restore

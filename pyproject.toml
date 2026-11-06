@@ -1,6 +1,6 @@
 [project]
 name = "art-embodied"
-version = "0.1.0rc2"
+version = "0.1.0rc3"
 description = "LeRobot-first trajectory-level reinforcement learning for OpenPipe ART"
 readme = "README.md"
 requires-python = ">=3.11"
