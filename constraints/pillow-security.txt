@@ -1,0 +1,2 @@
+# LeRobot 0.6.0 declares Pillow <13; apply only with the validated image checks.
+pillow==13.0.0

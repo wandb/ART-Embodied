@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import inspect
 
 import pytest
@@ -12,6 +13,7 @@ from art_embodied.policies.transformers_compat import (  # noqa: E402
 
 
 def test_art_mask_patch_matches_installed_transformers() -> None:
+    pytest.importorskip("transformers.masking_utils", exc_type=ModuleNotFoundError)
     import art.transformers.patches as art_patches
     from transformers import masking_utils
 
@@ -37,6 +39,7 @@ def test_art_mask_patch_matches_installed_transformers() -> None:
 def test_art_mask_compatibility_does_not_replace_unrelated_function(
     monkeypatch,
 ) -> None:
+    pytest.importorskip("transformers.masking_utils", exc_type=ModuleNotFoundError)
     from transformers import masking_utils
 
     sentinel = lambda *args, **kwargs: (args, kwargs)  # noqa: E731
@@ -95,6 +98,7 @@ def test_art_mask_signature_bridge_preserves_arguments(
     packed,
     keywords,
 ) -> None:
+    pytest.importorskip("transformers.masking_utils", exc_type=ModuleNotFoundError)
     import art.transformers.patches as art_patches
     from transformers import masking_utils
 
@@ -124,6 +128,7 @@ def test_art_mask_signature_bridge_preserves_arguments(
 
 
 def test_art_mask_bridge_preserves_native_forward_and_gradients(monkeypatch) -> None:
+    pytest.importorskip("transformers.masking_utils", exc_type=ModuleNotFoundError)
     import art.transformers.patches as art_patches
     from transformers import LlamaConfig, LlamaModel, masking_utils
 
@@ -166,3 +171,9 @@ def test_art_mask_bridge_preserves_native_forward_and_gradients(monkeypatch) -> 
             torch.testing.assert_close(parameter.grad, gradients[name], rtol=0, atol=0)
         else:
             assert parameter.grad is None
+
+
+def test_art_mask_bridge_is_noop_for_old_transformers() -> None:
+    if importlib.util.find_spec("transformers.masking_utils") is not None:
+        pytest.skip("Requires the OpenVLA-OFT Transformers profile")
+    assert ensure_art_mask_patch_compatibility() is False

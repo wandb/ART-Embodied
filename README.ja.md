@@ -168,18 +168,18 @@ runtime:
 ### 検証済み互換性
 
 ART-EmbodiedはOpenPipe ARTと併せて`art_embodied`パッケージをインストールします。
-`0.1.0rc2`は、実行環境ごとにART 0.5.18と0.5.20に対応します。
+現在のチェックアウトはPython 3.12以上でART 0.5.24を使用し、0.5.18と0.5.20への対応も維持します。リリース`0.1.0rc2`にはこの更新は含まれません。
 
 | 実行環境 | OpenPipe ART | 用途 |
 | --- | --- | --- |
-| Python 3.12以上の標準環境 | `0.5.20` | PI0 / PI0.5、PI0-FAST、SmolVLA構成 |
+| Python 3.12以上の標準環境 | `0.5.24` | PI0 / PI0.5、PI0-FAST、SmolVLA構成 |
 | Python 3.11 | `0.5.18` | 既存のOpenVLA-OFT構成（LeRobot `>=0.4.4,<0.5`） |
 | GR00T N1.7専用のPython 3.12環境 | `0.5.18` | NVIDIAが依存関係を固定した実行環境 |
 
 以下のインストール手順でARTの版を指定します。GR00Tのインストーラーは、
-NVIDIAがSciPy 1.15.3を要求し、ART 0.5.20がSciPy 1.17を要求するため、
+NVIDIAがSciPy 1.15.3を要求し、ART 0.5.24がSciPy 1.17を要求するため、
 ART 0.5.18を維持します。既存のART 0.5.18環境も引き続き使用できます。
-ART 0.5.20ではパッケージ、数値計算、更新・再開、W&Bの検証を実施しています。
+ART 0.5.24ではパッケージ、数値計算、更新・再開、W&Bの検証を実施しています。
 対象範囲は[互換性検証レポート](docs/experimental/upstream-art-compatibility.md)を参照してください。
 標準環境には`constraints/security.txt`を適用し、NVIDIA専用環境の固定版は別に管理します。
 導入方法による違いと残る注意点は[依存構成とセキュリティ](docs/experimental/dependency-security.md)を参照してください。
@@ -199,8 +199,8 @@ git clone https://github.com/wandb/ART-Embodied.git
 cd ART-Embodied
 python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install -c constraints/security.txt 'openpipe-art==0.5.18'
-python -m pip install -c constraints/security.txt '.[libero]'
+python -m pip install --only-binary=orjson -c constraints/security.txt 'openpipe-art==0.5.18'
+python -m pip install --only-binary=orjson -c constraints/security.txt '.[libero]'
 art-embodied doctor --profile libero
 ```
 
@@ -210,7 +210,8 @@ OpenVLA-OFTをロードし、LoRA GRPOを1更新、アダプターと学習状�
 
 checkout内でuvを使って開発する場合:
 
-uv 0.12.0以降を使用してください。`uv sync --locked`はLiteLLM 1.101.0と
+Pillow 13.0.0も上書き対象です。LeRobot 0.6.0の指定はPillow <13のため、この構成はplain pipではなくuvでインストールしてください。
+uv 0.12.0以降を使用してください。`uv sync --locked`はLiteLLM 1.101.3と
 Diffusers 0.38.0への互換性上書きを適用します。GR00T N1.7用インストーラーは
 Diffusersのみを上書きし、Safetensors 0.8.0を使います。上流パッケージは改変せず、
 古い依存バージョン指定を置き換えます。通常のpipではこれらの上書きは適用されません。
@@ -231,10 +232,8 @@ PI0/PI0.5 Flow-SDEには、LeRobot 0.6とTransformers 5を使う
 独立したPython 3.12環境を用意してください。
 
 ```bash
-python3.12 -m venv .venv-pi
-source .venv-pi/bin/activate
-python -m pip install -c constraints/security.txt 'openpipe-art==0.5.20' '.[pi-libero]'
-art-embodied doctor --profile pi
+uv sync --python 3.12 --locked --extra pi-libero
+uv run --no-sync art-embodied doctor --profile pi
 ```
 
 用途ごとに環境を分けてインストールしてください。

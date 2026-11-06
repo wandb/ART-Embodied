@@ -12,7 +12,16 @@ from packaging.version import Version
 def art_version_for_python(python_version: str) -> Version:
     """Select the default ART pin; native GR00T workers retain 0.5.18."""
 
-    return Version("0.5.18" if Version(python_version) < Version("3.12") else "0.5.20")
+    return Version("0.5.18" if Version(python_version) < Version("3.12") else "0.5.24")
+
+
+def supported_art_versions(python_version: str) -> frozenset[Version]:
+    """Retain qualified runtimes without admitting untested intermediate releases."""
+
+    versions = ("0.5.18",) if Version(python_version) < Version("3.12") else (
+        "0.5.18", "0.5.20", "0.5.24"
+    )
+    return frozenset(Version(version) for version in versions)
 
 
 TESTED_ART_VERSION = art_version_for_python(platform.python_version())
@@ -176,11 +185,11 @@ def runtime_compatibility_report(
                 f"openpipe-art=={expected_art_version} before "
                 "using the ART-Embodied control plane"
             )
-        elif Version(art_version) not in {Version("0.5.18"), expected_art_version}:
+        elif Version(art_version) not in supported_art_versions(platform.python_version()):
             issues.append(
                 "Unsupported OpenPipe ART version: "
                 f"expected {expected_art_version}"
-                + (" or 0.5.18" if expected_art_version != Version("0.5.18") else "")
+                + (" or 0.5.20 or 0.5.18" if expected_art_version != Version("0.5.18") else "")
                 + f", found {art_version}"
             )
 

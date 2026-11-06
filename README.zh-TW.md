@@ -164,17 +164,17 @@ runtime:
 ### 已驗證的相容性
 
 ART-Embodied 與 OpenPipe ART 一起安裝，套件名稱為 `art_embodied`。
-`0.1.0rc2` 依執行環境支援 ART 0.5.18 和 0.5.20：
+目前的簽出版本在 Python 3.12 以上使用 ART 0.5.24，並保留對 0.5.18 和 0.5.20 的支援。`0.1.0rc2` 發布套件不包含此次更新。
 
 | 執行環境 | OpenPipe ART | 用途 |
 | --- | --- | --- |
-| Python 3.12 以上預設環境 | `0.5.20` | PI0 / PI0.5、PI0-FAST、SmolVLA 設定 |
+| Python 3.12 以上預設環境 | `0.5.24` | PI0 / PI0.5、PI0-FAST、SmolVLA 設定 |
 | Python 3.11 | `0.5.18` | 既有 OpenVLA-OFT 設定（LeRobot `>=0.4.4,<0.5`） |
 | GR00T N1.7 專用 Python 3.12 環境 | `0.5.18` | NVIDIA 固定相依套件的原生環境 |
 
-以下安裝指令指定 ART 版本。NVIDIA 要求 SciPy 1.15.3，而 ART 0.5.20 要求
+以下安裝指令指定 ART 版本。NVIDIA 要求 SciPy 1.15.3，而 ART 0.5.24 要求
 SciPy 1.17，因此 GR00T 安裝腳本保留 ART 0.5.18。既有 ART 0.5.18 環境仍受支援。
-ART 0.5.20 已通過套件安裝、數值計算、更新與復原及 W&B 檢查；範圍請參閱
+ART 0.5.24 已通過套件安裝、數值計算、更新與復原及 W&B 檢查；範圍請參閱
 [相容性驗證報告](docs/experimental/upstream-art-compatibility.md)。
 標準環境使用 `constraints/security.txt`，NVIDIA 專用環境保留獨立的版本約束。
 安裝方式的差異及注意事項請參閱[相依套件設定與安全](docs/experimental/dependency-security.md)。
@@ -194,8 +194,8 @@ git clone https://github.com/wandb/ART-Embodied.git
 cd ART-Embodied
 python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install -c constraints/security.txt 'openpipe-art==0.5.18'
-python -m pip install -c constraints/security.txt '.[libero]'
+python -m pip install --only-binary=orjson -c constraints/security.txt 'openpipe-art==0.5.18'
+python -m pip install --only-binary=orjson -c constraints/security.txt '.[libero]'
 art-embodied doctor --profile libero
 ```
 
@@ -205,7 +205,7 @@ art-embodied doctor --profile libero
 若在 checkout 中以 uv 開發：
 
 請使用 uv 0.12.0 或更新版本。`uv sync --locked` 會覆寫相依套件限制，使用
-LiteLLM 1.101.0 和 Diffusers 0.38.0。GR00T N1.7 安裝指令稿只覆寫 Diffusers，
+LiteLLM 1.101.3、Diffusers 0.38.0 和 Pillow 13.0.0。LeRobot 0.6.0 要求 Pillow <13，因此其設定需使用 uv，而非 plain pip。GR00T N1.7 安裝指令稿只覆寫 Diffusers，
 並使用 Safetensors 0.8.0。這些設定取代上游的舊版本限制，不修改上游套件。
 一般 pip 安裝不會套用這些覆寫設定。
 
@@ -225,10 +225,8 @@ PI0/PI0.5 Flow-SDE 請使用獨立的 Python 3.12 環境，安裝
 LeRobot 0.6 與 Transformers 5：
 
 ```bash
-python3.12 -m venv .venv-pi
-source .venv-pi/bin/activate
-python -m pip install -c constraints/security.txt 'openpipe-art==0.5.20' '.[pi-libero]'
-art-embodied doctor --profile pi
+uv sync --python 3.12 --locked --extra pi-libero
+uv run --no-sync art-embodied doctor --profile pi
 ```
 
 請為不同用途分別建立環境：

@@ -116,6 +116,7 @@ class _FakePolicy:
 
 
 def test_pi_flow_bridge_samples_compact_record_and_rescores_exactly() -> None:
+    pytest.importorskip("lerobot", minversion="0.6.0")
     from lerobot.utils.constants import (
         OBS_LANGUAGE_ATTENTION_MASK,
         OBS_LANGUAGE_TOKENS,
@@ -355,6 +356,7 @@ def test_rlinf_raw_loader_rejects_unknown_auxiliary_checkpoint_keys(
 
 
 def test_rlinf_pi05_contract_overrides_serialized_lerobot_defaults() -> None:
+    pytest.importorskip("lerobot", minversion="0.6.0")
     from lerobot.configs import FeatureType, NormalizationMode, PolicyFeature
     from lerobot.utils.constants import ACTION, OBS_STATE
 
@@ -416,6 +418,7 @@ def test_rlinf_pi0_contract_preserves_four_step_sampler() -> None:
 
 
 def test_rlinf_pi0_extra_delta_mask_matches_openpi_six_plus_gripper() -> None:
+    pytest.importorskip("lerobot", minversion="0.6.0")
     from lerobot.processor.relative_action_processor import (
         RelativeActionsProcessorStep,
         to_absolute_actions,
@@ -478,6 +481,7 @@ def test_rlinf_pi0_extra_delta_contract_rejects_non_libero_action_shape() -> Non
 
 
 def test_rlinf_norm_stats_map_to_lerobot_features_and_slice_action(tmp_path) -> None:
+    pytest.importorskip("lerobot", minversion="0.6.0")
     import json
 
     stats = {

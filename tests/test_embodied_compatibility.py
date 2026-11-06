@@ -22,9 +22,9 @@ from art_embodied.compatibility import (
 
 @pytest.mark.parametrize(
     "python_version, expected",
-    [("3.11.14", "0.5.18"), ("3.12.13", "0.5.20"), ("3.13.0", "0.5.20")],
+    [("3.11.14", "0.5.18"), ("3.12.13", "0.5.24"), ("3.13.0", "0.5.24")],
 )
-@pytest.mark.parametrize("installed", ["0.5.18", "0.5.20"])
+@pytest.mark.parametrize("installed", ["0.5.18", "0.5.19", "0.5.20", "0.5.21", "0.5.22", "0.5.23", "0.5.24", "0.5.25"])
 def test_runtime_art_pin_follows_python(
     monkeypatch, python_version, expected, installed
 ):
@@ -40,10 +40,11 @@ def test_runtime_art_pin_follows_python(
     monkeypatch.setattr(metadata, "version", version)
     report = runtime_compatibility_report()
     assert report.python_version == python_version
-    supported = installed in {"0.5.18", expected}
+    supported = installed in ({"0.5.18"} if expected == "0.5.18" else {"0.5.18", "0.5.20", "0.5.24"})
     assert report.compatible is supported
     if not supported:
-        assert f"expected {expected}, found {installed}" in report.issues[0]
+        assert f"expected {expected}" in report.issues[0]
+        assert f"found {installed}" in report.issues[0]
 
 
 def test_runtime_report_accepts_tested_art_and_optional_lerobot(monkeypatch) -> None:

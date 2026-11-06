@@ -37,7 +37,7 @@ jobs:
         run: |
           uv sync --python 3.12 --locked --extra dev
           uv pip install 'torch==2.10.0' 'torchvision==0.25.0' --index-url https://download.pytorch.org/whl/cpu
-          uv pip install -c constraints/security.txt 'lerobot[peft,pi]==0.6.0' 'peft==0.20.0' 'transformers==5.5.4' 'wandb==0.24.2' 'imageio[ffmpeg]>=2.34,<3'
+          uv pip install -c constraints/security.txt --overrides constraints/pillow-security.txt 'lerobot[peft,pi]==0.6.0' 'peft==0.20.0' 'transformers==5.5.4' 'wandb==0.24.2' 'imageio[ffmpeg]>=2.34,<3'
           uv pip install --overrides constraints/diffusers-security.txt 'diffusers==0.38.0' 'safetensors==0.8.0'
       - name: Test without model downloads or experiment outputs
         run: |
@@ -101,7 +101,7 @@ jobs:
           printf '%s\n' '.[observability]' 'openpipe-art==0.5.18' \
             'scipy==1.15.3' 'numpy==1.26.4' 'weave==0.52.37' 'wandb==0.24.2' \
             > /tmp/gr00t-art-retained.in
-          uv pip compile --python-version 3.12 /tmp/gr00t-art-retained.in \
+          uv pip compile --no-config --only-binary orjson --python-version 3.12 /tmp/gr00t-art-retained.in \
             --output-file /tmp/gr00t-art-retained.txt
 
       - name: Build wheel and source distribution
@@ -140,7 +140,7 @@ jobs:
           test -n "$wheel_path"
           uv pip install -c constraints/security.txt --python /tmp/art-embodied-core/bin/python \
             'openpipe-art==0.5.18; python_version < "3.12"' \
-            'openpipe-art==0.5.20; python_version >= "3.12"'
+            'openpipe-art==0.5.24; python_version >= "3.12"'
           uv pip install -c constraints/security.txt --python /tmp/art-embodied-core/bin/python \
             "$wheel_path"
           /tmp/art-embodied-core/bin/python - <<'PY'
