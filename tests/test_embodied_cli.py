@@ -136,6 +136,14 @@ def test_embodied_doctor_validates_pinned_libero_worker_profile(monkeypatch) -> 
     assert report["profile"] == "libero"
     assert report["package_versions"] == versions
     assert report["compatible"] is True
+    assert len(report["security_warnings"]) == 1
+    assert "GHSA-63cw-57p8-fm3p" in report["security_warnings"][0]
+
+    text_result = runner.invoke(app, ["doctor", "--profile", "libero"])
+    assert text_result.exit_code == 0, text_result.output
+    assert "status: compatible" in text_result.output
+    assert "security warning:" in text_result.output
+    assert "weights_only=True" in text_result.output
 
 
 def test_embodied_doctor_reports_libero_profile_drift(monkeypatch) -> None:

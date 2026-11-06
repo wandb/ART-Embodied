@@ -164,7 +164,9 @@ runtime:
 ### 已验证的兼容性
 
 ART-Embodied 与 OpenPipe ART 一起安装，包名为 `art_embodied`。
-当前检出版本在 Python 3.12 及以上使用 ART 0.5.24，并保留对 0.5.18 和 0.5.20 的支持。`0.1.0rc2` 发布包不包含此次更新。
+`0.1.0rc3` 在 Python 3.12 及以上使用 ART 0.5.24，并保留对 0.5.18 和 0.5.20 的支持。
+
+OpenVLA-OFT 和 GR00T 专用环境使用较旧的 Torch 版本，即使设置了 `weights_only=True`，也只应加载可信的检查点。`doctor` 检查兼容性，不保证整体安全性。
 
 | 运行环境 | OpenPipe ART | 用途 |
 | --- | --- | --- |

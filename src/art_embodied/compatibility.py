@@ -143,6 +143,7 @@ class RuntimeCompatibilityReport:
     package_versions: dict[str, str | None]
     compatible: bool
     issues: tuple[str, ...]
+    security_warnings: tuple[str, ...] = ()
 
     def as_dict(self) -> dict[str, object]:
         return {
@@ -153,6 +154,7 @@ class RuntimeCompatibilityReport:
             "package_versions": dict(self.package_versions),
             "compatible": self.compatible,
             "issues": list(self.issues),
+            "security_warnings": list(self.security_warnings),
         }
 
 
@@ -298,6 +300,17 @@ def runtime_compatibility_report(
                     f"found {found}. Run scripts/install-gr00t-n1d7-runtime.sh"
                 )
 
+    security_warnings: list[str] = []
+    torch_version = package_versions.get("torch")
+    if torch_version is not None and Version(torch_version) < Version("2.10.0"):
+        security_warnings.append(
+            f"Torch {torch_version} has a known checkpoint-loading vulnerability "
+            "(GHSA-63cw-57p8-fm3p). Use only trusted model and training-state "
+            "files, even with weights_only=True. Torch 2.10.0 fixes this "
+            "advisory, but changing this profile's Torch pin requires "
+            "separate policy validation. Compatibility is not a security check."
+        )
+
     return RuntimeCompatibilityReport(
         python_version=platform.python_version(),
         profile=profile,
@@ -306,6 +319,7 @@ def runtime_compatibility_report(
         package_versions=package_versions,
         compatible=not issues,
         issues=tuple(issues),
+        security_warnings=tuple(security_warnings),
     )
 
 
