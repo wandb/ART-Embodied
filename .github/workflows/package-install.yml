@@ -101,7 +101,7 @@ jobs:
           printf '%s\n' '.[observability]' 'openpipe-art==0.5.18' \
             'scipy==1.15.3' 'numpy==1.26.4' 'weave==0.52.37' 'wandb==0.24.2' \
             > /tmp/gr00t-art-retained.in
-          uv pip compile --no-config --python-version 3.12 /tmp/gr00t-art-retained.in \
+          uv pip compile --no-config --only-binary orjson --python-version 3.12 /tmp/gr00t-art-retained.in \
             --output-file /tmp/gr00t-art-retained.txt
 
       - name: Build wheel and source distribution

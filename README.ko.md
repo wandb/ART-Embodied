@@ -201,8 +201,8 @@ git clone https://github.com/wandb/ART-Embodied.git
 cd ART-Embodied
 python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install -c constraints/security.txt 'openpipe-art==0.5.18'
-python -m pip install -c constraints/security.txt '.[libero]'
+python -m pip install --only-binary=orjson -c constraints/security.txt 'openpipe-art==0.5.18'
+python -m pip install --only-binary=orjson -c constraints/security.txt '.[libero]'
 art-embodied doctor --profile libero
 ```
 

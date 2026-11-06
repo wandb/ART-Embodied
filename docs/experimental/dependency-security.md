@@ -21,6 +21,14 @@ The overrides replace selected upstream requirements without modifying
 upstream package source or metadata. Dependency-consistency tools may report
 these intentional differences from the upstream requirements.
 
+The checkout disables source builds of orjson for both `uv sync` and `uv pip`.
+The pip examples use `--only-binary=orjson` for the same restriction. Without a
+compatible wheel, installation fails instead of compiling orjson. These
+settings do not propagate to consumers installing the add-on wheel elsewhere.
+Use a trusted index and cache; uv can reuse previously built cached wheels.
+Socket may still flag the build scripts in orjson's source distribution.
+This restriction prevents local source builds, not all supply-chain risks.
+
 ## Validation
 
 - SentencePiece: tokenizer comparisons on 16,436 strings and an OpenVLA-OFT

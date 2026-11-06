@@ -127,6 +127,8 @@ markers = [
 
 [tool.uv]
 required-version = ">=0.12.0"
+# Use wheels for orjson; do not execute its source-build backend.
+no-build-package = ["orjson"]
 # Temporary, scoped compatibility overrides. See README.md installation notes.
 override-dependencies = [
     "diffusers==0.38.0",
@@ -262,3 +264,6 @@ conflicts = [
 [tool.uv.extra-build-dependencies]
 egl-probe = ["cmake>=3.20,<4"]
 hf-egl-probe = ["cmake>=3.20,<4"]
+
+[tool.uv.pip]
+only-binary = ["orjson"]

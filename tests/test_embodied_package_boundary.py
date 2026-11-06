@@ -153,7 +153,7 @@ def test_gr00t_n1d7_installer_retains_native_dependencies() -> None:
     assert '--constraint "${constraints}"' in installer
     workflow = (ROOT / ".github/workflows/package-install.yml").read_text()
     assert (
-        "uv pip compile --no-config --python-version 3.12 /tmp/gr00t-art-retained.in"
+        "uv pip compile --no-config --only-binary orjson --python-version 3.12 /tmp/gr00t-art-retained.in"
         in workflow
     )
 
@@ -237,7 +237,7 @@ def test_readme_languages_share_release_and_art_install_profiles() -> None:
         assert f"`{release}`" in readme, name
         assert "docs/experimental/upstream-art-compatibility.md" in readme, name
         assert (
-            "python -m pip install -c constraints/security.txt 'openpipe-art==0.5.18'"
+            "python -m pip install --only-binary=orjson -c constraints/security.txt 'openpipe-art==0.5.18'"
             in readme
         ), name
         assert (
