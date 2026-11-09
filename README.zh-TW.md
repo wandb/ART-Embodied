@@ -142,7 +142,7 @@ PI0-FAST 在 LIBERO Long 的「將兩個摩卡壺放到爐台上」任務中，�
 
 已使用 Isaac Lab `v3.0.0` 的 Newton 物理與 Warp 渲染，驗證 8 個平行的官方 Cartpole 相機環境。
 支援初始狀態複製與重播、動作區塊、終止觀測及影片儲存。
-OpenPI PI0.5 DROID 配方支援軌跡收集、分散式 Flow-SDE GRPO 與檢查點還原。100 次更新後的封存評估從 137/256 提升至 213/256。新環境的 GPU 驗證仍在進行中。
+OpenPI PI0.5 DROID 配方支援軌跡收集、分散式 Flow-SDE GRPO 與檢查點還原。100 次更新後的封存評估從 137/256 提升至 213/256。全新安裝環境已完成兩次更新，並從 W&B 下載檢查點後於獨立程序中還原。optimizer、亂數狀態及 W&B 原生 step 0、1、2 均已驗證。
 請使用與現有策略分離的 Python 環境，參照[驗證步驟](README.md#experimental-isaac-lab-adapter)。
 GRPO 組內需對齊物體位置、關節狀態和任務目標等條件，僅設定相同隨機種子並不足夠。
 Warp 相機須設定 `update_latest_camera_pose=True`，以跟隨機器人移動並在狀態還原後更新視角。介面會在執行前檢查此設定。

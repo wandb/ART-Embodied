@@ -148,7 +148,7 @@ PI0-FAST는 LIBERO Long의 "put both moka pots on the stove" 태스크를 대상
 
 Isaac Lab `v3.0.0`의 Newton 물리와 Warp 렌더링으로 공식 Cartpole 카메라 환경 8개를 병렬 검증했습니다.
 초기 상태 복제·재현, 액션 청크, 종료 관측과 영상 저장을 지원합니다.
-OpenPI PI0.5 DROID 레시피는 롤아웃, 분산 Flow-SDE GRPO, 체크포인트 재개를 지원합니다. 100회 업데이트 후 sealed 평가가 137/256에서 213/256으로 향상됐습니다. 새 환경의 GPU 검증은 진행 중입니다.
+OpenPI PI0.5 DROID 레시피는 롤아웃, 분산 Flow-SDE GRPO, 체크포인트 재개를 지원합니다. 100회 업데이트 후 sealed 평가가 137/256에서 213/256으로 향상됐습니다. 신규 설치 환경에서 두 번의 업데이트와 W&B에서 다운로드한 체크포인트의 별도 프로세스 복원을 완료했습니다. optimizer·난수 상태 복원과 W&B native step 0·1·2를 확인했습니다.
 기존 정책과 별도의 Python 환경에서 [검증 절차](README.md#experimental-isaac-lab-adapter)를 실행하세요.
 GRPO에서는 시드뿐 아니라 물체 배치, 관절 상태, 태스크 목표도 그룹 내에서 일치시켜야 합니다.
 Warp 카메라에는 `update_latest_camera_pose=True`를 지정하세요. 로봇의 움직임과 상태 복원 후 시점을 반영하기 위해 실행 전에 이 설정을 검사합니다.

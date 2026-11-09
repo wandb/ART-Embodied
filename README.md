@@ -152,7 +152,9 @@ checks eight official Cartpole camera environments with Isaac Lab `v3.0.0`,
 Newton physics and Warp rendering. An OpenPI PI0.5 DROID recipe also supports
 rollout collection, distributed Flow-SDE GRPO and checkpoint resume. After 100
 updates, success improved from 137/256 to 213/256 on a sealed evaluation set.
-Fresh-install GPU qualification is in progress.
+Fresh installations have passed two full updates and a separate-process resume
+from a downloaded W&B checkpoint, including optimizer/RNG restoration and native
+W&B steps 0, 1 and 2.
 
 Install [Isaac Lab 3.0](https://isaac-sim.github.io/IsaacLab/v3.0.0/source/isaaclab/installation.html)
 in a separate environment. From this checkout, run with that environment's Python:
