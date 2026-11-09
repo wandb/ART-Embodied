@@ -873,7 +873,7 @@ class EvaluationConfig(_StrictConfig):
     pre_training_success_gate: PreTrainingSuccessGateConfig | None = None
     split: Literal["train_matched", "held_out"]
     data_role: Literal["diagnostic", "development", "sealed_test"]
-    runtime: Literal["native_lerobot"]
+    runtime: Literal["native_lerobot", "native_openpi"]
     baseline_outcomes_path: Path | None
     baseline_wait_timeout_seconds: int = pydantic.Field(default=0, ge=0)
     every_updates: int = pydantic.Field(ge=1)

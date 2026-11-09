@@ -80,6 +80,7 @@ jobs:
             src/art_embodied \
             tests/test_embodied_*.py \
             examples/embodied/*.py \
+            examples/embodied/isaaclab/*.py \
             examples/embodied/libero/*.py
 
       - name: Run complete core add-on suite

@@ -10,6 +10,13 @@ from importlib import import_module
 from typing import Any
 
 _EXPORT_GROUPS: dict[str, tuple[str, ...]] = {
+    "isaaclab": (
+        "IsaacLabChunkEnvironment",
+        "isaaclab_reset_fingerprints",
+        "repeat_isaaclab_scene_state",
+    ),
+    "isaaclab_rollout": ("IsaacLabGroupRollout",),
+    "isaaclab_droid": ("droid_action_chunk", "pack_droid_observation"),
     "lerobot": (
         "LeRobotActionPrediction",
         "LeRobotPolicyAdapter",

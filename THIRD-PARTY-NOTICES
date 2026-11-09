@@ -68,6 +68,18 @@ Other policy and simulator integrations
   https://github.com/ARISE-Initiative/robosuite/blob/master/LICENSE
 - MuJoCo, Google DeepMind: Apache License 2.0.
   https://github.com/google-deepmind/mujoco/blob/main/LICENSE
+- Isaac Lab, The Isaac Lab Project Developers: BSD-3-Clause (source code).
+  https://github.com/isaac-sim/IsaacLab/blob/v3.0.0/LICENSE
+  Optional external simulator runtime, not vendored. Simulator backends and
+  downloaded assets remain subject to their publishers' separate terms.
+- Isaac Lab Arena, The Isaac Lab Arena Project Developers: Apache License 2.0 (source code).
+  https://github.com/isaac-sim/IsaacLab-Arena/blob/668bb80b97e8721e47e90fa8e305b4cd97369d79/LICENSE.md
+  Optional external DROID environment and OpenPI interface reference, not vendored.
+  The installer applies local Newton/Warp import, camera and asset-loading
+  compatibility changes to the pinned source and records their hashes.
+- cuRobo, NVIDIA: Apache License 2.0 (source code).
+  https://github.com/NVlabs/curobo/blob/78fd485fa82d9b9a063fb4985e371814587e666a/LICENSE
+  Optional external dependency of the Arena runtime, not vendored.
 
 Models, checkpoints, and datasets
 --------------------------------
@@ -91,6 +103,9 @@ Fine-tuning a checkpoint does not replace its underlying license with Apache-2.0
 - PI0-FAST LeRobot checkpoint and FAST tokenizer (see their model cards and terms):
   https://huggingface.co/lerobot/pi0fast-libero
   https://huggingface.co/physical-intelligence/fast
+- OpenPI PI0.5 DROID joint-position checkpoint, Physical Intelligence, as used by
+  Isaac Lab Arena (see the publishers' checkpoint and scene-asset terms):
+  https://github.com/isaac-sim/IsaacLab-Arena/blob/668bb80b97e8721e47e90fa8e305b4cd97369d79/docs/pages/quickstart/running_a_real_policy/openpi.rst
 - SmolVLA, Hugging Face (Apache-2.0 as declared in the model card):
   https://huggingface.co/lerobot/smolvla_base
 - GR00T N1.7, NVIDIA (see model card and model license):

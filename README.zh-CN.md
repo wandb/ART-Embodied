@@ -87,6 +87,8 @@ OpenVLA 后端独立于 ART 的 `LocalBackend`、AOM 和 Serverless Training 运
 | GR00T N1.7 / RoboCasa Cuttingboard-to-Pan | Flow-SDE GRPO | 100（sealed） | 111/192 | **139/192** | **+14.6 个百分点** |
 | [PI0-FAST / LIBERO Long (单任务)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/a1hx8rsf) | Action-token GRPO | 100 (开发评估) | 70/100 | **89/100** | **+19 个百分点** |
 | [PI0-FAST / LIBERO Long (单任务)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/ww9b5upu) | Action-token GRPO | 100 (封存测试) | [73/100](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/r56aa76y) | **83/100** | **+10 个百分点** |
+| [PI0.5 DROID / Isaac Lab soup-to-bowl](https://wandb.ai/art-embodied/art-embodied-isaaclab/runs/j09zw68w) | Flow-SDE GRPO | 100 (development) | 65/128 | **109/128** | **+34.4 pp** |
+| [PI0.5 DROID / Isaac Lab soup-to-bowl](https://wandb.ai/art-embodied/art-embodied-isaaclab/runs/ljfxkgti) | Flow-SDE GRPO | 100 (sealed) | 137/256 | **213/256** | **+29.7 pp** |
 
 **评估条件。** 前五行使用固定的 100 个开发场景，初始状态与训练集分离，
 任务和指令与训练时相同。这些场景在开发期间反复使用；多随机种子和封存测试
@@ -135,6 +137,26 @@ PI0-FAST 在 LIBERO Long 的“将两个摩卡壶放到炉灶上”任务中，�
 | 包含优化器和 RNG 状态的检查点与恢复 | 已实现 |
 | W&B 指标、视频、Table 和模型制品 | 已实现 |
 | Weave 轨迹追踪与视频链接 | 已实现 |
+
+### Isaac Lab 适配器（实验阶段）
+
+已使用 Isaac Lab `v3.0.0` 的 Newton 物理与 Warp 渲染，验证了 8 个并行的官方 Cartpole 相机环境。
+支持初始状态复制与重放、动作块、终止观测及视频保存。
+OpenPI PI0.5 DROID 配方支持轨迹采集、分布式 Flow-SDE GRPO 和检查点恢复。100 次更新后的封存评估从 137/256 提升至 213/256。新环境的 GPU 验证仍在进行中。
+请使用独立于现有策略的 Python 环境，参照[验证步骤](README.md#experimental-isaac-lab-adapter)。
+GRPO 组内需要对齐物体位置、关节状态和任务目标等条件，仅设置相同随机种子并不够。
+Warp 相机须设置 `update_latest_camera_pose=True`，以跟随机器人运动并在状态恢复后更新视角。适配器会在运行前检查此设置。
+
+DROID 将汤罐移入碗中的配方使用 8 张 GPU，每次更新采集 512 条轨迹，每 5 次更新评估固定的 128 个回合。
+Panda 关节 armature 设为 `0.1`，物理条件与原始 Arena 基准不同。
+从 OpenPI DROID 检查点开始，无额外 SFT，并在测试前选定更新 100。配对结果为 97 例改善、21 例退步，提升幅度的配对 95% 置信区间为 [+22.3, +37.1] 个百分点。这是单任务、单训练种子的结果。
+请分离控制器、模拟器和策略环境，并按[安装、转换、训练与恢复步骤](README.md#droid-soup-to-bowl-recipe)操作。
+模拟器沿用 Arena 的 NumPy 版本覆盖并排除旧 `argparse` 依赖，这两项仍会出现在依赖检查中。
+安装器对 PhysX 延迟导入、Warp 相机及素材加载应用兼容修复，并检查、记录源文件哈希。OpenPI 专用环境保留 Torch 2.7.1 和 Transformers 4.53.2，请仅加载可信检查点。
+检查点和场景素材须遵循提供方的使用条款。单独生成的 256 状态测试集不用于开发。
+最终评估可用 `evaluate_droid --split sealed --preflight` 预检，依据开发集选定模型后再执行。使用相同的 256 个状态和随机种子比较初始模型，并将视频、配对结果和评估制品记录到 W&B。验证评估流程时请使用 `--split development`。
+
+其他 DROID pick-and-place 任务可复制配方，修改 `environment.task`、目标物体、目的地和指令，并在生成初始状态和配置时传入同一个 `--recipe`。系统会拒绝其他任务的初始状态。其他机器人或任务类型可使用通用的 `IsaacLabChunkEnvironment`、`IsaacLabGroupRollout`，并提供观测、动作、reset 和成功判定映射。参见[任务替换步骤](README.md#use-your-own-task)。
 
 ### 支持单一 GPU 的资源配置
 

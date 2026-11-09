@@ -677,6 +677,36 @@ def _gr00t_n1d7_flow_capabilities(
     )
 
 
+def _make_openpi_flow_policy(config: EmbodiedExperimentConfig, *, load: bool = True):
+    from .openpi import make_openpi_flow_policy
+
+    return make_openpi_flow_policy(config, load=load)
+
+
+def _openpi_flow_capabilities(config: EmbodiedExperimentConfig) -> PolicyCapabilities:
+    from .openpi import validate_openpi_config
+
+    settings = validate_openpi_config(config)
+    return PolicyCapabilities(
+        policy_type=config.policy.type,
+        action_kind="continuous",
+        probability_model="gaussian_flow_sde",
+        action_shape=(settings.execution_horizon, settings.action_dim),
+        chunk_horizon=settings.execution_horizon,
+        exact_logprobs=True,
+        teacher_forced_rescore=True,
+        rng_replay=True,
+        batched_inference=True,
+        checkpoint_delta="lora",
+        observation_normalization_revision=settings.normalization_sha256,
+    )
+
+
+register_policy_factory(
+    "openpi_pi05_droid",
+    _make_openpi_flow_policy,
+    capabilities=_openpi_flow_capabilities,
+)
 register_policy_factory(
     "openvla_oft",
     make_openvla_oft_policy,

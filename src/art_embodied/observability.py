@@ -1211,6 +1211,8 @@ class WandbWeaveObserver:
         self,
         policy_version: int,
         groups: Sequence[EmbodiedTrajectoryGroup],
+        *,
+        source_config_fingerprint: str | None = None,
     ) -> dict[str, Any]:
         """Persist every reward group before relying on remote telemetry."""
 
@@ -1224,7 +1226,11 @@ class WandbWeaveObserver:
         payload = {
             "schema_version": 1,
             "policy_version": int(policy_version),
-            "config_fingerprint": self.config.fingerprint,
+            "config_fingerprint": (
+                self.config.fingerprint
+                if source_config_fingerprint is None
+                else source_config_fingerprint
+            ),
             "summary": {
                 "groups": len(rows),
                 "trajectories": sum(int(row["completed_trajectories"]) for row in rows),

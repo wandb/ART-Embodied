@@ -89,6 +89,8 @@ ART-EmbodiedはARTのモデル管理APIを使い、軌道のグループ化、�
 | GR00T N1.7 / RoboCasa Cuttingboard-to-Pan | Flow-SDE GRPO | 100（sealed） | 111/192 | **139/192** | **+14.6 point** |
 | [PI0-FAST / LIBERO Long (単一タスク)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/a1hx8rsf) | Action-token GRPO | 100 (開発評価) | 70/100 | **89/100** | **+19 ポイント** |
 | [PI0-FAST / LIBERO Long (単一タスク)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/ww9b5upu) | Action-token GRPO | 100 (sealed) | [73/100](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/r56aa76y) | **83/100** | **+10 ポイント** |
+| [PI0.5 DROID / Isaac Lab soup-to-bowl](https://wandb.ai/art-embodied/art-embodied-isaaclab/runs/j09zw68w) | Flow-SDE GRPO | 100 (development) | 65/128 | **109/128** | **+34.4 pp** |
+| [PI0.5 DROID / Isaac Lab soup-to-bowl](https://wandb.ai/art-embodied/art-embodied-isaaclab/runs/ljfxkgti) | Flow-SDE GRPO | 100 (sealed) | 137/256 | **213/256** | **+29.7 pp** |
 
 **評価条件。** 最初の5行は、学習に使わなかった初期状態100件を固定した開発評価です。
 タスクと指示文は学習時と共通です。このセットは開発中に繰り返し使用しており、
@@ -139,6 +141,26 @@ sealedの改善幅+10ポイントの対応付き95%信頼区間は[0, 20]ポイ�
 | optimizer・RNG状態を含むチェックポイントと再開 | 実装済み |
 | W&B指標・動画・Table・モデルアーティファクト | 実装済み |
 | Weaveの軌道トレースと動画リンク | 実装済み |
+
+### Isaac Labアダプター（実験段階）
+
+Isaac Lab `v3.0.0`のNewton物理・Warp描画で、公式Cartpoleのカメラ付き8並列環境を検証しています。
+初期状態の複製・再現、アクションチャンク、終了時の観測と動画保存に対応します。
+OpenPI PI0.5 DROIDのレシピで、ロールアウト、分散Flow-SDE GRPO、チェックポイントからの再開に対応しています。100更新後のsealed評価は137/256から213/256に向上しました。新規環境でのGPU検証は進行中です。
+既存ポリシーとは別のPython環境を使い、[検証手順](README.md#experimental-isaac-lab-adapter)を参照してください。
+GRPOではseedだけでなく、物体配置・関節状態・タスクの目標などをグループ内で揃える必要があります。
+Warpカメラは`update_latest_camera_pose=True`を指定してください。腕への追従と状態復元後の視点更新に必要で、実行前に設定を検査します。
+
+DROIDのスープ缶をボウルに移すレシピは、8 GPU、1更新512軌道、5更新ごとに固定128エピソードを評価する構成です。
+Pandaの関節armatureを`0.1`に変更しており、未変更のArenaベンチマークとは条件が異なります。
+追加SFTなしでOpenPIのDROIDチェックポイントから開始し、テスト前に更新100を選びました。改善97例・悪化21例、改善幅の対応付き95%信頼区間は[+22.3, +37.1]ポイントです。単一タスク・単一学習seedでの結果です。
+制御・シミュレータ・方策の環境を分離し、[導入・変換・学習・再開の手順](README.md#droid-soup-to-bowl-recipe)に従ってください。
+シミュレータにはArenaに合わせたNumPy指定と旧`argparse`依存の除外があり、依存チェックにはこの2点が残ります。
+インストーラーはPhysXの遅延読み込み・Warpカメラ・素材取得の互換修正を行い、対象ソースのハッシュを検査・記録します。OpenPI専用環境はTorch 2.7.1・Transformers 4.53.2を使うため、信頼できるチェックポイントのみ読み込んでください。
+チェックポイントとシーン素材は提供元の利用条件に従ってください。学習中は別途生成した256状態のテストセットを使用しません。
+最終評価は`evaluate_droid --split sealed --preflight`で事前確認し、開発評価でモデルを選んだ後に実行します。学習前モデルと同じ256状態・乱数条件で比較し、W&Bに動画・対応表・評価アーティファクトを記録します。評価経路の動作確認には`--split development`を使います。
+
+別のDROID pick-and-placeタスクでは、レシピをコピーして`environment.task`と対象物・移動先・指示文を変更し、初期状態生成と設定生成の両方に同じ`--recipe`を渡します。異なるタスクの初期状態は受け付けません。別のロボットやタスク形式には、共通の`IsaacLabChunkEnvironment`・`IsaacLabGroupRollout`と、観測・行動・reset・成功判定の対応付けを使います。[タスク差し替え手順](README.md#use-your-own-task)を参照してください。
 
 ### 1 GPU構成を正式にサポート
 

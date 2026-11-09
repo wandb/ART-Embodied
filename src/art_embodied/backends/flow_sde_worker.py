@@ -69,6 +69,9 @@ def _worker_config(spec: dict[str, Any]) -> EmbodiedExperimentConfig:
 def _build_policy(spec: dict[str, Any]) -> tuple[Any, EmbodiedExperimentConfig]:
     config = _worker_config(spec)
     policy = make_policy(config)
+    configure_worker = getattr(policy, "set_worker_index", None)
+    if callable(configure_worker):
+        configure_worker(int(spec["worker_index"]))
     policy.load_checkpoint(spec["policy_snapshot"])
     return policy, config
 
