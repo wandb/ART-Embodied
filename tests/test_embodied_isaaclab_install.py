@@ -35,6 +35,7 @@ def test_simulator_resolves_native_physics_and_ik_together(tmp_path):
     uv = project["tool"]["uv"]
     assert uv["exclude-dependencies"] == ["argparse"]
     assert "numpy==2.3.1" in uv["override-dependencies"]
+    assert "setuptools==84.1.0" in uv["override-dependencies"]
     assert uv["sources"]["isaaclab-newton"]["path"] == str(
         lab / "source/isaaclab_newton"
     )
@@ -91,7 +92,7 @@ def test_controller_uses_project_lock_and_cpu_torch_without_openpi(
     assert len(calls) == 3
     sync, torch_install, probe = [args for args, _ in calls]
     assert "--frozen" in sync and "observability" in sync
-    assert "torch==2.10.0+cpu" in torch_install
+    assert "torch==2.13.0+cpu" in torch_install
     assert "safetensors==0.8.0" in torch_install
     assert "fsspec==2026.6.0" in torch_install
     assert "https://download.pytorch.org/whl/cpu/torch/" in torch_install

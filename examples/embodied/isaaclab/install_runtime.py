@@ -173,6 +173,8 @@ def simulator_project(lab, arena, openpi):
         "warp-lang==1.17.0",
         "usd-exchange==3.0.1",
         "websockets==16.1.1",
+        # Torch's setuptools cap predates the patched packaging release.
+        "setuptools==84.1.0",
     ]
     sources = [
         f"{json.dumps(name)} = {{path = {json.dumps(str(path))}, editable = true}}"
@@ -265,7 +267,7 @@ def install(runtime, directory):
                 "https://pypi.org/simple",
                 "--find-links",
                 "https://download.pytorch.org/whl/cpu/torch/",
-                "torch==2.10.0+cpu",
+                "torch==2.13.0+cpu",
                 "safetensors==0.8.0",
                 "setuptools==84.1.0",
                 "fsspec==2026.6.0",

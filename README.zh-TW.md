@@ -152,7 +152,7 @@ DROID 將湯罐移入碗中的配方使用 8 張 GPU，每次更新收集 512 �
 Panda 關節 armature 設為 `0.1`，物理條件與原始 Arena 基準不同。
 從 OpenPI DROID 檢查點開始，無額外 SFT，並在測試前選定更新 100。成對結果為 97 例改善、21 例退步，提升幅度的成對 95% 信賴區間為 [+22.3, +37.1] 個百分點。這是單一任務、單一訓練種子的結果。
 請分離控制器、模擬器與策略環境，並依照[安裝、轉換、訓練與還原步驟](README.md#droid-soup-to-bowl-recipe)操作。
-模擬器沿用 Arena 的 NumPy 版本覆寫並排除舊 `argparse` 相依套件，這兩項仍會出現在相依性檢查中。
+模擬器沿用 Arena 的 NumPy 版本覆寫、排除舊 `argparse` 相依套件，並為取得安全修正而將 setuptools 更新至超出 Torch 版本上限的版本。這三項仍會出現在相依性檢查中。
 安裝器對 PhysX 延遲載入、Warp 相機與素材載入套用相容修正，並檢查、記錄來源檔案雜湊。策略環境透過[專用相依套件更新](constraints/isaaclab-openpi-security.txt)安裝 Pillow、Diffusers 等套件的修正版本。Torch 2.7.1、Transformers 4.53.2 與 Accelerate 1.8.1 仍有已知安全警告。此 Torch 版本即使使用 `weights_only=True` 也無法安全載入惡意檢查點，請僅使用可信模型與設定。推論伺服器僅監聽 localhost，用於本機訓練。
 檢查點與場景素材須遵循提供方的使用條款。另行產生的 256 狀態測試集不供開發使用。
 最終評估可用 `evaluate_droid --split sealed --preflight` 預檢，依據開發集選定模型後再執行。使用相同的 256 個狀態與亂數種子比較初始模型，並將影片、成對結果與評估產物記錄到 W&B。驗證評估流程時請使用 `--split development`。

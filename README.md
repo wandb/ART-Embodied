@@ -214,8 +214,9 @@ JAX_PLATFORMS=cpu CUDA_VISIBLE_DEVICES='' "$POLICY" \
 The converter downloads the native `pi05_droid_jointpos` checkpoint and preserves
 its source weights and normalization data. Inference uses OpenPI's native BF16/FP32
 precision. Check the publishers' terms for checkpoints and scene assets before use.
-The simulator installer uses Arena's NumPy override for `openpi-client` and omits
-the obsolete `argparse` backport. These two upstream metadata conflicts remain
+The simulator installer uses Arena's NumPy override for `openpi-client`, omits
+the obsolete `argparse` backport, and updates setuptools beyond Torch's upper
+bound to obtain security fixes. These three upstream metadata conflicts remain
 visible in dependency checks.
 The installer also applies three checksum-checked Arena compatibility changes:
 lazy PhysX imports, Warp camera setup and remote asset loading. It records the

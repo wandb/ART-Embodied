@@ -158,7 +158,7 @@ Linux x86-64와 시뮬레이터의 CUDA 13.0용 Torch를 지원하는 드라이�
 Panda 관절 armature를 `0.1`로 바꾸므로 원본 Arena 벤치마크와 물리 조건이 다릅니다.
 추가 SFT 없이 OpenPI DROID 체크포인트에서 시작했고, 테스트 전에 업데이트 100을 선택했습니다. 개선 97건·퇴보 21건이며, 향상 폭의 대응표본 95% 신뢰구간은 [+22.3, +37.1]%p입니다. 단일 태스크와 단일 학습 시드의 결과입니다.
 제어·시뮬레이터·정책 환경을 분리하고 [설치·변환·학습·재개 절차](README.md#droid-soup-to-bowl-recipe)를 따르세요.
-시뮬레이터는 Arena와 같은 NumPy 버전 재지정 및 오래된 `argparse` 의존성 제외를 사용하며, 이 두 항목은 의존성 검사에 남습니다.
+시뮬레이터는 Arena와 같은 NumPy 버전 재지정, 오래된 `argparse` 의존성 제외, 보안 수정을 위한 Torch 상한을 넘는 setuptools 업데이트를 사용합니다. 이 세 항목은 의존성 검사에 남습니다.
 설치 도구는 PhysX 지연 로딩, Warp 카메라, 에셋 로딩 호환성 수정을 적용하며 소스 해시를 검사하고 기록합니다. 정책 환경에는 [전용 의존성 업데이트](constraints/isaaclab-openpi-security.txt)를 적용해 Pillow와 Diffusers 등의 수정 버전을 설치합니다. Torch 2.7.1, Transformers 4.53.2, Accelerate 1.8.1에는 알려진 보안 경고가 남아 있습니다. 이 Torch 버전에서는 `weights_only=True`도 악성 체크포인트를 안전하게 만들지 못하므로 신뢰할 수 있는 모델과 설정만 사용하세요. 추론 서버는 localhost에서 실행하는 로컬 학습용입니다.
 체크포인트와 장면 에셋에는 제공자의 이용 조건이 적용됩니다. 별도로 만든 256개 상태의 테스트 세트는 개발 중 사용하지 않습니다.
 최종 평가는 `evaluate_droid --split sealed --preflight`로 미리 확인하고 개발 평가로 모델을 선택한 뒤 실행합니다. 초기 모델과 같은 256개 상태 및 난수 조건으로 비교하며, W&B에 영상·대응 결과·평가 아티팩트를 기록합니다. 평가 경로 점검에는 `--split development`를 사용하세요.
