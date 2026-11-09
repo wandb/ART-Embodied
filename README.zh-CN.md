@@ -148,11 +148,12 @@ GRPO 组内需要对齐物体位置、关节状态和任务目标等条件，仅
 Warp 相机须设置 `update_latest_camera_pose=True`，以跟随机器人运动并在状态恢复后更新视角。适配器会在运行前检查此设置。
 
 DROID 将汤罐移入碗中的配方使用 8 张 GPU，每次更新采集 512 条轨迹，每 5 次更新评估固定的 128 个回合。
+需要 Linux x86-64 以及支持模拟器 CUDA 13.0 版 Torch 的驱动。已在 8 张 H100 80 GB 上验证。`prepare_droid --num-gpus` 也接受 2 或 4，但仅完成配置测试，尚未验证 GPU 运行。此 DROID 配方不使用下文的通用单 GPU 配置。
 Panda 关节 armature 设为 `0.1`，物理条件与原始 Arena 基准不同。
 从 OpenPI DROID 检查点开始，无额外 SFT，并在测试前选定更新 100。配对结果为 97 例改善、21 例退步，提升幅度的配对 95% 置信区间为 [+22.3, +37.1] 个百分点。这是单任务、单训练种子的结果。
 请分离控制器、模拟器和策略环境，并按[安装、转换、训练与恢复步骤](README.md#droid-soup-to-bowl-recipe)操作。
 模拟器沿用 Arena 的 NumPy 版本覆盖并排除旧 `argparse` 依赖，这两项仍会出现在依赖检查中。
-安装器对 PhysX 延迟导入、Warp 相机及素材加载应用兼容修复，并检查、记录源文件哈希。OpenPI 专用环境保留 Torch 2.7.1 和 Transformers 4.53.2，请仅加载可信检查点。
+安装器对 PhysX 延迟导入、Warp 相机及素材加载应用兼容修复，并检查、记录源文件哈希。策略环境通过[专用依赖更新](constraints/isaaclab-openpi-security.txt)安装 Pillow、Diffusers 等软件包的修复版本。Torch 2.7.1、Transformers 4.53.2 和 Accelerate 1.8.1 仍有已知安全警告。此 Torch 版本即使使用 `weights_only=True` 也无法安全加载恶意检查点，请仅使用可信模型和配置。推理服务器仅监听 localhost，用于本地训练。
 检查点和场景素材须遵循提供方的使用条款。单独生成的 256 状态测试集不用于开发。
 最终评估可用 `evaluate_droid --split sealed --preflight` 预检，依据开发集选定模型后再执行。使用相同的 256 个状态和随机种子比较初始模型，并将视频、配对结果和评估制品记录到 W&B。验证评估流程时请使用 `--split development`。
 

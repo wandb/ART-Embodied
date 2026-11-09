@@ -1,6 +1,7 @@
 import hashlib
 import io
 import os
+from pathlib import Path
 import tarfile
 import tomllib
 
@@ -29,6 +30,7 @@ def test_simulator_resolves_native_physics_and_ik_together(tmp_path):
     assert "pin==3.9.0" in dependencies
     assert "dex-retargeting==0.5.0" in dependencies
     assert "coacd==1.0.14" in dependencies
+    assert "setuptools==84.1.0" in dependencies
     assert all("isaacsim" not in name and "[" not in name for name in dependencies)
     uv = project["tool"]["uv"]
     assert uv["exclude-dependencies"] == ["argparse"]
@@ -90,10 +92,11 @@ def test_controller_uses_project_lock_and_cpu_torch_without_openpi(
     sync, torch_install, probe = [args for args, _ in calls]
     assert "--frozen" in sync and "observability" in sync
     assert "torch==2.10.0+cpu" in torch_install
-    assert "safetensors==0.7.0" in torch_install
+    assert "safetensors==0.8.0" in torch_install
+    assert "fsspec==2026.6.0" in torch_install
     assert "https://download.pytorch.org/whl/cpu/torch/" in torch_install
     assert "https://pypi.org/simple" in torch_install
-    assert any(value.startswith("setuptools==") for value in torch_install)
+    assert "setuptools==84.1.0" in torch_install
     assert "torch.version.cuda is None" in probe[-1]
     assert calls[0][1]["env"]["UV_PROJECT_ENVIRONMENT"] == str(
         destination / "environment"
@@ -103,6 +106,59 @@ def test_controller_uses_project_lock_and_cpu_torch_without_openpi(
     report = json.loads((destination / "installation.json").read_text())
     assert not report["sources"] and not report["gpu_verified"]
     assert len(report["controller_lock_sha256"]) == 64
+
+
+def test_policy_installer_applies_security_requirements_after_upstream_lock(
+    tmp_path, monkeypatch
+):
+    import json
+
+    from examples.embodied.isaaclab import install_runtime
+
+    calls = []
+    monkeypatch.setattr("shutil.which", lambda tool: f"/bin/{tool}")
+    monkeypatch.setattr(
+        install_runtime.subprocess, "run", lambda cmd, **kw: calls.append(cmd)
+    )
+    monkeypatch.setattr(
+        install_runtime.subprocess,
+        "check_output",
+        lambda cmd, **kw: "[]" if "list" in cmd else str(tmp_path / "site"),
+    )
+    monkeypatch.setattr(install_runtime, "fetch_source", lambda name, root: root / name)
+    monkeypatch.setattr(install_runtime.shutil, "copytree", lambda *a, **kw: None)
+    destination = tmp_path / "policy"
+    install("policy", destination)
+    sync, overlay, probe = calls
+    assert "--frozen" in sync
+    assert "--requirement" in overlay
+    requirements = Path(overlay[overlay.index("--requirement") + 1])
+    assert requirements.name == "isaaclab-openpi-security.txt"
+    project = tomllib.loads((requirements.parents[1] / "pyproject.toml").read_text())
+    assert "constraints/isaaclab-openpi-security.txt" in project["tool"]["hatch"][
+        "build"
+    ]["targets"]["sdist"]["only-include"]
+    assert "4.53.2" in probe[-1]
+    lines = set(requirements.read_text().splitlines())
+    for requirement in (
+        "-c security.txt",
+        "torch==2.7.1",
+        "transformers==4.53.2",
+        "numpy==1.26.4",
+        "pillow==13.0.0",
+        "diffusers==0.38.0",
+        "aiohttp==3.14.4",
+        "sentencepiece==0.2.1",
+        "safetensors==0.8.0",
+        "datasets==5.0.1",
+        "fsspec==2026.6.0",
+        "setuptools==84.1.0",
+    ):
+        assert requirement in lines
+    report = json.loads((destination / "installation.json").read_text())
+    assert report["security_requirements_sha256"][requirements.name] == hashlib.sha256(
+        requirements.read_bytes()
+    ).hexdigest()
 
 
 def test_source_archives_are_revision_and_digest_pinned():

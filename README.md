@@ -186,6 +186,12 @@ episodes improved and 21 regressed, with a +29.7-point lift (paired 95% CI
 [+22.3, +37.1], exact McNemar p=7.27e-13). This is one task and training seed
 under the physics settings above, not an Arena benchmark-wide result.
 
+Use Linux x86-64 and an NVIDIA driver compatible with the simulator's CUDA 13.0
+Torch build. The reference run used eight H100 80 GB GPUs. `prepare_droid
+--num-gpus` also accepts 2 or 4 while retaining 512 trajectories per update;
+those layouts have configuration tests but not GPU qualification. The DROID
+recipe does not use the generic single-GPU profile below.
+
 From a checkout, install three separate runtimes with Python 3.12, `uv` and Git:
 
 ```bash
@@ -213,8 +219,13 @@ the obsolete `argparse` backport. These two upstream metadata conflicts remain
 visible in dependency checks.
 The installer also applies three checksum-checked Arena compatibility changes:
 lazy PhysX imports, Warp camera setup and remote asset loading. It records the
-before/after hashes in `installation.json`. The isolated OpenPI runtime retains
-Torch 2.7.1 and Transformers 4.53.2; load only trusted checkpoints.
+before/after hashes in `installation.json`. The policy installer applies
+[`constraints/isaaclab-openpi-security.txt`](constraints/isaaclab-openpi-security.txt)
+after the upstream installation to update supporting packages, including Pillow
+and Diffusers. Torch 2.7.1, Transformers 4.53.2 and Accelerate 1.8.1 retain known
+security advisories. Use trusted checkpoints and configurations; `weights_only=True`
+does not make untrusted checkpoints safe on this Torch version. The inference
+server listens on localhost and is intended for local training workers.
 
 With the GPUs allocated and `WANDB_ENTITY` and `WANDB_API_KEY` set:
 

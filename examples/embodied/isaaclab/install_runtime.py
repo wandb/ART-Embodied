@@ -159,6 +159,7 @@ def simulator_project(lab, arena, openpi):
         "pin==3.9.0",
         "dex-retargeting==0.5.0",
         "cmeel-urdfdom==4.0.1",
+        "setuptools==84.1.0",
     ]
     # Arena uses the same NumPy override for openpi-client. Keep the IK binary
     # stack coherent instead of allowing a later install to downgrade pin.
@@ -237,14 +238,6 @@ def install(runtime, directory):
     openpi = fetch_source("openpi", sources) if runtime != "controller" else None
     arena_patches = {}
     if runtime == "controller":
-        lock = tomllib.loads((checkout / "uv.lock").read_text())
-        setuptools_versions = {
-            package["version"]
-            for package in lock["package"]
-            if package["name"] == "setuptools"
-        }
-        if len(setuptools_versions) != 1:
-            raise ValueError("The controller requires one locked setuptools version")
         subprocess.run(
             [
                 "uv",
@@ -273,8 +266,9 @@ def install(runtime, directory):
                 "--find-links",
                 "https://download.pytorch.org/whl/cpu/torch/",
                 "torch==2.10.0+cpu",
-                "safetensors==0.7.0",
-                f"setuptools=={setuptools_versions.pop()}",
+                "safetensors==0.8.0",
+                "setuptools==84.1.0",
+                "fsspec==2026.6.0",
             ],
             env=env,
             check=True,
@@ -324,8 +318,7 @@ def install(runtime, directory):
             env=env,
             check=True,
         )
-        constraints = directory / "policy-constraints.txt"
-        constraints.write_text("torch==2.7.1\ntransformers==4.53.2\nnumpy<2\n")
+        requirements = checkout / "constraints/isaaclab-openpi-security.txt"
         subprocess.run(
             [
                 "uv",
@@ -333,10 +326,8 @@ def install(runtime, directory):
                 "install",
                 "--python",
                 str(environment / "bin/python"),
-                "--constraint",
-                str(constraints),
-                "peft==0.17.1",
-                "accelerate==1.8.1",
+                "--requirement",
+                str(requirements),
             ],
             env=env,
             check=True,
@@ -391,6 +382,16 @@ def install(runtime, directory):
                     hashlib.sha256((checkout / "uv.lock").read_bytes()).hexdigest()
                     if runtime == "controller"
                     else None
+                ),
+                "security_requirements_sha256": (
+                    {
+                        name: hashlib.sha256(
+                            (checkout / "constraints" / name).read_bytes()
+                        ).hexdigest()
+                        for name in ("isaaclab-openpi-security.txt", "security.txt")
+                    }
+                    if runtime == "policy"
+                    else {}
                 ),
                 "gpu_verified": False,
             },
