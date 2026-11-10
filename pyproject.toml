@@ -95,6 +95,7 @@ only-include = [
     "CHANGELOG.md",
     "constraints/security.txt",
     "constraints/diffusers-security.txt",
+    "constraints/isaaclab-openpi-security.txt",
     "constraints/pillow-security.txt",
     "docs/experimental/dependency-security.md",
     "docs/experimental/upstream-art-compatibility.md",

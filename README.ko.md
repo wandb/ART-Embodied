@@ -90,6 +90,8 @@ OpenVLA 백엔드는 ART의 `LocalBackend`, AOM, Serverless Training과
 | GR00T N1.7 / RoboCasa Cuttingboard-to-Pan | Flow-SDE GRPO | 100 (sealed) | 111/192 | **139/192** | **+14.6 point** |
 | [PI0-FAST / LIBERO Long (단일 태스크)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/a1hx8rsf) | Action-token GRPO | 100 (개발 평가) | 70/100 | **89/100** | **+19 %p** |
 | [PI0-FAST / LIBERO Long (단일 태스크)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/ww9b5upu) | Action-token GRPO | 100 (sealed) | [73/100](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/r56aa76y) | **83/100** | **+10 %p** |
+| [PI0.5 DROID / Isaac Lab soup-to-bowl](https://wandb.ai/art-embodied/art-embodied-isaaclab/runs/j09zw68w) | Flow-SDE GRPO | 100 (development) | 65/128 | **109/128** | **+34.4 pp** |
+| [PI0.5 DROID / Isaac Lab soup-to-bowl](https://wandb.ai/art-embodied/art-embodied-isaaclab/runs/ljfxkgti) | Flow-SDE GRPO | 100 (sealed) | 137/256 | **213/256** | **+29.7 pp** |
 
 **평가 조건.** 처음 다섯 행은 학습에 사용하지 않은 초기 상태 100개를 고정한
 개발 평가입니다. 태스크와 지시문은 학습 때와 같습니다. 이 세트는 개발 중 반복해서
@@ -141,6 +143,27 @@ PI0-FAST는 LIBERO Long의 "put both moka pots on the stove" 태스크를 대상
 | optimizer·RNG 상태를 포함한 체크포인트와 재개 | 구현 완료 |
 | W&B 지표·영상·Table·모델 아티팩트 | 구현 완료 |
 | Weave 궤적 트레이스와 영상 링크 | 구현 완료 |
+
+### Isaac Lab 어댑터 (실험 단계)
+
+Isaac Lab `v3.0.0`의 Newton 물리와 Warp 렌더링으로 공식 Cartpole 카메라 환경 8개를 병렬 검증했습니다.
+초기 상태 복제·재현, 액션 청크, 종료 관측과 영상 저장을 지원합니다.
+OpenPI PI0.5 DROID 레시피는 롤아웃, 분산 Flow-SDE GRPO, 체크포인트 재개를 지원합니다. 100회 업데이트 후 sealed 평가가 137/256에서 213/256으로 향상됐습니다. 신규 설치 환경에서 두 번의 업데이트와 W&B에서 다운로드한 체크포인트의 별도 프로세스 복원을 완료했습니다. optimizer·난수 상태 복원과 W&B native step 0·1·2를 확인했습니다.
+기존 정책과 별도의 Python 환경에서 [검증 절차](README.md#experimental-isaac-lab-adapter)를 실행하세요.
+GRPO에서는 시드뿐 아니라 물체 배치, 관절 상태, 태스크 목표도 그룹 내에서 일치시켜야 합니다.
+Warp 카메라에는 `update_latest_camera_pose=True`를 지정하세요. 로봇의 움직임과 상태 복원 후 시점을 반영하기 위해 실행 전에 이 설정을 검사합니다.
+
+DROID 수프 캔을 그릇에 옮기는 레시피는 GPU 8개, 업데이트당 궤적 512개, 5회 업데이트마다 고정된 128개 에피소드 평가를 사용합니다.
+Linux x86-64와 시뮬레이터의 CUDA 13.0용 Torch를 지원하는 드라이버가 필요합니다. H100 80 GB 8개로 검증했습니다. `prepare_droid --num-gpus`는 2개와 4개도 허용하지만 구성 테스트만 완료했으며 GPU 실행은 미검증입니다. 이 DROID 레시피는 아래의 일반 단일 GPU 구성과 별개입니다.
+Panda 관절 armature를 `0.1`로 바꾸므로 원본 Arena 벤치마크와 물리 조건이 다릅니다.
+추가 SFT 없이 OpenPI DROID 체크포인트에서 시작했고, 테스트 전에 업데이트 100을 선택했습니다. 개선 97건·퇴보 21건이며, 향상 폭의 대응표본 95% 신뢰구간은 [+22.3, +37.1]%p입니다. 단일 태스크와 단일 학습 시드의 결과입니다.
+제어·시뮬레이터·정책 환경을 분리하고 [설치·변환·학습·재개 절차](README.md#droid-soup-to-bowl-recipe)를 따르세요.
+시뮬레이터는 Arena와 같은 NumPy 버전 재지정, 오래된 `argparse` 의존성 제외, 보안 수정을 위한 Torch 상한을 넘는 setuptools 업데이트를 사용합니다. 이 세 항목은 의존성 검사에 남습니다.
+설치 도구는 PhysX 지연 로딩, Warp 카메라, 에셋 로딩 호환성 수정을 적용하며 소스 해시를 검사하고 기록합니다. 정책 환경에는 [전용 의존성 업데이트](constraints/isaaclab-openpi-security.txt)를 적용해 Pillow와 Diffusers 등의 수정 버전을 설치합니다. Torch 2.7.1, Transformers 4.53.2, Accelerate 1.8.1에는 알려진 보안 경고가 남아 있습니다. 이 Torch 버전에서는 `weights_only=True`도 악성 체크포인트를 안전하게 만들지 못하므로 신뢰할 수 있는 모델과 설정만 사용하세요. 추론 서버는 localhost에서 실행하는 로컬 학습용입니다.
+체크포인트와 장면 에셋에는 제공자의 이용 조건이 적용됩니다. 별도로 만든 256개 상태의 테스트 세트는 개발 중 사용하지 않습니다.
+최종 평가는 `evaluate_droid --split sealed --preflight`로 미리 확인하고 개발 평가로 모델을 선택한 뒤 실행합니다. 초기 모델과 같은 256개 상태 및 난수 조건으로 비교하며, W&B에 영상·대응 결과·평가 아티팩트를 기록합니다. 평가 경로 점검에는 `--split development`를 사용하세요.
+
+다른 DROID pick-and-place 태스크는 레시피를 복사해 `environment.task`, 대상 물체, 목적지, 지시문을 바꾸고 초기 상태 생성과 설정 생성에 같은 `--recipe`를 전달합니다. 다른 태스크의 초기 상태는 거부합니다. 다른 로봇이나 태스크 유형에는 공통 `IsaacLabChunkEnvironment`·`IsaacLabGroupRollout`과 관측·행동·reset·성공 판정 매핑을 사용하세요. [태스크 변경 절차](README.md#use-your-own-task)를 참고하세요.
 
 ### 1 GPU도 지원되는 resource profile
 

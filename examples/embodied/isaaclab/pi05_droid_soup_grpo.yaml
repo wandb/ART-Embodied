@@ -1,0 +1,228 @@
+# Bind model paths, reset-bank hashes and devices with prepare_droid.py.
+schema_version: 1
+experiment:
+  project: art-embodied-isaaclab
+  run: droid-soup-grpo
+  seed: 17
+  tags: [isaaclab, newton-warp, droid, grpo, soup-bowl]
+policy:
+  type: openpi_pi05_droid
+  path: CHECKPOINT
+  revision: null
+  device: cuda:0
+  dtype: bfloat16
+  trust_remote_code: false
+  unnorm_key: null
+  load_kwargs:
+    config_name: pi05_droid_jointpos_polaris
+    checkpoint_sha256: CHECKPOINT_SHA256
+    normalization_sha256: NORMALIZATION_SHA256
+    execution_horizon: 15
+    action_dim: 8
+  rollout_generation: {do_sample: true, temperature: 1, top_p: 1}
+  train_generation: {do_sample: true, temperature: 1, top_p: 1}
+  evaluation_generation: {do_sample: false, temperature: 1, top_p: 1}
+  trainable_parameter_strategy: pi05_action_expert_lora
+  force_trainable_float32: true
+  lora:
+    enabled: true
+    rank: 32
+    alpha: 32
+    dropout: 0
+    init: gaussian
+    target_modules: [auto]
+environment:
+  type: isaaclab
+  task: soup_to_bowl
+  robot_type: droid
+  kwargs:
+    action_chunk_size: 15
+    num_envs: 32
+    physics_condition: native_mujoco_warp_fp32_panda_armature_0.1
+    pick_up_object: alphabet_soup_can_hope_robolab
+    destination_location: bowl_ycb_robolab
+    instruction: Pick up the soup can and place it in the bowl.
+    train_reset_bank_sha256: TRAIN_BANK_SHA256
+    collection_mode: external_vector_batches
+  reset: {mode: fixed_scene_state, seed: 42}
+  observation_processor: {runtime: native_openpi}
+  action_processor: {runtime: native_droid_absolute_joint}
+reward:
+  type: environment
+  name: success
+  terminal_only: true
+  scale: 1
+  kwargs: {}
+algorithm:
+  type: grpo
+  flow_sde:
+    noise_level: 0.5
+    num_denoise_steps: 10
+    stochastic_transitions_per_sample: 1
+    selected_step_sampling: uniform
+    joint_logprob: false
+  group_size: 8
+  clip_epsilon_low: 0.2
+  clip_epsilon_high: 0.2
+  kl_coefficient: 0
+  clip_ratio_c: 3
+  importance_sampling_level: token
+  training_unit: action
+  action_advantage_mode: example
+  score_source: trajectory_reward
+  pad_fixed_horizon_examples: true
+  filter_rewards: true
+  reward_filter_mode: loss_mask
+  rewards_lower_bound: 0.1
+  rewards_upper_bound: 0.9
+  loss_aggregation: rlinf_chunk_mean
+  advantage:
+    scope: group
+    normalize: true
+    extra_global_normalization: false
+    mask_zero_variance_groups: false
+    std_unbiased: true
+    epsilon: 0.000001
+  precalculate_logprobs: false
+  rollout_logprob_source: rollout_action
+  logprob_eval_mode: false
+  logprob_microbatch_size: 32
+  train_logprob_microbatch_size: 32
+  pre_update_logprob_kl_tolerance: 0.02
+  pre_update_ratio_tolerance: 0.02
+  skip_optimizer_step_without_policy_gradient_signal: false
+training:
+  updates: 100
+  optimizer_steps_per_update: 28
+  microbatch_size: 32
+  log_action_token_progress: false
+  action_token_progress_every_microbatches: 128
+  schedule:
+    type: rlinf_actor_global_batch
+    global_batch_size: 2560
+    actor_seed: 17
+    actor_world_size: 8
+    rank_local_shuffle: true
+    groups_per_process_per_rollout_epoch: 8
+    action_chunk_size: 15
+    update_epochs: 2
+    strict_geometry: true
+    pre_update_alignment_guard: first_subupdate
+    max_approximate_kl: null
+    approximate_kl_guard_scope: joint_chunk
+    min_optimizer_steps_before_kl_stop: 1
+  checkpoint_every_updates: 1
+  optimizer:
+    type: adamw
+    learning_rate: 0.0001
+    weight_decay: 0
+    beta1: 0.9
+    beta2: 0.95
+    epsilon: 0.00001
+    max_grad_norm: 1
+rollout:
+  groups_per_update: 64
+  epochs_per_update: 1
+  workers: 8
+  failure_policy: fail_update
+  minimum_completed_attempts_per_group: 8
+  max_episode_steps: 1050
+  max_policy_steps: 70
+  shared_prefix_action_chunks: 0
+  temperature: 1
+  deterministic: false
+  action_payload:
+    kind: continuous
+    require_old_logprobs: true
+    require_prompt: false
+    require_observation: false
+    trainable_action_selection: all
+    max_trainable_actions_per_trajectory: null
+evaluation:
+  enabled: true
+  evaluate_before_training: true
+  evaluate_after_first_update: false
+  split: held_out
+  data_role: development
+  runtime: native_openpi
+  baseline_outcomes_path: null
+  every_updates: 5
+  episodes: 128
+  seeds: [23000]
+  deterministic: true
+  temperature: 1
+  fixed_scenarios: []
+  checkpoint_selection: last
+  kwargs:
+    reset_bank_sha256: DEVELOPMENT_BANK_SHA256
+    sampler: native_ode
+    group_size: 1
+storage:
+  output_dir: OUTPUT_DIRECTORY
+  keep_last_checkpoints: 3
+  retain_checkpoint_updates: [1, 5, 10, 20, 40, 100]
+  save_training_state: true
+  max_log_file_mb: 64
+  retain_rollout_payloads: false
+runtime:
+  backend: local
+  rollout_devices: [cuda:0, cuda:1, cuda:2, cuda:3, cuda:4, cuda:5, cuda:6, cuda:7]
+  training_devices: [cuda:0, cuda:1, cuda:2, cuda:3, cuda:4, cuda:5, cuda:6, cuda:7]
+  worker_python_executable: POLICY_PYTHON
+  rollout_execution:
+    mode: in_process
+    actor_factory: null
+    actor_kwargs: {}
+    actors_per_device: 1
+    group_batching: false
+    lifecycle: per_update
+    policy_sync: shared
+    inference_mode: embedded
+    inference_factory: null
+    inference_replicas_per_device: 1
+    inference_max_batch_size: 1
+    inference_max_wait_ms: 0
+    startup_timeout_seconds: 7200
+    request_timeout_seconds: 7200
+  distributed_training: true
+  training_worker_lifecycle: cpu_offload
+  worker_handoff_dir: HANDOFF_DIRECTORY
+  worker_timeout_seconds: 7200
+  max_worker_handoff_mb: 32768
+  keep_worker_handoffs: false
+observability:
+  delivery_failure_policy: fail_run
+  wandb:
+    enabled: true
+    entity: WANDB_ENTITY
+    project: art-embodied-isaaclab
+    connection: primary
+    native_update_steps: true
+    save_code: false
+    group: droid-soup-grpo
+    job_type: trajectory-rl
+    mode: online
+    log_model_artifacts: true
+    log_input_model_artifact: false
+    log_evaluation_artifacts: true
+    log_evaluation_table: true
+    max_evaluation_table_rows: 128
+    log_rollout_progress: true
+    rollout_progress_every_groups: 4
+    log_evaluation_progress: true
+    evaluation_progress_every_episodes: 5
+  weave:
+    enabled: true
+    project: art-embodied-isaaclab
+    trace_trajectories: true
+    max_groups_per_update: 4
+    max_trajectories_per_group: 4
+    max_evaluation_trajectories: 8
+    use_server_cache: false
+    server_cache_dir: null
+    server_cache_size_mb: 0
+  videos_per_update: 512
+  videos_per_evaluation: 128
+  require_train_video: true
+  require_evaluation_video: true
+  video_fps: 1

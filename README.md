@@ -89,6 +89,8 @@ Success counts before and after training, evaluated on matched initial states:
 | GR00T N1.7 / RoboCasa Cuttingboard-to-Pan | Flow-SDE GRPO | 100 (sealed) | 111/192 | **139/192** | **+14.6 points** |
 | [PI0-FAST / LIBERO Long (single task)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/a1hx8rsf) | Action-token GRPO | 100 (development) | 70/100 | **89/100** | **+19 points** |
 | [PI0-FAST / LIBERO Long (single task)](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/ww9b5upu) | Action-token GRPO | 100 (sealed) | [73/100](https://wandb.ai/wandb-japan/art-embodied-pi0-fast-long/runs/r56aa76y) | **83/100** | **+10 points** |
+| [PI0.5 DROID / Isaac Lab soup-to-bowl](https://wandb.ai/art-embodied/art-embodied-isaaclab/runs/j09zw68w) | Flow-SDE GRPO | 100 (development) | 65/128 | **109/128** | **+34.4 pp** |
+| [PI0.5 DROID / Isaac Lab soup-to-bowl](https://wandb.ai/art-embodied/art-embodied-isaaclab/runs/ljfxkgti) | Flow-SDE GRPO | 100 (sealed) | 137/256 | **213/256** | **+29.7 pp** |
 
 **How to read the results.** The first five rows use 100 fixed development
 scenarios, with initial states held out from training. The tasks and instructions
@@ -141,6 +143,154 @@ traces. Reproduction recipes and state manifests are under `examples/embodied/`.
 | Checkpoint/resume with optimizer and RNG state | Implemented |
 | W&B metrics, videos, Tables, and Models artifacts | Implemented |
 | Weave nested trajectory traces and file-backed video | Implemented |
+
+### Experimental Isaac Lab adapter
+
+The vector adapter supports action chunks, shared-state reset checks and terminal
+observations. The [conformance example](examples/embodied/isaaclab/conformance.py)
+checks eight official Cartpole camera environments with Isaac Lab `v3.0.0`,
+Newton physics and Warp rendering. An OpenPI PI0.5 DROID recipe also supports
+rollout collection, distributed Flow-SDE GRPO and checkpoint resume. After 100
+updates, success improved from 137/256 to 213/256 on a sealed evaluation set.
+Fresh installations have passed two full updates and a separate-process resume
+from a downloaded W&B checkpoint, including optimizer/RNG restoration and native
+W&B steps 0, 1 and 2.
+
+Install [Isaac Lab 3.0](https://isaac-sim.github.io/IsaacLab/v3.0.0/source/isaaclab/installation.html)
+in a separate environment. From this checkout, run with that environment's Python:
+
+```bash
+PYTHONPATH="$PWD/src:$PWD${PYTHONPATH:+:$PYTHONPATH}" python \
+  -m examples.embodied.isaaclab.conformance --camera --num-envs 8 \
+  --max-steps 32 --viz none --output-dir /path/to/isaaclab-check
+```
+
+Keep the simulator runtime separate from existing policy environments. Task
+integrations must restore and compare commands and randomized task conditions
+as well as scene poses. A shared seed alone does not give cloned environments
+the same initial state.
+Set `update_latest_camera_pose=True` on Warp cameras so robot-mounted views
+follow the robot and refresh after state restoration. The adapter checks this
+before collecting trajectories.
+
+#### DROID soup-to-bowl recipe
+
+This experimental recipe uses Arena assets with Newton/MuJoCo-Warp physics and
+Warp cameras, without Isaac Sim or RTX rendering. It sets Panda joint armature
+to `0.1`, so results use modified physics rather than the unmodified Arena benchmark.
+The reference configuration uses 8 GPUs, 512 trajectories per update and 128 fixed
+development episodes every 5 updates. A separate 256-state test bank stays unused
+during development.
+
+Training starts from the native OpenPI DROID checkpoint without additional SFT.
+The update-100 checkpoint was selected before opening the test bank: 97 paired
+episodes improved and 21 regressed, with a +29.7-point lift (paired 95% CI
+[+22.3, +37.1], exact McNemar p=7.27e-13). This is one task and training seed
+under the physics settings above, not an Arena benchmark-wide result.
+
+Use Linux x86-64 and an NVIDIA driver compatible with the simulator's CUDA 13.0
+Torch build. The reference run used eight H100 80 GB GPUs. `prepare_droid
+--num-gpus` also accepts 2 or 4 while retaining 512 trajectories per update;
+those layouts have configuration tests but not GPU qualification. The DROID
+recipe does not use the generic single-GPU profile below.
+
+From a checkout, install three separate runtimes with Python 3.12, `uv` and Git:
+
+```bash
+export DROID_WORK=/path/outside/checkout/droid
+export PYTHONPATH="$PWD/src:$PWD"
+for runtime in controller simulator policy; do
+  python3.12 -m examples.embodied.isaaclab.install_runtime "$runtime" \
+    --directory "$DROID_WORK/$runtime"
+done
+CONTROLLER="$DROID_WORK/controller/environment/bin/python"
+SIMULATOR="$DROID_WORK/simulator/environment/bin/python"
+POLICY="$DROID_WORK/policy/environment/bin/python"
+
+JAX_PLATFORMS=cpu CUDA_VISIBLE_DEVICES='' "$POLICY" \
+  -m examples.embodied.isaaclab.convert_droid \
+  --openpi-source "$DROID_WORK/policy/sources/openpi" \
+  --output "$DROID_WORK/model"
+```
+
+The converter downloads the native `pi05_droid_jointpos` checkpoint and preserves
+its source weights and normalization data. Inference uses OpenPI's native BF16/FP32
+precision. Check the publishers' terms for checkpoints and scene assets before use.
+The simulator installer uses Arena's NumPy override for `openpi-client`, omits
+the obsolete `argparse` backport, and updates setuptools beyond Torch's upper
+bound to obtain security fixes. These three upstream metadata conflicts remain
+visible in dependency checks.
+The installer also applies three checksum-checked Arena compatibility changes:
+lazy PhysX imports, Warp camera setup and remote asset loading. It records the
+before/after hashes in `installation.json`. The policy installer applies
+[`constraints/isaaclab-openpi-security.txt`](constraints/isaaclab-openpi-security.txt)
+after the upstream installation to update supporting packages, including Pillow
+and Diffusers. Torch 2.7.1, Transformers 4.53.2 and Accelerate 1.8.1 retain known
+security advisories. Use trusted checkpoints and configurations; `weights_only=True`
+does not make untrusted checkpoints safe on this Torch version. The inference
+server listens on localhost and is intended for local training workers.
+
+With the GPUs allocated and `WANDB_ENTITY` and `WANDB_API_KEY` set:
+
+```bash
+RECIPE=examples/embodied/isaaclab/pi05_droid_soup_grpo.yaml
+"$SIMULATOR" -m examples.embodied.isaaclab.droid_reset_banks \
+  --recipe "$RECIPE" --output-dir "$DROID_WORK/banks"
+"$CONTROLLER" -m examples.embodied.isaaclab.prepare_droid \
+  --recipe "$RECIPE" \
+  --checkpoint "$DROID_WORK/model" --banks "$DROID_WORK/banks" \
+  --output-dir "$DROID_WORK/run" --policy-python "$POLICY" \
+  --config "$DROID_WORK/config.json"
+"$CONTROLLER" -m examples.embodied.isaaclab.run_droid \
+  --config "$DROID_WORK/config.json" --banks "$DROID_WORK/banks" \
+  --policy-python "$POLICY" --sim-python "$SIMULATOR"
+```
+
+To resume, repeat the last command with
+`--resume-from "$DROID_WORK/run/checkpoints/step-NNNNNN" --run-id EXISTING_RUN_ID`.
+Use the latest fully logged checkpoint and the original output directory. The
+runner restores optimizer/RNG state and checks W&B's native step before writing.
+Metrics, videos and model artifacts share the completed update number.
+
+Prepare the final evaluation before training, without running a policy on test states:
+
+```bash
+"$CONTROLLER" -m examples.embodied.isaaclab.evaluate_droid \
+  --config "$DROID_WORK/config.json" --banks "$DROID_WORK/banks" \
+  --output-dir "$DROID_WORK/final-evaluation" --split sealed --preflight
+```
+
+After selecting one checkpoint using development results, repeat that command
+without `--preflight`, adding `--checkpoint /path/to/selected/checkpoint`,
+`--policy-python "$POLICY"` and `--sim-python "$SIMULATOR"`. It evaluates the initial
+policy and that checkpoint on the same 256 states and policy seeds. W&B records
+their actual update numbers, videos, paired outcomes and evaluation artifacts.
+Use `--split development` with a different output directory to check this path
+without opening the test set.
+
+#### Use your own task
+
+For another DROID pick-and-place task, copy the recipe outside the checkout and
+change `environment.task`, `pick_up_object`, `destination_location` and
+`instruction`. Object names come from Arena's asset registry. Give the experiment
+a new name and output directory, then pass the same `--recipe` to both
+`droid_reset_banks` and `prepare_droid`. The reset banks include the task and
+physics settings; using banks from a different task raises an error before
+training. The reference batch sizes, control horizon and physics remain fixed.
+
+Other robots or task types need observation, action, reset and success mappings.
+The reusable interfaces are `IsaacLabChunkEnvironment` and `IsaacLabGroupRollout`
+in `art_embodied.integrations`. The former wraps a vector environment and preserves
+terminal observations. The latter collects GRPO groups into the same trajectory
+records used by the existing training and W&B/Weave pipeline. Its callbacks define
+which task conditions to restore and compare, how to map observations, and which
+camera to record. The batched policy supplies action predictions and their native
+log-probabilities. These interfaces do not assume DROID or a particular task.
+
+The supplied DROID runner uses its own process-isolated OpenPI and simulator
+workers. It is a complete pick-and-place recipe, not a universal launcher for all
+Isaac Lab tasks. Keep new task mappings in your application and verify shared
+resets, success detection and likelihood replay before a long run.
 
 ### One GPU is a supported resource profile
 

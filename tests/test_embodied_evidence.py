@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from art_embodied import evidence
 from art_embodied.checkpointing import CheckpointManager
 from art_embodied.evidence import (
     evaluation_evidence_identity,
@@ -40,8 +41,46 @@ def test_evidence_identity_hashes_adapter_and_evaluation_manifest(
         == hashlib.sha256(manifest.read_bytes()).hexdigest()
     )
     assert identity["source"]["package_tree"]["file_count"] > 0
-    assert identity["source"]["integration_tree"]["file_count"] > 0
     assert "openpipe-art" in identity["dependencies"]
+
+
+def test_source_identity_hashes_repository_integrations(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    integration_root = tmp_path / "examples" / "embodied"
+    integration_root.mkdir(parents=True)
+    recipe = integration_root / "recipe.yaml"
+    recipe.write_text("seed: 1\n", encoding="utf-8")
+    monkeypatch.setattr(evidence, "_find_git_repository", lambda _: tmp_path)
+    monkeypatch.setattr(
+        evidence,
+        "_run_git",
+        lambda _, *args: "test-commit" if args == ("rev-parse", "HEAD") else "",
+    )
+
+    before = evidence.source_identity()
+    assert before["git"] == {
+        "root": str(tmp_path),
+        "commit": "test-commit",
+        "dirty": False,
+    }
+    assert before["integration_tree"]["file_count"] == 1
+    recipe.write_text("seed: 2\n", encoding="utf-8")
+    after = evidence.source_identity()
+    assert before["integration_tree"]["sha256"] != after["integration_tree"]["sha256"]
+
+
+def test_source_identity_without_git_tracks_installed_package(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(evidence, "_find_git_repository", lambda _: None)
+
+    identity = evidence.source_identity()
+
+    assert identity["package_tree"]["file_count"] > 0
+    assert len(identity["package_tree"]["sha256"]) == 64
+    assert identity["git"] is None
+    assert "integration_tree" not in identity
 
 
 def test_evidence_identity_uses_transaction_manifest_for_checkpoint(
